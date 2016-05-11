@@ -9,7 +9,15 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 
@@ -19,24 +27,49 @@ import com.mygdx.game.BunnyGame;
 public class PlayScreen implements Screen {
 
     public BunnyGame game;
-    Texture texture;
+
+    //Tiled Map
     private OrthographicCamera gamecam;
     private Viewport gamePort;
     private TmxMapLoader mapLoader;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
+    //Box 2d variables
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
     public PlayScreen(BunnyGame game){
         this.game=game;
         //texture=new Texture("test.jpg");
         gamecam = new OrthographicCamera();
-        //gamePort=new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),gamecam);
-        gamePort=new FitViewport(400,208,gamecam);
+        //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
+        //gamePort=new StretchViewport(400,208,gamecam);
         mapLoader=new TmxMapLoader();
-        map = mapLoader.load("level1.tmx");
+        map = mapLoader.load("teste.tmx");
         renderer = new OrthogonalTiledMapRenderer(map);
-       gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
         gamePort=new FitViewport(400,208,gamecam);
+        gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
+
+        world = new World(new Vector2(0,0),true);
+        b2dr = new Box2DDebugRenderer();
+
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
+
+        //Spikes Layer   8
+        //Hood Layer     7
+        //Hole Layer     6
+        //Ground Layer   5
+        //Carrots Layer  4
+        //Graphics       3
+        //Grpahics1      2
+        //Graphics2      1
+        //BackGround     0
+
+
     }
 
     public void update(float dt){
