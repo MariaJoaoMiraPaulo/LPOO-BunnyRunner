@@ -5,10 +5,13 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -70,6 +73,69 @@ public class PlayScreen implements Screen {
         //BackGround     0
 
 
+        // Creating Carrots
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            fdef.shape=shape;
+            body.createFixture(fdef);
+        }
+
+
+
+        // Creating Ground
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            fdef.shape=shape;
+            body.createFixture(fdef);
+        }
+
+        // Creating Hole
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            fdef.shape=shape;
+            body.createFixture(fdef);
+        }
+
+        // Creating Hood
+        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            fdef.shape=shape;
+            body.createFixture(fdef);
+        }
+
+        // Creating Spikes
+        for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            fdef.shape=shape;
+            body.createFixture(fdef);
+        }
+
+
     }
 
     public void update(float dt){
@@ -93,6 +159,7 @@ public class PlayScreen implements Screen {
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
+        b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
        /* game.batch.begin();
         game.batch.draw(texture,0,0,texture.getWidth(),texture.getHeight());
