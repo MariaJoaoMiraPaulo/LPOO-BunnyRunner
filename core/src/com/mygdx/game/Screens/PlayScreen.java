@@ -25,13 +25,18 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
+import com.mygdx.game.Character.Bunny;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
  */
 public class PlayScreen implements Screen {
 
+    public enum State {PLAYING, WAITING_FOR_TOUCH};
+
     public BunnyGame game;
+
+    private Bunny bunny;
 
     //Tiled Map
     private OrthographicCamera gamecam;
@@ -44,19 +49,20 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    private State state;
+
     public PlayScreen(BunnyGame game){
         this.game=game;
-        //texture=new Texture("test.jpg");
         gamecam = new OrthographicCamera();
         //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
         //gamePort=new StretchViewport(400,208,gamecam);
         mapLoader=new TmxMapLoader();
         map = mapLoader.load("teste.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map);
-        gamePort=new FitViewport(400,208,gamecam);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / BunnyGame.PPM);
+        gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
 
-        world = new World(new Vector2(0,0),true);
+        world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
 
         BodyDef bdef = new BodyDef();
@@ -79,10 +85,10 @@ public class PlayScreen implements Screen {
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
             body.createFixture(fdef);
         }
@@ -93,10 +99,10 @@ public class PlayScreen implements Screen {
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
             body.createFixture(fdef);
         }
@@ -105,10 +111,10 @@ public class PlayScreen implements Screen {
         for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
             body.createFixture(fdef);
         }
@@ -117,10 +123,10 @@ public class PlayScreen implements Screen {
         for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
             body.createFixture(fdef);
         }
@@ -129,27 +135,54 @@ public class PlayScreen implements Screen {
         for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set(rect.getX()+rect.getWidth()/2,rect.getY()+rect.getHeight()/2);
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
             body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2,rect.getHeight()/2);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
             body.createFixture(fdef);
         }
 
+        bunny = new Bunny(world, this);
 
+        state = State.WAITING_FOR_TOUCH;
 
     }
 
     public void update(float dt){
-        handleInput(dt);   
+        boolean playing = false;
+
+        handleInput(dt);
+
+        world.step(1/60f, 6 , 2);
+
+        switch(state){
+            case PLAYING:
+                playing = true;
+                break;
+        }
+        bunny.update(dt,playing);
+
+
+        gamecam.position.x = bunny.b2body.getPosition().x;
+
         gamecam.update();
         renderer.setView(gamecam);
     }
 
     private void handleInput(float dt) {
-        if(Gdx.input.isTouched())
-            gamecam.position.x += 100*dt;
+        if(Gdx.input.isTouched()){
+            switch(state){
+                case PLAYING:
+                    if( bunny.b2body.getLinearVelocity().y == 0){
+                        bunny.jump();
+                    }
+                    break;
+                case WAITING_FOR_TOUCH:
+                    state = State.PLAYING;
+                    break;
+            }
+        }
     }
 
     @Override
@@ -160,14 +193,14 @@ public class PlayScreen implements Screen {
     @Override
     public void render(float delta) {
         update(delta);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         renderer.render();
         b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
-       /* game.batch.begin();
-        game.batch.draw(texture,0,0,texture.getWidth(),texture.getHeight());
+        game.batch.begin();
+        game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 10 / BunnyGame.PPM, 16/BunnyGame.PPM, 32/BunnyGame.PPM);
         game.batch.end();
-    */
+
     }
 
     @Override
@@ -194,4 +227,5 @@ public class PlayScreen implements Screen {
     public void dispose() {
 
     }
+
 }
