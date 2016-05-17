@@ -142,7 +142,7 @@ public class PlayScreen implements Screen {
     }
 
     public void update(float dt){
-        handleInput(dt);
+        handleInput(dt);   
         gamecam.update();
         renderer.setView(gamecam);
     }
