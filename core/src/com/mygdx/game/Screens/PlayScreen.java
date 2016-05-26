@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Character.Bunny;
 import com.mygdx.game.Tools.B2WorldCreator;
+import com.mygdx.game.Tools.WorldContactListener;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
@@ -68,6 +69,8 @@ public class PlayScreen implements Screen {
 
 
         new B2WorldCreator(world,map);
+
+        world.setContactListener(new WorldContactListener());
 
 
         bunny = new Bunny(world, this);

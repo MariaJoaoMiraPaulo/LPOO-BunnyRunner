@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BunnyGame;
@@ -67,6 +68,14 @@ public class Bunny extends Sprite {
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
+
+        //Line between two different points to simulate the contact with tile Objects
+        EdgeShape frontBunny = new EdgeShape();
+        frontBunny.set(new Vector2(7/BunnyGame.PPM,1/BunnyGame.PPM), new Vector2(7/BunnyGame.PPM,20/BunnyGame.PPM));
+        fdef.shape = frontBunny;
+        fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
+
+        b2body.createFixture(fdef).setUserData("frontBunny");
     }
 
     public void update(float dt, boolean playing){
