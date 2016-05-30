@@ -75,6 +75,8 @@ public class Bunny extends Sprite implements Disposable{
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(10 / BunnyGame.PPM);
+        fdef.filter.categoryBits = BunnyGame.BUNNY_BIT;
+        fdef.filter.maskBits= BunnyGame.CARROT_BIT | BunnyGame.DEFAULT_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

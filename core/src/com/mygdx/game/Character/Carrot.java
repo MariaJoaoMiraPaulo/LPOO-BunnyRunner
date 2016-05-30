@@ -1,5 +1,6 @@
 package com.mygdx.game.Character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -28,13 +29,15 @@ public class Carrot extends InteractiveTileObject{
         fdef.shape=shape;
          fixture = body.createFixture(fdef);
         fixture.setUserData(this);
+
+        setCategoryFilter(BunnyGame.CARROT_BIT);
     }
 
     @Override
     public void FrontBunnyHit() {
-        System.out.println("CARROT");
-
-        //TODO Video 13 collision with carrots
+        Gdx.app.log("Carrot","Colison");
+        setCategoryFilter(BunnyGame.DESTROYED_BIT);
+        getCell().setTile(null);
     }
 
 }

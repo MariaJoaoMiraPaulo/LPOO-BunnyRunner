@@ -13,6 +13,11 @@ public class    BunnyGame extends Game{
     public static final int V_HEIGHT = 208;
     public static final float PPM = 100;
 
+    public static final short DEFAULT_BIT = 1;
+    public static final short BUNNY_BIT = 2;
+    public static final short CARROT_BIT = 4;
+    public static final short DESTROYED_BIT = 4;
+
     public SpriteBatch batch;
 
     @Override
