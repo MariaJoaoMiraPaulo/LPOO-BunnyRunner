@@ -3,11 +3,8 @@ package com.mygdx.game.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -15,13 +12,14 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Screens.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 12/05/16.
  */
-public class Bunny extends Sprite {
+public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
     public PlayScreen screen;
@@ -29,26 +27,38 @@ public class Bunny extends Sprite {
     public World world;
     public Body b2body;
 
-    public Texture bunnyImage;
+    public Texture bunnyRunningImage;
+    public Texture bunnyStartImage;
     public TextureRegion[] runningFrames;
     public TextureRegion currentFrame;
     public Animation runningAnimation;
+    public TextureRegion[] startingFrames;
+    public Animation startingAnimation;
 
     float stateTime;
 
     public Bunny(World world, PlayScreen screen){
-        bunnyImage = new Texture("bunny.png");
-        TextureRegion[][] tmp = TextureRegion.split(bunnyImage, bunnyImage.getWidth()/5, bunnyImage.getHeight());
+        bunnyRunningImage = new Texture("bunny.png");
+        TextureRegion[][] tmp = TextureRegion.split(bunnyRunningImage, bunnyRunningImage.getWidth()/5, bunnyRunningImage.getHeight());
         runningFrames = new TextureRegion[5];
         int index = 0;
-        Gdx.app.log("BUNNY", "Vou entrar");
         for(int i=0;i<5;i++){
-            Gdx.app.log("BUNNY", "i:"+i);
             runningFrames[index] = tmp[0][i];
             index++;
         }
         runningAnimation = new Animation(0.1f, runningFrames);
         stateTime = 0f;
+
+        bunnyStartImage= new Texture("bunny_start.png");
+        TextureRegion[][] tmp2 = TextureRegion.split(bunnyStartImage, bunnyStartImage.getWidth()/3, bunnyStartImage.getHeight());
+        startingFrames = new TextureRegion[3];
+        int index2 = 0;
+        for(int i=0;i<3;i++){
+            Gdx.app.log("BUNNY", "i:"+i);
+            startingFrames[index2] = tmp2[0][i];
+            index2++;
+        }
+        startingAnimation = new Animation(0.1f, startingFrames);
 
         this.screen = screen;
         this.world = world;
@@ -85,7 +95,20 @@ public class Bunny extends Sprite {
 
 
         stateTime += dt;
-        currentFrame = runningAnimation.getKeyFrame(stateTime, true);
+
+        switch (screen.getState()){
+            case PLAYING:
+                currentFrame = runningAnimation.getKeyFrame(stateTime, true);
+                break;
+            case WAITING_FOR_TOUCH:
+                currentFrame = startingAnimation.getKeyFrame(stateTime, true);
+                break;
+            default:
+                currentFrame = startingAnimation.getKeyFrame(stateTime, true);
+                break;
+
+
+        }
 
     }
 
@@ -97,4 +120,17 @@ public class Bunny extends Sprite {
         return currentFrame;
     }
 
+    @Override
+    public void dispose() {
+        bunnyRunningImage.dispose();
+        bunnyStartImage.dispose();
+        currentFrame.getTexture().dispose();
+        for(TextureRegion image : runningFrames)
+            image.getTexture().dispose();
+
+        for(TextureRegion image : startingFrames)
+            image.getTexture().dispose();
+
+
+    }
 }

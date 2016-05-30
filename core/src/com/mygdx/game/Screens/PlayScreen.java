@@ -34,6 +34,10 @@ import com.mygdx.game.Tools.WorldContactListener;
  */
 public class PlayScreen implements Screen {
 
+    public State getState() {
+        return state;
+    }
+
     public enum State {PLAYING, WAITING_FOR_TOUCH};
 
     public BunnyGame game;
@@ -133,6 +137,7 @@ public class PlayScreen implements Screen {
 
     }
 
+
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
@@ -155,7 +160,10 @@ public class PlayScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
     }
 
 }
