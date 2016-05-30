@@ -33,6 +33,8 @@ public class Carrot extends InteractiveTileObject{
     @Override
     public void FrontBunnyHit() {
         System.out.println("CARROT");
+
+        //TODO Video 13 collision with carrots
     }
 
 }

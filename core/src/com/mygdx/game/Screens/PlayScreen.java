@@ -128,7 +128,7 @@ public class PlayScreen implements Screen {
         b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 10 / BunnyGame.PPM, 16/BunnyGame.PPM, 32/BunnyGame.PPM);
+        game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 10 / BunnyGame.PPM, 18/BunnyGame.PPM, 32/BunnyGame.PPM);
         game.batch.end();
 
     }
