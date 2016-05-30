@@ -76,7 +76,6 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
 
-
         bunny = new Bunny(world, this);
 
         state = State.WAITING_FOR_TOUCH;

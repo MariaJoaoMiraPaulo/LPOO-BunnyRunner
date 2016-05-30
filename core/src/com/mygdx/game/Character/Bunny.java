@@ -49,16 +49,15 @@ public class Bunny extends Sprite implements Disposable{
         runningAnimation = new Animation(0.1f, runningFrames);
         stateTime = 0f;
 
-        bunnyStartImage= new Texture("bunny_start.png");
+        bunnyStartImage= new Texture("bunnyStart.png");
         TextureRegion[][] tmp2 = TextureRegion.split(bunnyStartImage, bunnyStartImage.getWidth()/3, bunnyStartImage.getHeight());
         startingFrames = new TextureRegion[3];
         int index2 = 0;
         for(int i=0;i<3;i++){
-            Gdx.app.log("BUNNY", "i:"+i);
             startingFrames[index2] = tmp2[0][i];
             index2++;
         }
-        startingAnimation = new Animation(0.1f, startingFrames);
+        startingAnimation = new Animation(1f, startingFrames);
 
         this.screen = screen;
         this.world = world;
@@ -83,7 +82,7 @@ public class Bunny extends Sprite implements Disposable{
 
         //Line between two different points to simulate the contact with tile Objects
         EdgeShape frontBunny = new EdgeShape();
-        frontBunny.set(new Vector2(7/BunnyGame.PPM,1/BunnyGame.PPM), new Vector2(7/BunnyGame.PPM,20/BunnyGame.PPM));
+        frontBunny.set(new Vector2(11/BunnyGame.PPM,1/BunnyGame.PPM), new Vector2(11/BunnyGame.PPM,20/BunnyGame.PPM));
         fdef.shape = frontBunny;
         fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
 

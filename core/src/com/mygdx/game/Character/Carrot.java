@@ -27,7 +27,7 @@ public class Carrot extends InteractiveTileObject{
         body = world.createBody(bdef);
         shape.setAsBox(bounds.getWidth()/2/ BunnyGame.PPM,bounds.getHeight()/2/ BunnyGame.PPM);
         fdef.shape=shape;
-         fixture = body.createFixture(fdef);
+        fixture = body.createFixture(fdef);
         fixture.setUserData(this);
 
         setCategoryFilter(BunnyGame.CARROT_BIT);
