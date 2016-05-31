@@ -81,7 +81,8 @@ public class Bunny extends Sprite implements Disposable{
                 BunnyGame.PLATFORM_BIT;
 
         fdef.shape = shape;
-        b2body.createFixture(fdef);
+
+       b2body.createFixture(fdef).setUserData(this);
 
         //Line between two different points to simulate the contact with tile Objects
 

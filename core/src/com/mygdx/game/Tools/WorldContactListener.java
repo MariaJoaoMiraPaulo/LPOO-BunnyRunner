@@ -22,10 +22,10 @@ public class WorldContactListener implements ContactListener {
         Fixture fixtureB = contact.getFixtureB();
 
         if(fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.PLATFORM_BIT ){
-           // ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(0, -2f));
+           ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(0, -2f));
         }
         else if(fixtureB.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureA.getFilterData().categoryBits == BunnyGame.PLATFORM_BIT){
-        //    ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(0, -2f));
+           ((Bunny) fixtureB.getUserData()).applyForce(new Vector2(0, -2f));
         }
 
         if(fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT ||
