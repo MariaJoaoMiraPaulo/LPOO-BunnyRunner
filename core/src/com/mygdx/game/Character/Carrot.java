@@ -34,7 +34,7 @@ public class Carrot extends InteractiveTileObject{
     }
 
     @Override
-    public void FrontBunnyHit() {
+    public void bunnyHit() {
         Gdx.app.log("Carrot","Colison");
         setCategoryFilter(BunnyGame.DESTROYED_BIT);
         getCell().setTile(null);

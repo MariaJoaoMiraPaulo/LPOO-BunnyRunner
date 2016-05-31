@@ -74,11 +74,12 @@ public class PlayScreen implements Screen {
 
         new B2WorldCreator(world,map);
 
-        world.setContactListener(new WorldContactListener());
-
         bunny = new Bunny(world, this);
 
         state = State.WAITING_FOR_TOUCH;
+
+        world.setContactListener(new WorldContactListener());
+
 
     }
 

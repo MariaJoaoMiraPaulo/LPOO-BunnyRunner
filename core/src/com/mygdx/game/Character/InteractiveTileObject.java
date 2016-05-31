@@ -29,7 +29,7 @@ public abstract class InteractiveTileObject {
         this.bounds = bounds;
     }
 
-    public abstract void FrontBunnyHit();
+    public abstract void bunnyHit();
 
     public void setCategoryFilter(short filterBit){
         Filter filter = new Filter();

@@ -19,18 +19,24 @@ public class WorldContactListener implements ContactListener {
         Gdx.app.log("Colidiu", "aleluia");
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
+        Gdx.app.log("Colidiu", "aaaa "+fixtureA.getFilterData().categoryBits + " com " + fixtureB.getFilterData().categoryBits);
 
-        if(fixtureA.getUserData()=="frontBunny" || fixtureB.getUserData()=="frontBunny"){
+        if(fixtureA.getUserData()=="frontBunny" || fixtureB.getUserData()=="frontBunny" ||
+                fixtureA.getUserData()=="headBunny" || fixtureB.getUserData()=="headBunny" ||
+                fixtureA.getUserData()=="feetBunny" || fixtureB.getUserData()=="feetBunny"){
              Gdx.app.log("Colidiu", "Com o coelho");
                 //Colison with Front Bunny
-                Fixture front;
+                Fixture bunny;
                 Fixture object;
-                if(fixtureA.getUserData()=="frontBunny"){
-                    front=fixtureA;
+                if(fixtureA.getUserData()=="frontBunny" ||
+                        fixtureA.getUserData()=="headBunny" ||
+                        fixtureA.getUserData()=="feetBunny"){
+
+                    bunny=fixtureA;
                     object=fixtureB;
                 }
                 else{
-                    front=fixtureB;
+                    bunny=fixtureB;
                     object=fixtureA;
                 }
 
@@ -45,7 +51,7 @@ public class WorldContactListener implements ContactListener {
                 //Test if the object is of the type InterativeTileObject
                 if(object.getUserData() instanceof InteractiveTileObject){
                     Gdx.app.log("Colidiu", "Com uma cenoura");
-                    ( (InteractiveTileObject) object.getUserData()).FrontBunnyHit();
+                    ( (InteractiveTileObject) object.getUserData()).bunnyHit();
                 }
         }
     }

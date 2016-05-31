@@ -82,11 +82,25 @@ public class Bunny extends Sprite implements Disposable{
 
         //Line between two different points to simulate the contact with tile Objects
         EdgeShape frontBunny = new EdgeShape();
-        frontBunny.set(new Vector2(25/BunnyGame.PPM,1/BunnyGame.PPM), new Vector2(25/BunnyGame.PPM,20/BunnyGame.PPM));
+        frontBunny.set(new Vector2(10/BunnyGame.PPM,-10/BunnyGame.PPM), new Vector2(10/BunnyGame.PPM,13/BunnyGame.PPM));
         fdef.shape = frontBunny;
         fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
 
         b2body.createFixture(fdef).setUserData("frontBunny");
+
+        EdgeShape headBunny = new EdgeShape();
+        headBunny.set(new Vector2(-10/BunnyGame.PPM,13/BunnyGame.PPM), new Vector2(10/BunnyGame.PPM,13/BunnyGame.PPM));
+        fdef.shape = headBunny;
+        fdef.isSensor=true;
+
+        b2body.createFixture(fdef).setUserData("headBunny");
+
+        EdgeShape feetBunny = new EdgeShape();
+        feetBunny.set(new Vector2(-10/BunnyGame.PPM,-10/BunnyGame.PPM), new Vector2(10/BunnyGame.PPM,-10/BunnyGame.PPM));
+        fdef.shape = feetBunny;
+        fdef.isSensor=true;
+
+        b2body.createFixture(fdef).setUserData("feetBunny");
     }
 
     public void update(float dt, boolean playing){
