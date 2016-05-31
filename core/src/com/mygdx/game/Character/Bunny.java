@@ -75,7 +75,10 @@ public class Bunny extends Sprite implements Disposable{
         CircleShape shape = new CircleShape();
         shape.setRadius(10 / BunnyGame.PPM);
         fdef.filter.categoryBits = BunnyGame.BUNNY_BIT;
-        fdef.filter.maskBits= BunnyGame.CARROT_BIT | BunnyGame.DEFAULT_BIT;
+        fdef.filter.maskBits= BunnyGame.CARROT_BIT |
+                BunnyGame.DEFAULT_BIT |
+                BunnyGame.GROUND_BIT |
+                BunnyGame.PLATFORM_BIT;
 
         fdef.shape = shape;
         b2body.createFixture(fdef);
@@ -87,7 +90,7 @@ public class Bunny extends Sprite implements Disposable{
         fdef.shape = headBunny;
         fdef.isSensor=true;
 
-        b2body.createFixture(fdef).setUserData("headBunny");
+        b2body.createFixture(fdef).setUserData(this);
 
     }
 
@@ -121,6 +124,10 @@ public class Bunny extends Sprite implements Disposable{
 
     public TextureRegion getCurrentFrame() {
         return currentFrame;
+    }
+
+    public void applyForce(Vector2 force){
+        b2body.applyLinearImpulse(force, b2body.getWorldCenter(), true);
     }
 
     @Override

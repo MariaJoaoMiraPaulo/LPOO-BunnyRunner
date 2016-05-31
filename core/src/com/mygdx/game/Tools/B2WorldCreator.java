@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BunnyGame;
+import com.mygdx.game.Character.Bunny;
 import com.mygdx.game.Character.Carrot;
 
 /**
@@ -100,6 +101,13 @@ public class B2WorldCreator {
         //Grapihcs 1
         //Background 0
 
+        // Creating Carrots
+        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+
+            new Carrot(world,map,rect);
+        }
+
         // Creating Ground
         for(MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
@@ -109,15 +117,40 @@ public class B2WorldCreator {
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
+
+            fdef.filter.categoryBits = BunnyGame.GROUND_BIT;
+
             body.createFixture(fdef);
         }
 
-        // Creating Carrots
-        for(MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)){
+        // Creating Spikes
+        for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
-            new Carrot(world,map,rect);
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
+            fdef.shape=shape;
+
+            body.createFixture(fdef);
         }
+
+        // Creating Platform
+        for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
+            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
+            bdef.type= BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
+
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
+            fdef.shape=shape;
+
+            fdef.filter.categoryBits = BunnyGame.PLATFORM_BIT;
+
+            body.createFixture(fdef);
+        }
+
     }
 
 
