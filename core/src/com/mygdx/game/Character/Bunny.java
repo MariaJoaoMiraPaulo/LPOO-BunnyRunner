@@ -39,7 +39,6 @@ public class Bunny extends Sprite implements Disposable{
 
     public State stateBunny;
 
-
     float stateTime;
 
     public Bunny(World world, PlayScreen screen){
@@ -108,6 +107,15 @@ public class Bunny extends Sprite implements Disposable{
         fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
 
         b2body.createFixture(fdef).setUserData(this);
+
+        //Line between two different points to simulate the contact with tile Objects
+        EdgeShape feetBunny = new EdgeShape();
+        frontBunny.set(new Vector2(-10/BunnyGame.PPM,-10/BunnyGame.PPM), new Vector2(10/BunnyGame.PPM,-10/BunnyGame.PPM));
+        fdef.shape = feetBunny;
+        fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
+
+        b2body.createFixture(fdef).setUserData(this);
+
     }
 
     public void update(float dt){

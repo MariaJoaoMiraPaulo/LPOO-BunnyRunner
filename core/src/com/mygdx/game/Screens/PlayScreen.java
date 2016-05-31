@@ -49,6 +49,8 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
+    private float gameTime;
+
 
     public PlayScreen(BunnyGame game){
         this.game=game;
@@ -69,13 +71,15 @@ public class PlayScreen implements Screen {
 
         bunny = new Bunny(world, this);
 
+        gameTime = 0;
+
         world.setContactListener(new WorldContactListener());
 
 
     }
 
     public void update(float dt){
-        boolean playing = false;
+        gameTime += dt;
 
         handleInput(dt);
 
@@ -91,17 +95,33 @@ public class PlayScreen implements Screen {
     }
 
     private void handleInput(float dt) {
-        if(Gdx.input.isTouched()){
-            switch(bunny.stateBunny){
+        if(gameTime < 2) {
+            if (Gdx.input.justTouched()) {
+                switch (bunny.stateBunny) {
+                    case RUNNING:
+                        if (bunny.b2body.getLinearVelocity().y == 0) {
+                            bunny.jump();
+                            bunny.stateBunny = Bunny.State.JUMPING;
+                        }
+                        break;
+                    case STANDING:
+                        bunny.stateBunny = Bunny.State.RUNNING;
+                        break;
+                    case JUMPING:
+                        break;
+                }
+            }
+        }
+        else  if (Gdx.input.isTouched()) {
+            switch (bunny.stateBunny) {
                 case RUNNING:
-                    if( bunny.b2body.getLinearVelocity().y == 0){
+                    if (bunny.b2body.getLinearVelocity().y == 0) {
                         bunny.jump();
-                        bunny.stateBunny=Bunny.State.JUMPING;
+                        bunny.stateBunny = Bunny.State.JUMPING;
                     }
                     break;
                 case STANDING:
-                    Gdx.app.log("Entrei","aqui");
-                    bunny.stateBunny=Bunny.State.RUNNING;
+                    bunny.stateBunny = Bunny.State.RUNNING;
                     break;
                 case JUMPING:
                     break;
