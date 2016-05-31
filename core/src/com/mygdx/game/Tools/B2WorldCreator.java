@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Character.Bunny;
 import com.mygdx.game.Character.Carrot;
+import com.mygdx.game.Character.Spike;
 
 /**
  * Created by mariajoaomirapaulo on 26/05/16.
@@ -126,14 +127,7 @@ public class B2WorldCreator {
         // Creating Spikes
         for(MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
-            bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
-            fdef.shape=shape;
-
-            body.createFixture(fdef);
+           new Spike(world,map,rect);
         }
 
         // Creating Platform

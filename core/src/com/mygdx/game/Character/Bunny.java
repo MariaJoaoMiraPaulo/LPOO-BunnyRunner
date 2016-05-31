@@ -22,6 +22,8 @@ import com.mygdx.game.Screens.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
+    public enum State {STANDING, RUNNING, JUMPING, DEAD };
+
     public PlayScreen screen;
 
     public World world;
@@ -35,9 +37,13 @@ public class Bunny extends Sprite implements Disposable{
     public TextureRegion[] startingFrames;
     public Animation startingAnimation;
 
+    public State stateBunny;
+
+
     float stateTime;
 
     public Bunny(World world, PlayScreen screen){
+
         bunnyRunningImage = new Texture("bunny.png");
         TextureRegion[][] tmp = TextureRegion.split(bunnyRunningImage, bunnyRunningImage.getWidth()/5, bunnyRunningImage.getHeight());
         runningFrames = new TextureRegion[5];
@@ -63,6 +69,8 @@ public class Bunny extends Sprite implements Disposable{
         this.world = world;
         defineBunny();
 
+        this.stateBunny=State.STANDING;
+
     }
 
     public void defineBunny(){
@@ -78,7 +86,7 @@ public class Bunny extends Sprite implements Disposable{
         fdef.filter.maskBits= BunnyGame.CARROT_BIT |
                 BunnyGame.DEFAULT_BIT |
                 BunnyGame.GROUND_BIT |
-                BunnyGame.PLATFORM_BIT;
+                BunnyGame.PLATFORM_BIT | BunnyGame.SPIKE_BIT;
 
         fdef.shape = shape;
 
@@ -93,21 +101,28 @@ public class Bunny extends Sprite implements Disposable{
 
         b2body.createFixture(fdef).setUserData(this);
 
+        //Line between two different points to simulate the contact with tile Objects
+        EdgeShape frontBunny = new EdgeShape();
+        frontBunny.set(new Vector2(15/BunnyGame.PPM,17/BunnyGame.PPM), new Vector2(15/BunnyGame.PPM,-7/BunnyGame.PPM));
+        fdef.shape = frontBunny;
+        fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
+
+        b2body.createFixture(fdef).setUserData(this);
     }
 
-    public void update(float dt, boolean playing){
+    public void update(float dt){
 
-        if(b2body.getLinearVelocity().x < 2 && playing)
+        if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING)
             b2body.setLinearVelocity(MOVEMENT, 0);
-
 
         stateTime += dt;
 
-        switch (screen.getState()){
-            case PLAYING:
+        switch (stateBunny){
+            case JUMPING:
+            case RUNNING:
                 currentFrame = runningAnimation.getKeyFrame(stateTime, true);
                 break;
-            case WAITING_FOR_TOUCH:
+            case STANDING:
                 currentFrame = startingAnimation.getKeyFrame(stateTime, true);
                 break;
             default:
@@ -120,7 +135,7 @@ public class Bunny extends Sprite implements Disposable{
     }
 
     public void jump(){
-            b2body.applyLinearImpulse(new Vector2(0, 3f), b2body.getWorldCenter(), true);
+            b2body.applyLinearImpulse(new Vector2(0, 3.7f), b2body.getWorldCenter(), true);
     }
 
     public TextureRegion getCurrentFrame() {
@@ -143,5 +158,9 @@ public class Bunny extends Sprite implements Disposable{
             image.getTexture().dispose();
 
 
+    }
+
+    public PlayScreen getScreen(){
+        return screen;
     }
 }

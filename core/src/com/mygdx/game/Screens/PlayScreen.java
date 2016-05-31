@@ -34,12 +34,6 @@ import com.mygdx.game.Tools.WorldContactListener;
  */
 public class PlayScreen implements Screen {
 
-    public State getState() {
-        return state;
-    }
-
-    public enum State {PLAYING, WAITING_FOR_TOUCH};
-
     public BunnyGame game;
 
     private Bunny bunny;
@@ -55,7 +49,6 @@ public class PlayScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    private State state;
 
     public PlayScreen(BunnyGame game){
         this.game=game;
@@ -63,7 +56,7 @@ public class PlayScreen implements Screen {
         //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
         //gamePort=new StretchViewport(400,208,gamecam);
         mapLoader=new TmxMapLoader();
-        map = mapLoader.load("carrotTest.tmx");
+        map = mapLoader.load("level1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / BunnyGame.PPM);
         gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
@@ -75,8 +68,6 @@ public class PlayScreen implements Screen {
         new B2WorldCreator(world,map);
 
         bunny = new Bunny(world, this);
-
-        state = State.WAITING_FOR_TOUCH;
 
         world.setContactListener(new WorldContactListener());
 
@@ -90,12 +81,7 @@ public class PlayScreen implements Screen {
 
         world.step(1/60f, 6 , 2);
 
-        switch(state){
-            case PLAYING:
-                playing = true;
-                break;
-        }
-        bunny.update(dt,playing);
+        bunny.update(dt);
 
 
         gamecam.position.x = bunny.b2body.getPosition().x;
@@ -106,14 +92,18 @@ public class PlayScreen implements Screen {
 
     private void handleInput(float dt) {
         if(Gdx.input.isTouched()){
-            switch(state){
-                case PLAYING:
+            switch(bunny.stateBunny){
+                case RUNNING:
                     if( bunny.b2body.getLinearVelocity().y == 0){
                         bunny.jump();
+                        bunny.stateBunny=Bunny.State.JUMPING;
                     }
                     break;
-                case WAITING_FOR_TOUCH:
-                    state = State.PLAYING;
+                case STANDING:
+                    Gdx.app.log("Entrei","aqui");
+                    bunny.stateBunny=Bunny.State.RUNNING;
+                    break;
+                case JUMPING:
                     break;
             }
         }
@@ -164,6 +154,10 @@ public class PlayScreen implements Screen {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
+    }
+
+    public void newGame(){
+        game.setScreen(new PlayScreen(game));
     }
 
 }
