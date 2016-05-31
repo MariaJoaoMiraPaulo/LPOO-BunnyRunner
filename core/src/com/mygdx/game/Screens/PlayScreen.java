@@ -63,7 +63,7 @@ public class PlayScreen implements Screen {
         //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
         //gamePort=new StretchViewport(400,208,gamecam);
         mapLoader=new TmxMapLoader();
-        map = mapLoader.load("teste.tmx");
+        map = mapLoader.load("carrotTest.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / BunnyGame.PPM);
         gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);

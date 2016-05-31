@@ -82,7 +82,7 @@ public class Bunny extends Sprite implements Disposable{
 
         //Line between two different points to simulate the contact with tile Objects
         EdgeShape frontBunny = new EdgeShape();
-        frontBunny.set(new Vector2(11/BunnyGame.PPM,1/BunnyGame.PPM), new Vector2(11/BunnyGame.PPM,20/BunnyGame.PPM));
+        frontBunny.set(new Vector2(25/BunnyGame.PPM,1/BunnyGame.PPM), new Vector2(25/BunnyGame.PPM,20/BunnyGame.PPM));
         fdef.shape = frontBunny;
         fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
 
