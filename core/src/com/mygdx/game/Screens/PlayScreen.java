@@ -52,6 +52,7 @@ public class PlayScreen implements Screen, InputProcessor {
     private boolean dead=false;
     private float gameTime;
     private Vector2 screenDelta;
+    private Vector2 startingPoint;
 
 
     public PlayScreen(BunnyGame game){
@@ -81,7 +82,8 @@ public class PlayScreen implements Screen, InputProcessor {
         //Telling Libgdx what it input process so it can be called when a new input event arrives
         Gdx.input.setInputProcessor(this);
 
-        this.screenDelta= new Vector2(0,0);
+        screenDelta = new Vector2(0,0);
+        startingPoint = new Vector2(0,0);
 
 
     }
@@ -223,6 +225,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        startingPoint.set(screenX, screenY);
 
         switch (bunny.stateBunny) {
             case RUNNING:
@@ -242,14 +245,22 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        this.screenDelta.set(0,0);
+        screenDelta.set(0,0);
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        this.screenDelta.set(screenX+this.screenDelta.x,screenY+this.screenDelta.y);
-        if(this.screenDelta.x > 2000)
+       /* if(screenDelta.x != screenX && screenDelta.y != screenY)
+            screenDelta.set(screenX-screenDelta.x,screenY-screenDelta.y);
+        else if(screenDelta.x == screenX && screenDelta.y != screenY)
+            screenDelta.set(screenDelta.x,screenY-screenDelta.y);
+        else if(screenDelta.x != screenX && screenDelta.y == screenY)
+            screenDelta.set(screenX-screenDelta.x, screenDelta.y);*/
+        screenDelta.set(screenX - startingPoint.x, screenY - startingPoint.y);
+
+        Gdx.app.log("Eventos: ", "Drag "+screenDelta.x + " " + screenDelta.y);
+        if(screenDelta.x > 300)
             bunny.rotateBunny();
         return false;
     }

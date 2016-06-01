@@ -206,7 +206,8 @@ public class Bunny extends Sprite implements Disposable{
     }
 
     public void jump(){
-            b2body.applyLinearImpulse(new Vector2(0, 3.7f), b2body.getWorldCenter(), true);
+        b2body.applyLinearImpulse(new Vector2(0, 3.7f), b2body.getWorldCenter(), true);
+        //b2body.applyForceToCenter(new Vector2(0, 3.7f), true);
     }
 
     public TextureRegion getCurrentFrame() {
@@ -221,6 +222,8 @@ public class Bunny extends Sprite implements Disposable{
     public void dispose() {
         bunnyRunningImage.dispose();
         bunnyStartImage.dispose();
+        bunnyFallingImage.dispose();
+        bunnyDeadImage.dispose();
         currentFrame.getTexture().dispose();
         for(TextureRegion image : runningFrames)
             image.getTexture().dispose();
@@ -228,7 +231,11 @@ public class Bunny extends Sprite implements Disposable{
         for(TextureRegion image : startingFrames)
             image.getTexture().dispose();
 
+        for(TextureRegion image : fallingFrames)
+            image.getTexture().dispose();
 
+        for(TextureRegion image : deadFrames)
+            image.getTexture().dispose();
     }
 
     public PlayScreen getScreen(){
