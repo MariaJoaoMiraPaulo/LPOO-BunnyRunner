@@ -22,7 +22,7 @@ import com.mygdx.game.Screens.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
-    public enum State {STANDING, RUNNING, JUMPING, DEAD };
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, DEAD };
 
     public PlayScreen screen;
 
@@ -31,11 +31,15 @@ public class Bunny extends Sprite implements Disposable{
 
     public Texture bunnyRunningImage;
     public Texture bunnyStartImage;
+    public Texture bunnyFallingImage;
     public TextureRegion[] runningFrames;
     public TextureRegion currentFrame;
     public Animation runningAnimation;
     public TextureRegion[] startingFrames;
     public Animation startingAnimation;
+    public TextureRegion[] fallingFrames;
+    public Animation fallingAnimation;
+
 
     public State stateBunny;
 
@@ -63,6 +67,16 @@ public class Bunny extends Sprite implements Disposable{
             index2++;
         }
         startingAnimation = new Animation(1f, startingFrames);
+
+        bunnyFallingImage= new Texture("falling_bunny.png");
+        TextureRegion[][] tmp3 = TextureRegion.split(bunnyFallingImage, bunnyFallingImage.getWidth()/2, bunnyFallingImage.getHeight());
+        fallingFrames = new TextureRegion[2];
+        int index3 = 0;
+        for(int i=0;i<2;i++){
+            fallingFrames[index3] = tmp3[0][i];
+            index3++;
+        }
+        fallingAnimation = new Animation(1f, fallingFrames);
 
         this.screen = screen;
         this.world = world;
@@ -123,6 +137,9 @@ public class Bunny extends Sprite implements Disposable{
         if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING)
             b2body.setLinearVelocity(MOVEMENT, 0);
 
+        if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING)
+            stateBunny=State.FALLING;
+
         stateTime += dt;
 
         switch (stateBunny){
@@ -132,6 +149,9 @@ public class Bunny extends Sprite implements Disposable{
                 break;
             case STANDING:
                 currentFrame = startingAnimation.getKeyFrame(stateTime, true);
+                break;
+            case FALLING:
+                currentFrame=fallingAnimation.getKeyFrame(stateTime,true);
                 break;
             default:
                 currentFrame = startingAnimation.getKeyFrame(stateTime, true);
