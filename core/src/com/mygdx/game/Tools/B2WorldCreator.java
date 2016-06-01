@@ -133,7 +133,7 @@ public class B2WorldCreator {
            new Spike(world,map,rect);
         }
 
-        // Creating Border
+        // Creating Platform
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
@@ -143,12 +143,12 @@ public class B2WorldCreator {
             shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
 
-            fdef.filter.categoryBits = BunnyGame.PLATFORM_BIT;
+            fdef.filter.categoryBits = BunnyGame.BORDER_BIT;
 
             body.createFixture(fdef);
         }
 
-        // Creating Platform
+        // Creating Border
         for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
@@ -158,7 +158,7 @@ public class B2WorldCreator {
             shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
             fdef.shape=shape;
 
-            fdef.filter.categoryBits = BunnyGame.BORDER_BIT;
+            fdef.filter.categoryBits = BunnyGame.PLATFORM_BIT;
 
             body.createFixture(fdef);
         }
