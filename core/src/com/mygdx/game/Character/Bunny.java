@@ -1,5 +1,6 @@
 package com.mygdx.game.Character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -22,7 +23,7 @@ public class Bunny extends Sprite implements Disposable{
 
 
 
-    public enum State {STANDING, RUNNING, JUMPING, FALLING, DEAD};
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD};
 
     public PlayScreen screen;
 
@@ -108,7 +109,7 @@ public class Bunny extends Sprite implements Disposable{
 
         FixtureDef fdef = new FixtureDef();
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(10/BunnyGame.PPM,13.5f/BunnyGame.PPM);
+        shape.setAsBox(13/BunnyGame.PPM,16.5f/BunnyGame.PPM);
 
        // CircleShape shape = new CircleShape();
        // shape.setRadius(10 / BunnyGame.PPM);
@@ -154,6 +155,8 @@ public class Bunny extends Sprite implements Disposable{
     public void update(float dt){
 
         stateTime += dt;
+        Gdx.app.log("Tempo ", " "+ stateTime + "  " + stateBunny);
+
 
         if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING)
             b2body.setLinearVelocity(MOVEMENT, 0);
@@ -167,6 +170,11 @@ public class Bunny extends Sprite implements Disposable{
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
             stateBunny=State.FALLING;
             stateTime=0;
+        }
+
+        if(stateBunny==State.CRAWL && stateTime>2) {
+            Gdx.app.log("Tempo ", "Entrei ");
+            rotateBunny();
         }
 
 
@@ -231,6 +239,19 @@ public class Bunny extends Sprite implements Disposable{
         this.stateTime = 0;
         this.stateBunny=state;
 
+    }
+
+    public void rotateBunny(){
+
+        if(stateBunny==State.CRAWL) {
+            b2body.setTransform(b2body.getPosition().x, b2body.getPosition().y, -(float) Math.PI / 2);
+            setState(State.RUNNING);
+        }
+        else {
+            b2body.setTransform(b2body.getPosition().x,b2body.getPosition().y, (float)Math.PI/2);
+            b2body.applyForceToCenter(new Vector2(0, 1f), true);
+            setState(State.CRAWL);
+        }
     }
 
 }

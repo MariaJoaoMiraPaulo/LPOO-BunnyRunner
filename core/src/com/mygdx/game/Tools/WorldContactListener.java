@@ -65,7 +65,7 @@ public class WorldContactListener implements ContactListener {
                     break;
                 case BunnyGame.BUNNY_BIT | BunnyGame.GROUND_BIT:
                     if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.GROUND_BIT) {
-                        if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING)
+                        if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING )
                             ((Bunny) fixtureA.getUserData()).setState(Bunny.State.RUNNING);
                     } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING)
                         ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);

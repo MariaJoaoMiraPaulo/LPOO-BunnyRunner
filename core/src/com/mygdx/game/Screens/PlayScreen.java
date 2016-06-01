@@ -51,6 +51,7 @@ public class PlayScreen implements Screen, InputProcessor {
     private Box2DDebugRenderer b2dr;
     private boolean dead=false;
     private float gameTime;
+    private Vector2 screenDelta;
 
 
     public PlayScreen(BunnyGame game){
@@ -79,6 +80,8 @@ public class PlayScreen implements Screen, InputProcessor {
 
         //Telling Libgdx what it input process so it can be called when a new input event arrives
         Gdx.input.setInputProcessor(this);
+
+        this.screenDelta= new Vector2(0,0);
 
 
     }
@@ -148,10 +151,10 @@ public class PlayScreen implements Screen, InputProcessor {
         b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        if(bunny.stateBunny!=Bunny.State.DEAD)
-            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 18/BunnyGame.PPM, 32/BunnyGame.PPM);
+        if(bunny.stateBunny!=Bunny.State.DEAD)//18 32   //36 22
+            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 25/BunnyGame.PPM, 38/BunnyGame.PPM);
         else
-            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 36/BunnyGame.PPM, 22/BunnyGame.PPM);
+            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 43/BunnyGame.PPM, 27/BunnyGame.PPM);
         game.batch.end();
 
 /*
@@ -220,6 +223,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         switch (bunny.stateBunny) {
             case RUNNING:
                 if (bunny.b2body.getLinearVelocity().y == 0) {
@@ -238,11 +242,15 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        this.screenDelta.set(0,0);
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        this.screenDelta.set(screenX+this.screenDelta.x,screenY+this.screenDelta.y);
+        if(this.screenDelta.x > 2000)
+            bunny.rotateBunny();
         return false;
     }
 
