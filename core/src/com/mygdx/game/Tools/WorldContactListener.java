@@ -42,9 +42,9 @@ public class WorldContactListener implements ContactListener {
 
             //Test if the object is of the type InterativeTileObject
             if (object.getUserData() instanceof InteractiveTileObject) {
-                Gdx.app.log("Colidiu", "Com uma cenoura");
                 ((InteractiveTileObject) object.getUserData()).bunnyHit();
             }
+        }
 
             switch (typeOfCollision) {
                 case BunnyGame.BUNNY_BIT | BunnyGame.PLATFORM_BIT:
@@ -56,36 +56,45 @@ public class WorldContactListener implements ContactListener {
                     break;
                 case BunnyGame.BUNNY_BIT | BunnyGame.SPIKE_BIT:
                     if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.SPIKE_BIT)
-                        ((Bunny) fixtureA.getUserData()).getScreen().newGame();
+                        ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                        // ((Bunny) fixtureA.getUserData()).getScreen().newGame();
                     else {
-                        ((Bunny) fixtureB.getUserData()).getScreen().newGame();
+                        ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                        //((Bunny) fixtureB.getUserData()).getScreen().newGame();
                     }
                     break;
                 case BunnyGame.BUNNY_BIT | BunnyGame.GROUND_BIT:
                     if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.GROUND_BIT) {
-                        if(((Bunny) fixtureA.getUserData()).stateBunny !=Bunny.State.STANDING)
-                            ((Bunny) fixtureA.getUserData()).stateBunny= Bunny.State.RUNNING;
-                    }
-                    else if(((Bunny) fixtureB.getUserData()).stateBunny !=Bunny.State.STANDING)
-                              ((Bunny) fixtureB.getUserData()).stateBunny= Bunny.State.RUNNING;
+                        if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING)
+                            ((Bunny) fixtureA.getUserData()).setState(Bunny.State.RUNNING);
+                    } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING)
+                        ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                     break;
+                case BunnyGame.BUNNY_BIT | BunnyGame.BORDER_BIT:
+                    Gdx.app.log("Border: ", " colidiu");
+                    if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.BORDER_BIT)
+                        ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(-2f, -2));
+                    else {
+                        ((Bunny) fixtureB.getUserData()).applyForce(new Vector2(-2f, -2f));
                     }
-
+                    break;
             }
+
+
         }
 
 
-    @Override
-    public void endContact(Contact contact) {
+        @Override
+        public void endContact(Contact contact) {
+        }
+
+        @Override
+        public void preSolve(Contact contact, Manifold oldManifold) {
+
+        }
+
+        @Override
+        public void postSolve(Contact contact, ContactImpulse impulse) {
+
+        }
     }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
-}

@@ -1,6 +1,7 @@
 package com.mygdx.game.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -32,7 +33,7 @@ import com.mygdx.game.Tools.WorldContactListener;
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
  */
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen, InputProcessor {
 
     public BunnyGame game;
 
@@ -48,7 +49,7 @@ public class PlayScreen implements Screen {
     //Box 2d variables
     private World world;
     private Box2DDebugRenderer b2dr;
-
+    private boolean dead=false;
     private float gameTime;
 
 
@@ -67,6 +68,7 @@ public class PlayScreen implements Screen {
         b2dr = new Box2DDebugRenderer();
 
 
+
         new B2WorldCreator(world,map);
 
         bunny = new Bunny(world, this);
@@ -75,13 +77,16 @@ public class PlayScreen implements Screen {
 
         world.setContactListener(new WorldContactListener());
 
+        //Telling Libgdx what it input process so it can be called when a new input event arrives
+        Gdx.input.setInputProcessor(this);
+
 
     }
 
     public void update(float dt){
         gameTime += dt;
 
-        handleInput(dt);
+        //handleInput(dt);
 
         world.step(1/60f, 6 , 2);
 
@@ -95,7 +100,7 @@ public class PlayScreen implements Screen {
     }
 
     private void handleInput(float dt) {
-        if(gameTime < 2) {
+     /*   if(gameTime < 2) {
             if (Gdx.input.justTouched()) {
                 switch (bunny.stateBunny) {
                     case RUNNING:
@@ -127,6 +132,7 @@ public class PlayScreen implements Screen {
                     break;
             }
         }
+        */
     }
 
     @Override
@@ -142,9 +148,26 @@ public class PlayScreen implements Screen {
         b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 10 / BunnyGame.PPM, 18/BunnyGame.PPM, 32/BunnyGame.PPM);
+        if(bunny.stateBunny!=Bunny.State.DEAD)
+            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 18/BunnyGame.PPM, 32/BunnyGame.PPM);
+        else
+            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 36/BunnyGame.PPM, 22/BunnyGame.PPM);
         game.batch.end();
 
+/*
+        if(bunny.stateBunny==Bunny.State.DEAD){
+            float time=Gdx.graphics.getDeltaTime();
+            int sleep=0;
+            if(dead==true){
+                while(sleep<5){
+                    sleep+=time;
+                }
+                bunny.getScreen().newGame();
+            }
+            dead=true;
+
+        }
+*/
     }
 
 
@@ -180,4 +203,56 @@ public class PlayScreen implements Screen {
         game.setScreen(new PlayScreen(game));
     }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        switch (bunny.stateBunny) {
+            case RUNNING:
+                if (bunny.b2body.getLinearVelocity().y == 0) {
+                    bunny.jump();
+                    bunny.setState(Bunny.State.JUMPING);
+                }
+                break;
+            case STANDING:
+                bunny.setState(Bunny.State.RUNNING);
+                break;
+            case JUMPING:
+                break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 }
