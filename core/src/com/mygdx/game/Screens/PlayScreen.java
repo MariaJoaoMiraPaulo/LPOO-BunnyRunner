@@ -154,7 +154,7 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         if(bunny.stateBunny!=Bunny.State.DEAD)//18 32   //36 22
-            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 25/BunnyGame.PPM, 38/BunnyGame.PPM);
+            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 13 / BunnyGame.PPM, bunny.b2body.getPosition().y - 18f / BunnyGame.PPM, 25/BunnyGame.PPM, 38/BunnyGame.PPM);
         else
             game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 10 / BunnyGame.PPM, bunny.b2body.getPosition().y - 13.5f / BunnyGame.PPM, 43/BunnyGame.PPM, 27/BunnyGame.PPM);
         game.batch.end();

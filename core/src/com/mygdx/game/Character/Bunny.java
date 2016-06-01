@@ -207,7 +207,7 @@ public class Bunny extends Sprite implements Disposable{
 
     public void jump(){
         b2body.applyLinearImpulse(new Vector2(0, 3.7f), b2body.getWorldCenter(), true);
-        //b2body.applyForceToCenter(new Vector2(0, 3.7f), true);
+       // b2body.applyForceToCenter(new Vector2(0, -20f), true);
     }
 
     public TextureRegion getCurrentFrame() {
