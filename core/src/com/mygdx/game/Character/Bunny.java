@@ -22,7 +22,7 @@ import com.mygdx.game.Screens.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
-    public enum State {STANDING, RUNNING, JUMPING, FALLING, DEAD };
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, DEAD};
 
     public PlayScreen screen;
 

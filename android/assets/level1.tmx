@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="59">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" nextobjectid="63">
  <tileset firstgid="1" name="level1" tilewidth="16" tileheight="16" tilecount="1872" columns="156">
   <image source="level1.png" width="2500" height="206"/>
  </tileset>
@@ -54,10 +54,9 @@
   <object id="38" x="3006" y="191.479" width="833.447" height="15.0246"/>
   <object id="46" x="941.802" y="127.118" width="146.154" height="6.81477"/>
   <object id="47" x="1797.06" y="126.755" width="154.693" height="8.85921"/>
-  <object id="51" x="1790.92" y="128.118" width="6.1333" height="15.674"/>
   <object id="53" x="927.491" y="127.436" width="13.6295" height="16.3555"/>
-  <object id="57" x="1889.35" y="79.1054" width="13.6297" height="15.674"/>
   <object id="58" x="1798.16" y="137.685" width="154.384" height="5.77034"/>
+  <object id="59" x="1903.79" y="80.442" width="175.51" height="7.31291"/>
  </objectgroup>
  <objectgroup name="Spikes">
   <object id="39" x="2928.99" y="191.495" width="76.3255" height="16.3558"/>
@@ -65,7 +64,10 @@
  <objectgroup name="Platform" offsetx="-0.681477" offsety="0">
   <object id="45" x="942.483" y="136.295" width="145.837" height="6.81477"/>
   <object id="54" x="1905.29" y="89.745" width="174.697" height="5.77034"/>
-  <object id="55" x="1903.66" y="80.0751" width="176.608" height="8.85921"/>
  </objectgroup>
  <objectgroup name="Wood"/>
+ <objectgroup name="Border">
+  <object id="61" x="1887.54" y="80.442" width="15.4384" height="15.4384"/>
+  <object id="62" x="1790.85" y="126.757" width="6.50037" height="16.2509"/>
+ </objectgroup>
 </map>

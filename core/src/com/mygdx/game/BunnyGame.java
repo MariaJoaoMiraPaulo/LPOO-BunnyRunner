@@ -20,6 +20,7 @@ public class BunnyGame extends Game{
     public static final short GROUND_BIT = 16;
     public static final short PLATFORM_BIT = 32;
     public static final short SPIKE_BIT = 64;
+    public static final short BORDER_BIT = 128;
 
     public SpriteBatch batch;
 
