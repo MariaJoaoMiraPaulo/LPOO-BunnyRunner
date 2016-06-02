@@ -47,13 +47,13 @@ public class PlayScreen implements Screen, InputProcessor {
     private boolean dragDone;
 
 
-    public PlayScreen(BunnyGame game){
+    public PlayScreen(BunnyGame game, int mapLevel){
         this.game=game;
         gamecam = new OrthographicCamera();
         //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
         //gamePort=new StretchViewport(400,208,gamecam);
         mapLoader=new TmxMapLoader();
-        map = mapLoader.load("level1.tmx");
+        map = mapLoader.load("level"+mapLevel+".tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / BunnyGame.PPM);
         gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
@@ -142,7 +142,7 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     public void newGame(){
-        game.setScreen(new PlayScreen(game));
+        game.setScreen(new PlayScreen(game,game.getAtualLevel()));
     }
 
     @Override

@@ -2,7 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.Screens.PlayScreen;
+import com.sun.org.apache.xpath.internal.operations.String;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
@@ -25,11 +27,14 @@ public class BunnyGame extends Game{
     public static final short HUNTER_BIT = 512;
 
     public SpriteBatch batch;
+    private int atualLevel=1;
+
 
     @Override
     public void create() {
         batch= new SpriteBatch();
-        setScreen(new PlayScreen(this));
+        setScreen(new PlayScreen(this,1));
+
     }
 
     @Override
@@ -40,5 +45,14 @@ public class BunnyGame extends Game{
     @Override
     public void render() {
         super.render();
+    }
+
+    public int getAtualLevel() {
+        return atualLevel;
+    }
+
+    public void newLevel() {
+        if(this.atualLevel <2)
+            this.atualLevel = 2;
     }
 }

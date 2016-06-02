@@ -22,6 +22,7 @@ import com.mygdx.game.Screens.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
+
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD};
 
     public PlayScreen screen;
@@ -253,6 +254,10 @@ public class Bunny extends Sprite implements Disposable{
             b2body.applyLinearImpulse(new Vector2(2f, 1f), b2body.getPosition(), true);
             setState(State.CRAWL);
         }
+    }
+
+    public PlayScreen getScreen() {
+        return screen;
     }
 
 }
