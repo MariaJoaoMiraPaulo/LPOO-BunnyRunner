@@ -3,11 +3,13 @@ package com.mygdx.game.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -28,6 +30,7 @@ public class Hunter extends Sprite implements Disposable{
     private World world;
     private PlayScreen screen;
     public Body b2body;
+    private Fixture fixture;
 
     public Texture hunterImage;
     public TextureRegion[] hunterFrames;
@@ -66,7 +69,8 @@ public class Hunter extends Sprite implements Disposable{
 
         fdef.shape = shape;
 
-        b2body.createFixture(fdef).setUserData(this);
+        fixture = b2body.createFixture(fdef);
+        fixture.setUserData(this);
 
         hunterState=MovementState.RIGHT;
 
@@ -99,7 +103,7 @@ public class Hunter extends Sprite implements Disposable{
             deadHunterFrames[index3] = tmp2[0][i];
             index3++;
         }
-        deadHunterAnimation = new Animation(0.1f, deadHunterFrames);
+        deadHunterAnimation = new Animation(0.2f, deadHunterFrames);
 
         inicialPosition=b2body.getPosition().x;
 
@@ -109,16 +113,17 @@ public class Hunter extends Sprite implements Disposable{
 
     }
 
-
     public void update(float dt){
         stateTime += dt;
 
         switch (hunterState){
             case RIGHT:
-                b2body.setLinearVelocity(1,0);
+                if(screen.getBunny().stateBunny != Bunny.State.DEAD)
+                    b2body.setLinearVelocity(1,0);
                 break;
             case LEFT:
-                b2body.setLinearVelocity(-1,0);
+                if(screen.getBunny().stateBunny != Bunny.State.DEAD)
+                    b2body.setLinearVelocity(-1,0);
                 break;
             case DEAD:
                 break;
@@ -149,8 +154,29 @@ public class Hunter extends Sprite implements Disposable{
     }
 
     @Override
-    public void dispose() {
+    public void draw(Batch batch) {
+        if(hunterState != Hunter.MovementState.DEAD)
+            batch.draw(getCurrentFrame(), b2body.getPosition().x - 13 / BunnyGame.PPM, b2body.getPosition().y - 23f / BunnyGame.PPM, 35/BunnyGame.PPM, 50/BunnyGame.PPM);
+        else if(stateTime < 1)
+            batch.draw(getCurrentFrame(), b2body.getPosition().x - 13 / BunnyGame.PPM, b2body.getPosition().y - 23f / BunnyGame.PPM, 35/BunnyGame.PPM, 50/BunnyGame.PPM);
 
+    }
+
+    @Override
+    public void dispose() {
+        currentFrame.getTexture().dispose();
+        hunterImage.dispose();
+        hunterImageLeft.dispose();
+        deadHunterImage.dispose();
+
+        for(TextureRegion image : hunterFrames)
+            image.getTexture().dispose();
+
+        for(TextureRegion image : hunterFramesLeft)
+            image.getTexture().dispose();
+
+        for(TextureRegion image : deadHunterFrames)
+            image.getTexture().dispose();
     }
 
     public TextureRegion getCurrentFrame() {
@@ -168,8 +194,14 @@ public class Hunter extends Sprite implements Disposable{
     public void setHunterState(MovementState hunterState) {
         stateTime = 0;
         if(hunterState == MovementState.DEAD){
-            //world.destroyBody(b2body);
+            Filter filter = new Filter();
+            filter.categoryBits = BunnyGame.DESTROYED_BIT;
+            fixture.setFilterData(filter);
         }
         this.hunterState = hunterState;
+    }
+
+    public float getStateTime() {
+        return stateTime;
     }
 }

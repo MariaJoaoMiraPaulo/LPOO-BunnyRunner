@@ -3,6 +3,7 @@ package com.mygdx.game.Character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -20,8 +21,6 @@ import com.mygdx.game.Screens.PlayScreen;
  */
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
-
-
 
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD};
 
@@ -200,6 +199,14 @@ public class Bunny extends Sprite implements Disposable{
 
     public void applyForce(Vector2 force){
         b2body.applyLinearImpulse(force, b2body.getWorldCenter(), true);
+    }
+
+    @Override
+    public void draw(Batch batch) {
+        if(stateBunny!=Bunny.State.DEAD && stateBunny != State.CRAWL)
+            batch.draw(getCurrentFrame(), b2body.getPosition().x - 13 / BunnyGame.PPM, b2body.getPosition().y - 18f / BunnyGame.PPM, 25/BunnyGame.PPM, 38/BunnyGame.PPM);
+        else
+            batch.draw(getCurrentFrame(), b2body.getPosition().x - 18 / BunnyGame.PPM, b2body.getPosition().y - 18f / BunnyGame.PPM, 43/BunnyGame.PPM, 27/BunnyGame.PPM);
     }
 
     @Override

@@ -108,11 +108,8 @@ public class PlayScreen implements Screen, InputProcessor {
         b2dr.render(world,gamecam.combined);
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
-        if(bunny.stateBunny!=Bunny.State.DEAD && bunny.stateBunny != Bunny.State.CRAWL)
-            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 13 / BunnyGame.PPM, bunny.b2body.getPosition().y - 18f / BunnyGame.PPM, 25/BunnyGame.PPM, 38/BunnyGame.PPM);
-        else
-            game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 18 / BunnyGame.PPM, bunny.b2body.getPosition().y - 18f / BunnyGame.PPM, 43/BunnyGame.PPM, 27/BunnyGame.PPM);
-        game.batch.draw(hunter.getCurrentFrame(), hunter.b2body.getPosition().x - 13 / BunnyGame.PPM, hunter.b2body.getPosition().y - 23f / BunnyGame.PPM, 35/BunnyGame.PPM, 50/BunnyGame.PPM);
+        bunny.draw(game.batch);
+        hunter.draw(game.batch);
         game.batch.end();
     }
     
@@ -217,5 +214,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public void setHunter(Hunter hunter) {
         this.hunter = hunter;
+    }
+
+    public Bunny getBunny() {
+        return bunny;
     }
 }

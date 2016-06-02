@@ -72,11 +72,13 @@ public class WorldContactListener implements ContactListener {
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_BIT) {
                     if (((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.CRAWL){
                         ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
-
+                        ((Bunny) fixtureA.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureA.getUserData()).b2body.getPosition(), true);
                     }
                      else   ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
-                } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL)
+                } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL){
                     ((Hunter)fixtureA.getUserData()).setHunterState(Hunter.MovementState.DEAD);
+                    ((Bunny) fixtureB.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureB.getUserData()).b2body.getPosition(), true);
+                }
                     else ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
                 break;
         }
