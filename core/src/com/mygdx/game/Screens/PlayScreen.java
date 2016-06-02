@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Character.Bunny;
+import com.mygdx.game.Character.Hunter;
 import com.mygdx.game.Tools.WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
 
@@ -26,6 +27,7 @@ public class PlayScreen implements Screen, InputProcessor {
     public BunnyGame game;
 
     private Bunny bunny;
+    private Hunter hunter;
 
     //Tiled Map
     private OrthographicCamera gamecam;
@@ -61,7 +63,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
 
-        new WorldCreator(world,map);
+        new WorldCreator(world,map, this);
 
         bunny = new Bunny(world, this);
 
@@ -85,6 +87,7 @@ public class PlayScreen implements Screen, InputProcessor {
         world.step(1/60f, 6 , 2);
 
         bunny.update(dt);
+        hunter.update(dt);
 
         gamecam.position.x = bunny.b2body.getPosition().x;
 
@@ -109,6 +112,7 @@ public class PlayScreen implements Screen, InputProcessor {
             game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 13 / BunnyGame.PPM, bunny.b2body.getPosition().y - 18f / BunnyGame.PPM, 25/BunnyGame.PPM, 38/BunnyGame.PPM);
         else
             game.batch.draw(bunny.getCurrentFrame(), bunny.b2body.getPosition().x - 18 / BunnyGame.PPM, bunny.b2body.getPosition().y - 18f / BunnyGame.PPM, 43/BunnyGame.PPM, 27/BunnyGame.PPM);
+        game.batch.draw(hunter.getCurrentFrame(), hunter.b2body.getPosition().x - 13 / BunnyGame.PPM, hunter.b2body.getPosition().y - 23f / BunnyGame.PPM, 35/BunnyGame.PPM, 50/BunnyGame.PPM);
         game.batch.end();
     }
     
@@ -205,5 +209,13 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void setHunter(Hunter hunter) {
+        this.hunter = hunter;
     }
 }

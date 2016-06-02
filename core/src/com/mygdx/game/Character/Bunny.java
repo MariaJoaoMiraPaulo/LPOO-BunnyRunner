@@ -129,7 +129,9 @@ public class Bunny extends Sprite implements Disposable{
                 BunnyGame.DEFAULT_BIT |
                 BunnyGame.GROUND_BIT |
                 BunnyGame.PLATFORM_BIT |
-                BunnyGame.SPIKE_BIT ;
+                BunnyGame.SPIKE_BIT |
+                BunnyGame.DOOR_BIT |
+                BunnyGame.ROCK_BIT;
 
         fdef.shape = shape;
 

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Character.Bunny;
 import com.mygdx.game.Character.Carrot;
+import com.mygdx.game.Character.Hunter;
 import com.mygdx.game.Character.InteractiveTileObject;
 
 /**
@@ -68,6 +69,13 @@ public class WorldContactListener implements ContactListener {
                 } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
                     ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                 break;
+            case BunnyGame.HUNTER_BIT | BunnyGame.ROCK_BIT:
+                if (fixtureA.getFilterData().categoryBits == BunnyGame.HUNTER_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.ROCK_BIT)
+                    ((Hunter) fixtureA.getUserData()).switchState();
+                else {
+                    ((Hunter) fixtureB.getUserData()).switchState();
+                }
+
         }
 
 
