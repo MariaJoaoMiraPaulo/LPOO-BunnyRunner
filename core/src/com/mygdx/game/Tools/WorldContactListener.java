@@ -48,10 +48,9 @@ public class WorldContactListener implements ContactListener {
         switch (typeOfCollision) {
             case BunnyGame.BUNNY_BIT | BunnyGame.PLATFORM_BIT:
                 Gdx.app.log("Plat ", "Entrei");
-                if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.PLATFORM_BIT){
+                if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.PLATFORM_BIT) {
                     ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(0, -1f));
-                }
-                else {
+                } else {
                     ((Bunny) fixtureB.getUserData()).applyForce(new Vector2(0, -1f));
                 }
                 break;
@@ -64,18 +63,26 @@ public class WorldContactListener implements ContactListener {
                 break;
             case BunnyGame.BUNNY_BIT | BunnyGame.GROUND_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.GROUND_BIT) {
-                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING &&  ((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL)
+                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL)
                         ((Bunny) fixtureA.getUserData()).setState(Bunny.State.RUNNING);
                 } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
                     ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                 break;
-            case BunnyGame.HUNTER_BIT | BunnyGame.ROCK_BIT:
+          /*  case BunnyGame.HUNTER_BIT | BunnyGame.ROCK_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.HUNTER_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.ROCK_BIT)
                     ((Hunter) fixtureA.getUserData()).switchState();
                 else {
                     ((Hunter) fixtureB.getUserData()).switchState();
                 }
-
+                break;
+                */
+            case BunnyGame.HUNTER_BIT | BunnyGame.BUNNY_BIT:
+                if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_BIT) {
+                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL)
+                        ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
+                    ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                break;
         }
 
 

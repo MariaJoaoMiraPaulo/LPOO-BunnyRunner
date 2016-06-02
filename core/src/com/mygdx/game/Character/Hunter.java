@@ -36,6 +36,9 @@ public class Hunter extends Sprite implements Disposable{
 
     public float animationStateTime;
 
+    private float distanceMax;
+    private float inicialPosition;
+
 
     public Hunter(PlayScreen screen, float x, float y){
         this.screen = screen;
@@ -53,8 +56,7 @@ public class Hunter extends Sprite implements Disposable{
         fdef.filter.categoryBits = BunnyGame.HUNTER_BIT;
         fdef.filter.maskBits= BunnyGame.BUNNY_BIT |
                 BunnyGame.DEFAULT_BIT |
-                BunnyGame.GROUND_BIT |
-                BunnyGame.ROCK_BIT;
+                BunnyGame.GROUND_BIT ;
 
         fdef.shape = shape;
 
@@ -83,11 +85,18 @@ public class Hunter extends Sprite implements Disposable{
             index2++;
         }
         hunterAnimationLeft = new Animation(0.1f, hunterFramesLeft);
+        inicialPosition=b2body.getPosition().x;
+
+
+        distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
 
     }
 
 
     public void update(float dt){
+
+
+
 
         switch (hunterState){
             case RIGHT:
@@ -98,6 +107,13 @@ public class Hunter extends Sprite implements Disposable{
                 break;
         }
 
+        Gdx.app.log("Cheguei ", " X: "+b2body.getPosition().x);
+
+        if(b2body.getPosition().x>=distanceMax && hunterState == MovementState.RIGHT){
+            switchState();
+        }
+        else if(b2body.getPosition().x<= inicialPosition && hunterState == MovementState.LEFT)
+            switchState();
 
         animationStateTime += dt;
 
