@@ -228,12 +228,13 @@ public class PlayScreen implements Screen, InputProcessor {
         startingPoint.set(screenX, screenY);
 
         switch (bunny.stateBunny) {
-            case RUNNING:
+            /*case RUNNING:
                 if (bunny.b2body.getLinearVelocity().y == 0) {
                     bunny.jump();
                     bunny.setState(Bunny.State.JUMPING);
                 }
                 break;
+                */
             case STANDING:
                 bunny.setState(Bunny.State.RUNNING);
                 break;
@@ -260,8 +261,17 @@ public class PlayScreen implements Screen, InputProcessor {
         screenDelta.set(screenX - startingPoint.x, screenY - startingPoint.y);
 
         Gdx.app.log("Eventos: ", "Drag "+screenDelta.x + " " + screenDelta.y);
-        if(screenDelta.x > 300)
+        if(screenDelta.y > 20)
             bunny.rotateBunny();
+
+        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.y<-20)
+        {
+            bunny.jump();
+            bunny.setState(Bunny.State.JUMPING);
+        }
+
+
+
         return false;
     }
 

@@ -64,18 +64,19 @@ public class WorldContactListener implements ContactListener {
                     }
                     break;
                 case BunnyGame.BUNNY_BIT | BunnyGame.GROUND_BIT:
+                    Gdx.app.log("Entrei","na colisao com o chao!!!!!!!");
                     if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.GROUND_BIT) {
-                        if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING )
+                        if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING &&  ((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL)
                             ((Bunny) fixtureA.getUserData()).setState(Bunny.State.RUNNING);
-                    } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING)
+                    } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
                         ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                     break;
                 case BunnyGame.BUNNY_BIT | BunnyGame.BORDER_BIT:
                     Gdx.app.log("Border: ", " colidiu");
                     if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.BORDER_BIT)
-                        ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(-2f, -2));
+                        ((Bunny) fixtureA.getUserData()).applyForce(new Vector2(0, -2));
                     else {
-                        ((Bunny) fixtureB.getUserData()).applyForce(new Vector2(-2f, -2f));
+                        ((Bunny) fixtureB.getUserData()).applyForce(new Vector2(0, -2f));
                     }
                     break;
             }
