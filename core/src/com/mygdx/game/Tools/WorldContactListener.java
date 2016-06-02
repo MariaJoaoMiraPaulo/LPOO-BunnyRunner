@@ -68,20 +68,16 @@ public class WorldContactListener implements ContactListener {
                 } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
                     ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                 break;
-          /*  case BunnyGame.HUNTER_BIT | BunnyGame.ROCK_BIT:
-                if (fixtureA.getFilterData().categoryBits == BunnyGame.HUNTER_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.ROCK_BIT)
-                    ((Hunter) fixtureA.getUserData()).switchState();
-                else {
-                    ((Hunter) fixtureB.getUserData()).switchState();
-                }
-                break;
-                */
             case BunnyGame.HUNTER_BIT | BunnyGame.BUNNY_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_BIT) {
-                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL)
-                        ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
-                } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
-                    ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                    if (((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.CRAWL){
+                        ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
+
+                    }
+                     else   ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL)
+                    ((Hunter)fixtureA.getUserData()).setHunterState(Hunter.MovementState.DEAD);
+                    else ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
                 break;
         }
 
