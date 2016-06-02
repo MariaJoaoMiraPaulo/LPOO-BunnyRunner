@@ -34,6 +34,7 @@ public class Bunny extends Sprite implements Disposable{
     public Texture bunnyStartImage;
     public Texture bunnyFallingImage;
     public Texture bunnyDeadImage;
+    public Texture bunnyCrawlImage;
     public TextureRegion[] runningFrames;
     public TextureRegion currentFrame;
     public Animation runningAnimation;
@@ -43,6 +44,8 @@ public class Bunny extends Sprite implements Disposable{
     public Animation fallingAnimation;
     public TextureRegion[] deadFrames;
     public Animation deadAnimation;
+    public TextureRegion[] crawlFrames;
+    public Animation crawlAnimation;
 
 
     public State stateBunny;
@@ -94,6 +97,16 @@ public class Bunny extends Sprite implements Disposable{
         }
         deadAnimation= new Animation(0.2f, deadFrames);
 
+        bunnyCrawlImage= new Texture("bunny_crawl.png");
+        TextureRegion[][] tmp5 = TextureRegion.split(bunnyCrawlImage, bunnyCrawlImage.getWidth()/2, bunnyCrawlImage.getHeight());
+        crawlFrames = new TextureRegion[2];
+        int index5 = 0;
+        for(int i=0;i<2;i++){
+            crawlFrames[index5] = tmp5[0][i];
+            index5++;
+        }
+        crawlAnimation= new Animation(0.2f, crawlFrames);
+
         this.screen = screen;
         this.world = world;
         defineBunny();
@@ -111,52 +124,22 @@ public class Bunny extends Sprite implements Disposable{
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(13/BunnyGame.PPM,16.5f/BunnyGame.PPM);
 
-       // CircleShape shape = new CircleShape();
-       // shape.setRadius(10 / BunnyGame.PPM);
         fdef.filter.categoryBits = BunnyGame.BUNNY_BIT;
         fdef.filter.maskBits= BunnyGame.CARROT_BIT |
                 BunnyGame.DEFAULT_BIT |
                 BunnyGame.GROUND_BIT |
                 BunnyGame.PLATFORM_BIT |
-                BunnyGame.SPIKE_BIT |
-                BunnyGame.BORDER_BIT;
+                BunnyGame.SPIKE_BIT ;
 
         fdef.shape = shape;
 
-       b2body.createFixture(fdef).setUserData(this);
-
-        //Line between two different points to simulate the contact with tile Objects
-
-      //  EdgeShape headBunny = new EdgeShape();
-       // headBunny.set(new Vector2(-4/BunnyGame.PPM,17/BunnyGame.PPM), new Vector2(4/BunnyGame.PPM,17/BunnyGame.PPM));
-        //fdef.shape = headBunny;
-       // fdef.isSensor=true;
-/*
         b2body.createFixture(fdef).setUserData(this);
-/*
-        //Line between two different points to simulate the contact with tile Objects
-        EdgeShape frontBunny = new EdgeShape();
-        frontBunny.set(new Vector2(15/BunnyGame.PPM,17/BunnyGame.PPM), new Vector2(15/BunnyGame.PPM,-7/BunnyGame.PPM));
-        fdef.shape = frontBunny;
-        fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
-
-        b2body.createFixture(fdef).setUserData(this);
-
-        //Line between two different points to simulate the contact with tile Objects
-        EdgeShape feetBunny = new EdgeShape();
-        frontBunny.set(new Vector2(-10/BunnyGame.PPM,-10/BunnyGame.PPM), new Vector2(10/BunnyGame.PPM,-10/BunnyGame.PPM));
-        fdef.shape = feetBunny;
-        fdef.isSensor=true; //A sensor shape collects contact information but never generates a collision response
-
-        b2body.createFixture(fdef).setUserData(this);
-*/
     }
 
     public void update(float dt){
 
         stateTime += dt;
         Gdx.app.log("Tempo ", " "+ stateTime + "  " + stateBunny);
-
 
         if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING)
             b2body.setLinearVelocity(MOVEMENT, 0);
@@ -173,13 +156,11 @@ public class Bunny extends Sprite implements Disposable{
         }
 
         if(stateBunny==State.CRAWL && stateTime>2) {
-            Gdx.app.log("Tempo ", "Entrei ");
             rotateBunny();
         }
 
 
         animationStateTime += dt;
-
 
         switch (stateBunny){
             case JUMPING:
@@ -195,19 +176,18 @@ public class Bunny extends Sprite implements Disposable{
             case DEAD:
                 currentFrame=deadAnimation.getKeyFrame(animationStateTime,true);
                 break;
+            case CRAWL:
+                currentFrame=crawlAnimation.getKeyFrame(animationStateTime,true);
+                break;
             default:
                 currentFrame = startingAnimation.getKeyFrame(animationStateTime, true);
                 break;
-
-
         }
-
 
     }
 
     public void jump(){
-        b2body.applyLinearImpulse(new Vector2(0, 3.7f), b2body.getWorldCenter(), true);
-       // b2body.applyForceToCenter(new Vector2(0, -20f), true);
+        b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
     }
 
     public TextureRegion getCurrentFrame() {
@@ -224,6 +204,7 @@ public class Bunny extends Sprite implements Disposable{
         bunnyStartImage.dispose();
         bunnyFallingImage.dispose();
         bunnyDeadImage.dispose();
+        bunnyCrawlImage.dispose();
         currentFrame.getTexture().dispose();
         for(TextureRegion image : runningFrames)
             image.getTexture().dispose();
@@ -236,27 +217,29 @@ public class Bunny extends Sprite implements Disposable{
 
         for(TextureRegion image : deadFrames)
             image.getTexture().dispose();
-    }
 
-    public PlayScreen getScreen(){
-        return screen;
+        for(TextureRegion image : crawlFrames)
+            image.getTexture().dispose();
     }
 
     public void setState(State state) {
-        this.stateTime = 0;
-        this.stateBunny=state;
+        if(stateBunny != State.DEAD){
+            this.stateTime = 0;
+            this.stateBunny=state;
+        }
 
     }
 
     public void rotateBunny(){
 
         if(stateBunny==State.CRAWL) {
-            b2body.setTransform(b2body.getPosition().x, b2body.getPosition().y, -(float) Math.PI / 2);
+            b2body.setTransform(b2body.getPosition().x, b2body.getPosition().y, (float)Math.PI*2);
+            b2body.applyLinearImpulse(new Vector2(0, 1f), b2body.getPosition(), true);
             setState(State.RUNNING);
         }
         else {
             b2body.setTransform(b2body.getPosition().x,b2body.getPosition().y, (float)Math.PI/2);
-            b2body.applyForceToCenter(new Vector2(0, 1f), true);
+            b2body.applyLinearImpulse(new Vector2(2f, 1f), b2body.getPosition(), true);
             setState(State.CRAWL);
         }
     }

@@ -17,10 +17,10 @@ import com.mygdx.game.Character.Spike;
 /**
  * Created by mariajoaomirapaulo on 26/05/16.
  */
-public class B2WorldCreator {
+public class WorldCreator {
 
 
-    public B2WorldCreator(World world, TiledMap map){
+    public WorldCreator(World world, TiledMap map){
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -135,21 +135,6 @@ public class B2WorldCreator {
 
         // Creating Platform
         for(MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)){
-            Rectangle rect =  ((RectangleMapObject) object).getRectangle();
-            bdef.type= BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
-
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth()/2/ BunnyGame.PPM,rect.getHeight()/2/ BunnyGame.PPM);
-            fdef.shape=shape;
-
-            fdef.filter.categoryBits = BunnyGame.BORDER_BIT;
-
-            body.createFixture(fdef);
-        }
-
-        // Creating Border
-        for(MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             bdef.type= BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
