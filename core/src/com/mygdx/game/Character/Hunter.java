@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.GUI.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 02/06/16.
@@ -28,7 +28,7 @@ public class Hunter extends Sprite implements Disposable{
     private float stateTime;
 
     private World world;
-    private PlayScreen screen;
+    private BunnyGame game;
     public Body b2body;
     private Fixture fixture;
 
@@ -49,9 +49,9 @@ public class Hunter extends Sprite implements Disposable{
     private float inicialPosition;
 
 
-    public Hunter(PlayScreen screen, float x, float y){
-        this.screen = screen;
-        this.world = screen.getWorld();
+    public Hunter(BunnyGame game, float x, float y){
+        this.game = game;
+        this.world = game.getWorld();
 
         BodyDef bdef = new BodyDef();
         bdef.position.set( x / BunnyGame.PPM, y / BunnyGame.PPM);
@@ -118,11 +118,11 @@ public class Hunter extends Sprite implements Disposable{
 
         switch (hunterState){
             case RIGHT:
-                if(screen.getBunny().stateBunny != Bunny.State.DEAD)
+                if(game.getBunny().stateBunny != Bunny.State.DEAD)
                     b2body.setLinearVelocity(1,0);
                 break;
             case LEFT:
-                if(screen.getBunny().stateBunny != Bunny.State.DEAD)
+                if(game.getBunny().stateBunny != Bunny.State.DEAD)
                     b2body.setLinearVelocity(-1,0);
                 break;
             case DEAD:

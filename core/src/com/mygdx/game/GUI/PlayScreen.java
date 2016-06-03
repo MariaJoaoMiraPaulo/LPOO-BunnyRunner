@@ -1,10 +1,11 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -16,28 +17,30 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Character.Bunny;
 import com.mygdx.game.Character.Hunter;
-import com.mygdx.game.Tools.WorldCreator;
 import com.mygdx.game.Tools.WorldContactListener;
+import com.mygdx.game.Tools.WorldCreator;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
  */
 public class PlayScreen implements Screen, InputProcessor {
 
+    public SpriteBatch batch;
+
     public BunnyGame game;
 
-    private Bunny bunny;
-    private Hunter hunter;
+   // private Bunny bunny;
+  //  private Hunter hunter;
 
     //Tiled Map
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-    private TmxMapLoader mapLoader;
-    private TiledMap map;
+ //   private TmxMapLoader mapLoader;
+  //  private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
 
     //Box 2d variables
-    private World world;
+   // private World world;
     private Box2DDebugRenderer b2dr;
     private float gameTime;
 
@@ -48,28 +51,30 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
     public PlayScreen(BunnyGame game, int mapLevel){
+        this.batch = new SpriteBatch();
+
         this.game=game;
         gamecam = new OrthographicCamera();
         //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
         //gamePort=new StretchViewport(400,208,gamecam);
-        mapLoader=new TmxMapLoader();
-        map = mapLoader.load("level"+mapLevel+".tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / BunnyGame.PPM);
+      /*  mapLoader=new TmxMapLoader();
+        map = mapLoader.load("level"+mapLevel+".tmx");*/
+        renderer = new OrthogonalTiledMapRenderer(game.getMap(), 1 / BunnyGame.PPM);
         gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
 
-        world = new World(new Vector2(0,-10),true);
+        //world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
 
 
 
-        new WorldCreator(world,map, this);
+       /* new WorldCreator(world,map, this);
 
-        bunny = new Bunny(world, this);
+        bunny = new Bunny(world, this);*/
 
         gameTime = 0;
 
-        world.setContactListener(new WorldContactListener());
+        //world.setContactListener(new WorldContactListener());
 
         //Telling Libgdx what it input process so it can be called when a new input event arrives
         Gdx.input.setInputProcessor(this);
@@ -84,12 +89,7 @@ public class PlayScreen implements Screen, InputProcessor {
     public void update(float dt){
         gameTime += dt;
 
-        world.step(1/60f, 6 , 2);
-
-        bunny.update(dt);
-        hunter.update(dt);
-
-        gamecam.position.x = bunny.b2body.getPosition().x;
+        gamecam.position.x = game.getBunny().b2body.getPosition().x;
 
         gamecam.update();
         renderer.setView(gamecam);
@@ -105,12 +105,14 @@ public class PlayScreen implements Screen, InputProcessor {
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         renderer.render();
-        b2dr.render(world,gamecam.combined);
-        game.batch.setProjectionMatrix(gamecam.combined);
-        game.batch.begin();
-        bunny.draw(game.batch);
-        hunter.draw(game.batch);
-        game.batch.end();
+        b2dr.render(game.getWorld(),gamecam.combined);
+        batch.setProjectionMatrix(gamecam.combined);
+        batch.begin();
+        if(game.getGameState() == BunnyGame.GameState.PLAYING){
+        game.getBunny().draw(batch);
+        game.getHunter().draw(batch);
+        }
+        batch.end();
     }
     
     @Override
@@ -135,9 +137,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        map.dispose();
+        //map.dispose();
         renderer.dispose();
-        world.dispose();
+        //world.dispose();
         b2dr.dispose();
     }
 
@@ -164,8 +166,8 @@ public class PlayScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         startingPoint.set(screenX, screenY);
 
-        if(bunny.stateBunny == Bunny.State.STANDING)
-            bunny.setState(Bunny.State.RUNNING);
+        if(game.getBunny().stateBunny == Bunny.State.STANDING)
+            game.getBunny().setState(Bunny.State.RUNNING);
 
         return false;
     }
@@ -184,19 +186,19 @@ public class PlayScreen implements Screen, InputProcessor {
 
         Gdx.app.log("Eventos: ", "Drag "+screenDelta.x + " " + screenDelta.y);
 
-        if(screenDelta.y > 20 && !dragDone && bunny.stateBunny != Bunny.State.CRAWL){
-            bunny.rotateBunny();
+        if(screenDelta.y > 20 && !dragDone && game.getBunny().stateBunny != Bunny.State.CRAWL){
+            game.getBunny().rotateBunny();
             dragDone = true;
         }
 
-        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.y<-20 && !dragDone) {
-            bunny.jump();
-            bunny.setState(Bunny.State.JUMPING);
+        if(game.getBunny().stateBunny== Bunny.State.RUNNING && screenDelta.y<-20 && !dragDone) {
+            game.getBunny().jump();
+            game.getBunny().setState(Bunny.State.JUMPING);
             dragDone = true;
         }
 
-        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) {
-            bunny.setState(Bunny.State.SLOWDOWN);
+        if(game.getBunny().stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) {
+            game.getBunny().setState(Bunny.State.SLOWDOWN);
             dragDone=true;
         }
 
@@ -213,15 +215,7 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
-    public World getWorld() {
-        return world;
-    }
-
-    public void setHunter(Hunter hunter) {
-        this.hunter = hunter;
-    }
-
-    public Bunny getBunny() {
-        return bunny;
+    public void setGame(BunnyGame game) {
+        this.game = game;
     }
 }

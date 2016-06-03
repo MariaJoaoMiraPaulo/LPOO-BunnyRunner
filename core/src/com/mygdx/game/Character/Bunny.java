@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.GUI.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 12/05/16.
@@ -25,7 +25,7 @@ public class Bunny extends Sprite implements Disposable{
 
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN};
 
-    public PlayScreen screen;
+    public BunnyGame game;
 
     public World world;
     public Body b2body;
@@ -56,7 +56,7 @@ public class Bunny extends Sprite implements Disposable{
     public float animationStateTime;
     public float stateTime;
 
-    public Bunny(World world, PlayScreen screen){
+    public Bunny(World world, BunnyGame game){
 
         bunnyRunningImage = new Texture("bunny.png");
         TextureRegion[][] tmp = TextureRegion.split(bunnyRunningImage, bunnyRunningImage.getWidth()/5, bunnyRunningImage.getHeight());
@@ -121,7 +121,7 @@ public class Bunny extends Sprite implements Disposable{
         slowDownAnimation= new Animation(0.8f, slowDownFrames);
 
 
-        this.screen = screen;
+        this.game = game;
         this.world = world;
         defineBunny();
 
@@ -165,7 +165,8 @@ public class Bunny extends Sprite implements Disposable{
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
         else if(stateBunny==State.DEAD && stateTime >=3)
-            screen.newGame();
+            game.setGameState(BunnyGame.GameState.OVER);
+        // game.getGameConst().newGame();
 
 
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
@@ -277,8 +278,8 @@ public class Bunny extends Sprite implements Disposable{
         }
     }
 
-    public PlayScreen getScreen() {
-        return screen;
+    public BunnyGame getGame() {
+        return game;
     }
 
 }
