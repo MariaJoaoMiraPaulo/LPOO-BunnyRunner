@@ -195,6 +195,11 @@ public class PlayScreen implements Screen, InputProcessor {
             dragDone = true;
         }
 
+        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) {
+            bunny.setState(Bunny.State.SLOWDOWN);
+            dragDone=true;
+        }
+
         return false;
     }
 

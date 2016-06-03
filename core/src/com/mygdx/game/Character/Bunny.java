@@ -23,7 +23,7 @@ public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
 
-    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD};
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN};
 
     public PlayScreen screen;
 
@@ -35,6 +35,7 @@ public class Bunny extends Sprite implements Disposable{
     public Texture bunnyFallingImage;
     public Texture bunnyDeadImage;
     public Texture bunnyCrawlImage;
+    public Texture bunnySlowDownImage;
     public TextureRegion[] runningFrames;
     public TextureRegion currentFrame;
     public Animation runningAnimation;
@@ -46,6 +47,8 @@ public class Bunny extends Sprite implements Disposable{
     public Animation deadAnimation;
     public TextureRegion[] crawlFrames;
     public Animation crawlAnimation;
+    public TextureRegion[] slowDownFrames;
+    public Animation slowDownAnimation;
 
 
     public State stateBunny;
@@ -107,6 +110,17 @@ public class Bunny extends Sprite implements Disposable{
         }
         crawlAnimation= new Animation(0.2f, crawlFrames);
 
+        bunnySlowDownImage= new Texture("bunny_slowdown.png");
+        TextureRegion[][] tmp6 = TextureRegion.split(bunnySlowDownImage, bunnySlowDownImage.getWidth()/2, bunnySlowDownImage.getHeight());
+        slowDownFrames = new TextureRegion[2];
+        int index6 = 0;
+        for(int i=0;i<2;i++){
+            slowDownFrames[index6] = tmp6[0][i];
+            index6++;
+        }
+        slowDownAnimation= new Animation(0.8f, slowDownFrames);
+
+
         this.screen = screen;
         this.world = world;
         defineBunny();
@@ -163,6 +177,10 @@ public class Bunny extends Sprite implements Disposable{
             rotateBunny();
         }
 
+        if(stateBunny==State.SLOWDOWN && stateTime>3) {
+            setState(State.RUNNING);
+        }
+
 
         animationStateTime += dt;
 
@@ -182,6 +200,9 @@ public class Bunny extends Sprite implements Disposable{
                 break;
             case CRAWL:
                 currentFrame=crawlAnimation.getKeyFrame(animationStateTime,true);
+                break;
+            case SLOWDOWN:
+                currentFrame=slowDownAnimation.getKeyFrame(animationStateTime,true);
                 break;
             default:
                 currentFrame = startingAnimation.getKeyFrame(animationStateTime, true);
