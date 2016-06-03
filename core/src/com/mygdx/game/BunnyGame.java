@@ -3,6 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.game.GUI.MainMenu;
 import com.mygdx.game.GUI.PlayScreen;
 import com.sun.org.apache.xpath.internal.operations.String;
 
@@ -33,7 +34,8 @@ public class BunnyGame extends Game{
     @Override
     public void create() {
         batch= new SpriteBatch();
-        setScreen(new PlayScreen(this,1));
+       // setScreen(new PlayScreen(this,1));
+        setScreen(new MainMenu(this));
 
     }
 
