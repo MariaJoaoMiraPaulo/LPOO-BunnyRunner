@@ -67,6 +67,8 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     public void update(float dt){
+        Gdx.app.log("Render", "Screen");
+
         gameTime += dt;
 
         game.getWorld().step(1/60f, 6 , 2);
