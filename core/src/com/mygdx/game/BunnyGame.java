@@ -2,8 +2,16 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Character.Bunny;
+import com.mygdx.game.Character.Hunter;
+import com.mygdx.game.GUI.PlayScreen;
+import com.mygdx.game.Tools.WorldContactListener;
+import com.mygdx.game.Tools.WorldCreator;
 import com.sun.org.apache.xpath.internal.operations.String;
 
 /**
@@ -29,12 +37,28 @@ public class BunnyGame extends Game{
     public SpriteBatch batch;
     private int atualLevel=1;
 
+    private Bunny bunny;
+    private Hunter hunter;
+
+    private TmxMapLoader mapLoader;
+    private TiledMap map;
+    private World world;
 
     @Override
     public void create() {
+        mapLoader=new TmxMapLoader();
+        map = mapLoader.load("level"+1+".tmx");
+
+        world = new World(new Vector2(0,-10),true);
+
+        new WorldCreator(world,map,this);
+
+        bunny = new Bunny(world, this);
+
+        world.setContactListener(new WorldContactListener());
+
         batch= new SpriteBatch();
         setScreen(new PlayScreen(this,1));
-
     }
 
     @Override
@@ -54,5 +78,25 @@ public class BunnyGame extends Game{
     public void newLevel() {
         if(this.atualLevel <2)
             this.atualLevel = 2;
+    }
+
+    public void setHunter(Hunter hunter) {
+        this.hunter = hunter;
+    }
+
+    public Bunny getBunny() {
+        return bunny;
+    }
+
+    public Hunter getHunter() {
+        return hunter;
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public TiledMap getMap() {
+        return map;
     }
 }

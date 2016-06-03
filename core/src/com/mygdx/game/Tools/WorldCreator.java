@@ -14,7 +14,7 @@ import com.mygdx.game.Character.Bunny;
 import com.mygdx.game.Character.Carrot;
 import com.mygdx.game.Character.Hunter;
 import com.mygdx.game.Character.Spike;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.GUI.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 26/05/16.
@@ -22,7 +22,7 @@ import com.mygdx.game.Screens.PlayScreen;
 public class WorldCreator {
 
 
-    public WorldCreator(World world, TiledMap map, PlayScreen screen){
+    public WorldCreator(World world, TiledMap map, BunnyGame game){
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -116,7 +116,7 @@ public class WorldCreator {
         // Creating Hunter
         for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
-            screen.setHunter(new Hunter(screen ,rect.getX(),rect.getY()));
+            game.setHunter(new Hunter(game ,rect.getX(),rect.getY()));
         }
 
 
