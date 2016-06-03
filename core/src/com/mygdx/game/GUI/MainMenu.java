@@ -20,6 +20,7 @@ public class MainMenu implements Screen {
 
     private Texture background;
     private Image playButton;
+    private Image exitButton;
     private Stage stage;
     private BunnyGame game;
 
@@ -32,15 +33,14 @@ public class MainMenu implements Screen {
         stage = new Stage();
 
         background = new Texture("MainMenu.png");
-        Gdx.app.log("Background", " comprimento :"+ Gdx.graphics.getWidth()+ " altura:"+ Gdx.graphics.getHeight());
 
-        float xPlayButton=Gdx.graphics.getWidth()*14.5f/100;
+        float xPlayButton=Gdx.graphics.getWidth()*40/100;
         Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
-        float yPlayButton=Gdx.graphics.getHeight()*19/100;
+        float yPlayButton=Gdx.graphics.getHeight()*26/100;
         Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
-        float wPlayButton = Gdx.graphics.getWidth()*32/100;
+        float wPlayButton = Gdx.graphics.getWidth()*20/100;
         Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
-        float hPlayButton = Gdx.graphics.getHeight()*12/100;
+        float hPlayButton = Gdx.graphics.getHeight()*7/100;
         Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
 
 
@@ -49,19 +49,40 @@ public class MainMenu implements Screen {
         playButton.setHeight(hPlayButton);
         playButton.setPosition(xPlayButton,yPlayButton);
 
+         xPlayButton=Gdx.graphics.getWidth()*40/100;
+        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
+         yPlayButton=Gdx.graphics.getHeight()*16/100;
+        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
+         wPlayButton = Gdx.graphics.getWidth()*20/100;
+        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
+         hPlayButton = Gdx.graphics.getHeight()*7/100;
+        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
+
+
+        exitButton = new Image(background);
+        exitButton.setWidth(wPlayButton);
+        exitButton.setHeight(hPlayButton);
+        exitButton.setPosition(xPlayButton,yPlayButton);
+
         Gdx.input.setInputProcessor(stage);
         stage.addActor(playButton);
-        //stage.addActor(exitButton);
+        stage.addActor(exitButton);
 
         playButton.addListener(new ClickListener(){
            @Override
             public void clicked(InputEvent event, float x, float y){
-                Gdx.app.log("Entrei","no botão");
                setPlayScreen();
 
            }
         });
 
+        exitButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                Gdx.app.exit();
+
+            }
+        });
 
     }
     public void setPlayScreen(){
