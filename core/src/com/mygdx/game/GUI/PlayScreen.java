@@ -1,4 +1,4 @@
-package com.mygdx.game.Screens;
+package com.mygdx.game.GUI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -14,10 +14,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Character.Bunny;
-import com.mygdx.game.Character.Hunter;
-import com.mygdx.game.Tools.WorldCreator;
+import com.mygdx.game.Logic.Bunny;
+import com.mygdx.game.Logic.Hunter;
 import com.mygdx.game.Tools.WorldContactListener;
+import com.mygdx.game.Tools.WorldCreator;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.

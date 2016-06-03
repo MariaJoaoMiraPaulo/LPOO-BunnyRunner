@@ -8,10 +8,9 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Character.Bunny;
-import com.mygdx.game.Character.Carrot;
-import com.mygdx.game.Character.Hunter;
-import com.mygdx.game.Character.InteractiveTileObject;
+import com.mygdx.game.Logic.Bunny;
+import com.mygdx.game.Logic.Hunter;
+import com.mygdx.game.Logic.InteractiveTileObject;
 
 /**
  * Created by mariajoaomirapaulo on 26/05/16.

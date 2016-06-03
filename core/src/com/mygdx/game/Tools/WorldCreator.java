@@ -10,11 +10,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Character.Bunny;
-import com.mygdx.game.Character.Carrot;
-import com.mygdx.game.Character.Hunter;
-import com.mygdx.game.Character.Spike;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.Logic.Carrot;
+import com.mygdx.game.Logic.Hunter;
+import com.mygdx.game.Logic.Spike;
+import com.mygdx.game.GUI.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 26/05/16.

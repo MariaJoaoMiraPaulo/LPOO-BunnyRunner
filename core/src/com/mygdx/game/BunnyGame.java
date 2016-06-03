@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.GUI.PlayScreen;
 import com.sun.org.apache.xpath.internal.operations.String;
 
 /**

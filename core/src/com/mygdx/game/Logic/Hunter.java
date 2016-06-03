@@ -1,4 +1,4 @@
-package com.mygdx.game.Character;
+package com.mygdx.game.Logic;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.GUI.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 02/06/16.
