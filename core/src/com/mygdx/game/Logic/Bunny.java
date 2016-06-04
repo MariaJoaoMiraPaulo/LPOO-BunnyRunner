@@ -166,8 +166,7 @@ public class Bunny extends Sprite implements Disposable{
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
         else if(stateBunny==State.DEAD && stateTime >=3)
-            game.setScreen(new GameOverMenu(game));
-
+            game.setToGameOverMenu();
 
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
             stateBunny=State.FALLING;

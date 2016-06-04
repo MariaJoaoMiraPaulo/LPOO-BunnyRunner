@@ -62,7 +62,6 @@ public class PlayScreen implements Screen, InputProcessor {
         b2dr = new Box2DDebugRenderer();
 
 
-
         new WorldCreator(world,map, this);
 
         bunny = new Bunny(world, game);

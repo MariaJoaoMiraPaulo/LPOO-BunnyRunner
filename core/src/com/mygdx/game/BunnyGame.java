@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GUI.GameOverMenu;
@@ -31,13 +32,17 @@ public class BunnyGame extends Game{
     public SpriteBatch batch;
     private int atualLevel=1;
 
+    private MainMenu mainMenu;
+    private GameOverMenu gameOverMenu;
 
     @Override
     public void create() {
         batch= new SpriteBatch();
-        setScreen(new PlayScreen(this,1));
-        //setScreen(new MainMenu(this));
-       // setScreen(new GameOverMenu(this));
+        mainMenu = new MainMenu(this);
+        gameOverMenu = new GameOverMenu(this);
+        //setScreen(new PlayScreen(this,1));
+       //setScreen(new GameOverMenu(this));
+        setScreen(mainMenu);
     }
 
     @Override
@@ -57,5 +62,17 @@ public class BunnyGame extends Game{
     public void newLevel() {
         if(this.atualLevel <2)
             this.atualLevel = 2;
+    }
+
+    public void setToMainMenu(){
+        setScreen(mainMenu);
+    }
+
+    public void setToGameOverMenu(){
+        setScreen(gameOverMenu);
+    }
+
+    public void setToPlayScreen(){
+        setScreen(new PlayScreen(this, 1));
     }
 }
