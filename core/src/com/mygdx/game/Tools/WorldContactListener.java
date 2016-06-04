@@ -80,7 +80,7 @@ public class WorldContactListener implements ContactListener {
                 }
                     else ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
                 break;
-            case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
+           /* case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.DOOR_BIT) {
                     ((Bunny) fixtureA.getUserData()).getScreen().game.newLevel();
                     ((Bunny) fixtureA.getUserData()).getScreen().newGame();
@@ -89,6 +89,7 @@ public class WorldContactListener implements ContactListener {
                     ((Bunny) fixtureB.getUserData()).getScreen().newGame();
                 }
                 break;
+                */
         }
 
 

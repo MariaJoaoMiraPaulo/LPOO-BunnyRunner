@@ -65,7 +65,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         new WorldCreator(world,map, this);
 
-        bunny = new Bunny(world, this);
+        bunny = new Bunny(world, game);
 
         gameTime = 0;
 
