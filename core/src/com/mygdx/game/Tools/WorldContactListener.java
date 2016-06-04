@@ -9,8 +9,10 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Bunny;
+import com.mygdx.game.Logic.Carrot;
 import com.mygdx.game.Logic.Hunter;
 import com.mygdx.game.Logic.InteractiveTileObject;
+import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 
 /**
  * Created by mariajoaomirapaulo on 26/05/16.
@@ -23,7 +25,7 @@ public class WorldContactListener implements ContactListener {
 
         int typeOfCollision = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
 
-        if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT ||
+     /*   if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT ||
                 fixtureB.getFilterData().categoryBits == BunnyGame.BUNNY_BIT) {
 
             //Colison with Front Bunny
@@ -39,12 +41,21 @@ public class WorldContactListener implements ContactListener {
             }
 
             //Test if the object is of the type InterativeTileObject
-            if (object.getUserData() instanceof InteractiveTileObject) {
-                ((InteractiveTileObject) object.getUserData()).bunnyHit();
+            if (object.getUserData() instanceof Carrot) {
+                ((Carrot) object.getUserData()).bunnyHit();
             }
-        }
+        }*/
 
         switch (typeOfCollision) {
+            case BunnyGame.BUNNY_BIT | BunnyGame.CARROT_BIT:
+                if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.CARROT_BIT) {
+                    ((Bunny) fixtureA.getUserData()).incNumberOfCarrots();
+                    ((Carrot)fixtureB.getUserData()).bunnyHit();
+                } else {
+                    ((Bunny) fixtureB.getUserData()).incNumberOfCarrots();
+                    ((Carrot)fixtureA.getUserData()).bunnyHit();
+                }
+                break;
             case BunnyGame.BUNNY_BIT | BunnyGame.PLATFORM_BIT:
                 Gdx.app.log("Plat ", "Entrei");
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.PLATFORM_BIT) {
@@ -73,12 +84,19 @@ public class WorldContactListener implements ContactListener {
                         ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
                         ((Bunny) fixtureA.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureA.getUserData()).b2body.getPosition(), true);
                     }
-                     else   ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                    else   ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
                 } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL){
                     ((Hunter)fixtureA.getUserData()).setHunterState(Hunter.MovementState.DEAD);
                     ((Bunny) fixtureB.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureB.getUserData()).b2body.getPosition(), true);
                 }
-                    else ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                else ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                break;
+            case BunnyGame.BUNNY_BIT | BunnyGame.ROCK_BIT:
+                if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.ROCK_BIT) {
+                    ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                } else {
+                    ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                }
                 break;
            /* case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.DOOR_BIT) {

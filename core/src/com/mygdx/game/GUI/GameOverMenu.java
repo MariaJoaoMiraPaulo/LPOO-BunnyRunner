@@ -130,7 +130,6 @@ public class GameOverMenu implements Screen {
 
     @Override
     public void show() {
-        Gdx.app.log("Boas tardes", "show");
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -145,7 +144,6 @@ public class GameOverMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        Gdx.app.log("Boas tardes", "resize");
         gamePort.update(width,height);
     }
 
@@ -156,7 +154,6 @@ public class GameOverMenu implements Screen {
 
     @Override
     public void resume() {
-        Gdx.app.log("Boas tardes", "resume");
     }
 
     @Override

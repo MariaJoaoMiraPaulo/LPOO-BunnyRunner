@@ -74,6 +74,17 @@ public class Hunter extends Sprite implements Disposable{
 
         hunterState=MovementState.RIGHT;
 
+        defineHunter();
+
+        inicialPosition=b2body.getPosition().x;
+
+        distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
+
+        stateTime = 0;
+    }
+
+    public void defineHunter(){
+
         hunterImage = new Texture("hunter_right.png");
         TextureRegion[][] tmp = TextureRegion.split(hunterImage, hunterImage.getWidth()/6, hunterImage.getHeight());
         hunterFrames = new TextureRegion[6];
@@ -104,13 +115,6 @@ public class Hunter extends Sprite implements Disposable{
             index3++;
         }
         deadHunterAnimation = new Animation(0.2f, deadHunterFrames);
-
-        inicialPosition=b2body.getPosition().x;
-
-        distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
-
-        stateTime = 0;
-
     }
 
     public void update(float dt){

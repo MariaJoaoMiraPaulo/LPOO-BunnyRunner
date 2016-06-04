@@ -51,6 +51,7 @@ public class Bunny extends Sprite implements Disposable{
     public TextureRegion[] slowDownFrames;
     public Animation slowDownAnimation;
 
+    public int numberOfCarrots;
 
     public State stateBunny;
 
@@ -58,6 +59,44 @@ public class Bunny extends Sprite implements Disposable{
     public float stateTime;
 
     public Bunny(World world, BunnyGame game){
+        defineAnimations();
+
+        this.game = game;
+        this.world = world;
+        defineBunny();
+
+        this.stateBunny=State.STANDING;
+
+        numberOfCarrots = 0;
+    }
+
+    public void defineBunny(){
+        BodyDef bdef = new  BodyDef();
+        bdef.position.set(135 / BunnyGame.PPM, 32 / BunnyGame.PPM);
+        bdef.type = BodyDef.BodyType.DynamicBody;
+        b2body = world.createBody(bdef);
+
+        FixtureDef fdef = new FixtureDef();
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(13/BunnyGame.PPM,16.5f/BunnyGame.PPM);
+
+        fdef.filter.categoryBits = BunnyGame.BUNNY_BIT;
+        fdef.filter.maskBits= BunnyGame.CARROT_BIT |
+                BunnyGame.DEFAULT_BIT |
+                BunnyGame.GROUND_BIT |
+                BunnyGame.PLATFORM_BIT |
+                BunnyGame.SPIKE_BIT |
+                BunnyGame.DOOR_BIT |
+                BunnyGame.ROCK_BIT |
+                BunnyGame.HUNTER_BIT |
+                BunnyGame.DOOR_BIT;
+
+        fdef.shape = shape;
+
+        b2body.createFixture(fdef).setUserData(this);
+    }
+
+    public void defineAnimations(){
 
         bunnyRunningImage = new Texture("bunny.png");
         TextureRegion[][] tmp = TextureRegion.split(bunnyRunningImage, bunnyRunningImage.getWidth()/5, bunnyRunningImage.getHeight());
@@ -120,39 +159,6 @@ public class Bunny extends Sprite implements Disposable{
             index6++;
         }
         slowDownAnimation= new Animation(0.8f, slowDownFrames);
-
-
-        this.game = game;
-        this.world = world;
-        defineBunny();
-
-        this.stateBunny=State.STANDING;
-    }
-
-    public void defineBunny(){
-        BodyDef bdef = new  BodyDef();
-        bdef.position.set(135 / BunnyGame.PPM, 32 / BunnyGame.PPM);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        b2body = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(13/BunnyGame.PPM,16.5f/BunnyGame.PPM);
-
-        fdef.filter.categoryBits = BunnyGame.BUNNY_BIT;
-        fdef.filter.maskBits= BunnyGame.CARROT_BIT |
-                BunnyGame.DEFAULT_BIT |
-                BunnyGame.GROUND_BIT |
-                BunnyGame.PLATFORM_BIT |
-                BunnyGame.SPIKE_BIT |
-                BunnyGame.DOOR_BIT |
-                BunnyGame.ROCK_BIT |
-                BunnyGame.HUNTER_BIT |
-                BunnyGame.DOOR_BIT;
-
-        fdef.shape = shape;
-
-        b2body.createFixture(fdef).setUserData(this);
     }
 
     public void update(float dt){
@@ -177,7 +183,7 @@ public class Bunny extends Sprite implements Disposable{
             rotateBunny();
         }
 
-        if(stateBunny==State.SLOWDOWN && stateTime>3) {
+        if(stateBunny==State.SLOWDOWN && stateTime>1.5f) {
             setState(State.RUNNING);
         }
 
@@ -260,7 +266,6 @@ public class Bunny extends Sprite implements Disposable{
             this.stateTime = 0;
             this.stateBunny=state;
         }
-
     }
 
     public void rotateBunny(){
@@ -275,6 +280,11 @@ public class Bunny extends Sprite implements Disposable{
             b2body.applyLinearImpulse(new Vector2(2f, 1f), b2body.getPosition(), true);
             setState(State.CRAWL);
         }
+    }
+
+    public void incNumberOfCarrots(){
+        numberOfCarrots++;
+        Gdx.app.log("Carrots", "Apanhei uma "+ numberOfCarrots);
     }
 
 }
