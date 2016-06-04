@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Carrot;
 import com.mygdx.game.Logic.Hunter;
@@ -112,11 +113,16 @@ public class WorldCreator {
             body.createFixture(fdef);
         }
 
+        Array<Hunter> hunters= new Array<Hunter>();
+
         // Creating Hunter
         for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
-            screen.setHunter(new Hunter(screen ,rect.getX(),rect.getY()));
+            //screen.setHunter(new Hunter(screen ,rect.getX(),rect.getY()));
+            hunters.add(new Hunter(screen ,rect.getX(),rect.getY()));
         }
+
+        screen.setHunters(hunters);
 
 
     }

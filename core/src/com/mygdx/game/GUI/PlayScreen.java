@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
@@ -30,7 +31,8 @@ public class PlayScreen implements Screen, InputProcessor {
     public BunnyGame game;
 
     private Bunny bunny;
-    private Hunter hunter;
+   // private Hunter hunter;
+    private Array<Hunter> hunters;
     private HudScore hud;
 
     //Tiled Map
@@ -67,10 +69,11 @@ public class PlayScreen implements Screen, InputProcessor {
         world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
 
-        bunny = new Bunny(world, game);
-
         hud = new HudScore(game.batch);
 
+        bunny = new Bunny(world, game);
+
+        hunters = new Array<Hunter>();
 
         new WorldCreator(world,map, this);
 
@@ -125,7 +128,9 @@ public class PlayScreen implements Screen, InputProcessor {
         world.step(1/60f, 6 , 2);
 
         bunny.update(dt);
-        hunter.update(dt);
+        for(Hunter hunter : hunters)
+                hunter.update(dt);
+        //hunter.update(dt); //FIXME
 
         gamecam.position.x = bunny.b2body.getPosition().x;
 
@@ -147,7 +152,9 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         bunny.draw(game.batch);
-        hunter.draw(game.batch);
+        for(Hunter hunter : hunters)
+                hunter.draw(game.batch);
+        //hunter.draw(game.batch);//FIXME
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -258,9 +265,9 @@ public class PlayScreen implements Screen, InputProcessor {
         return world;
     }
 
-    public void setHunter(Hunter hunter) {
+   /* public void setHunter(Hunter hunter) {
         this.hunter = hunter;
-    }
+    }*/
 
     public Bunny getBunny() {
         return bunny;
@@ -268,5 +275,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public HudScore getHud() {
         return hud;
+    }
+
+    public void setHunters(Array<Hunter> hunters){
+        this.hunters = hunters;
     }
 }
