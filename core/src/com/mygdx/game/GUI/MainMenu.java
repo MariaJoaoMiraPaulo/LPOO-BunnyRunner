@@ -30,15 +30,12 @@ public class MainMenu implements Screen {
     private BunnyGame game;
 
     private Viewport gamePort;
-    private OrthographicCamera camera;
 
     public MainMenu(BunnyGame game) {
 
         this.game = game;
 
-        camera = new OrthographicCamera();
-        gamePort=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),camera);
-        camera.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
+        gamePort=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort.apply();
         stage = new Stage(gamePort, game.batch);
 
@@ -108,9 +105,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
@@ -120,7 +115,6 @@ public class MainMenu implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);
-        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
     }
 
     @Override

@@ -27,14 +27,11 @@ public class GameOverMenu implements Screen {
     private BunnyGame game;
 
     private Viewport gamePort;
-    private OrthographicCamera camera;
 
     public GameOverMenu(BunnyGame game) {
 
         this.game = game;
-        camera = new OrthographicCamera();
-        gamePort=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),camera);
-        camera.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
+        gamePort=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort.apply();
         stage = new Stage(gamePort, game.batch);
 
@@ -140,8 +137,6 @@ public class GameOverMenu implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         game.batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
@@ -152,7 +147,6 @@ public class GameOverMenu implements Screen {
     public void resize(int width, int height) {
         Gdx.app.log("Boas tardes", "resize");
         gamePort.update(width,height);
-        camera.position.set(camera.viewportWidth/2,camera.viewportHeight/2,0);
     }
 
     @Override
