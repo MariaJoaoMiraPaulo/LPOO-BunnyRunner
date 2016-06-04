@@ -29,6 +29,8 @@ public class HudScore extends Stage {
     private SpriteBatch batch;
 
     private int score;
+    private int levelCarrot;
+    private int imageState=0;
 
 
     public HudScore(SpriteBatch batch){
@@ -66,6 +68,7 @@ public class HudScore extends Stage {
 
     public void setScore(int score) {
         this.score=score;
+        this.levelCarrot=levelCarrot;
         numberCarrot.setText(String.format("%02d", score));
 
     }
@@ -76,15 +79,14 @@ public class HudScore extends Stage {
         batch.begin();
         Gdx.app.log("Score"," "+ score);
         if(score==0)
-            batch.draw(carrotLevel.get(0),Gdx.graphics.getWidth()-250,Gdx.graphics.getHeight()- 100,233,100);
+            batch.draw(carrotLevel.get(0),150,Gdx.graphics.getHeight()- 100,233,100);
         else if (score <10)
-            batch.draw(carrotLevel.get(1),Gdx.graphics.getWidth()-250,Gdx.graphics.getHeight()- 100,233,100);
+            batch.draw(carrotLevel.get(1),150,Gdx.graphics.getHeight()- 100,233,100);
         else if( score <20)
-            batch.draw(carrotLevel.get(2),Gdx.graphics.getWidth()-250,Gdx.graphics.getHeight()- 100,233,100);
+            batch.draw(carrotLevel.get(2),150,Gdx.graphics.getHeight()- 100,233,100);
         else if (score < 25)
-            batch.draw(carrotLevel.get(3),Gdx.graphics.getWidth()-250,Gdx.graphics.getHeight()- 100,233,100);
-        else  batch.draw(carrotLevel.get(4),Gdx.graphics.getWidth()-250,Gdx.graphics.getHeight()- 100,233,100);
-
+            batch.draw(carrotLevel.get(3),150,Gdx.graphics.getHeight()- 100,233,100);
+        else  batch.draw(carrotLevel.get(4),150,Gdx.graphics.getHeight()- 100,233,100);
 
         batch.end();
 
