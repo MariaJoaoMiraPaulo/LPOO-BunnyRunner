@@ -32,7 +32,7 @@ public class MainMenu implements Screen {
 
         stage = new Stage();
 
-        background = new Texture("MainMenu.png");
+        background = new Texture("MainMenu2.png");
 
         float xPlayButton=Gdx.graphics.getWidth()*40/100;
         Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
