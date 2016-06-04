@@ -28,6 +28,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private Bunny bunny;
     private Hunter hunter;
+    private HudScore hud;
 
     //Tiled Map
     private OrthographicCamera gamecam;
@@ -60,6 +61,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
+        hud = new HudScore(game.batch);
 
 
         new WorldCreator(world,map, this);
@@ -110,6 +112,8 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny.draw(game.batch);
         hunter.draw(game.batch);
         game.batch.end();
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
     }
     
     @Override
