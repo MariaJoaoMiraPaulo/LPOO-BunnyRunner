@@ -3,6 +3,7 @@ package com.mygdx.game.GUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -18,6 +19,8 @@ import com.mygdx.game.Logic.Bunny;
 import com.mygdx.game.Logic.Hunter;
 import com.mygdx.game.Tools.WorldContactListener;
 import com.mygdx.game.Tools.WorldCreator;
+
+import java.io.IOException;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
@@ -47,6 +50,8 @@ public class PlayScreen implements Screen, InputProcessor {
     private Vector2 startingPoint;
     private boolean dragDone;
 
+    private FileHandle file;
+    private int highscore;
 
     public PlayScreen(BunnyGame game, int mapLevel){
         this.game=game;
@@ -80,7 +85,38 @@ public class PlayScreen implements Screen, InputProcessor {
         startingPoint = new Vector2(0,0);
         dragDone = false;
 
+        loadFile();
+    }
 
+    public void loadFile(){
+        file = Gdx.files.local("highscore.dat");
+
+        if(!file.exists()){
+            highscore = 0;
+            Gdx.app.log("Highscore", "Passei");
+        }
+        else {
+            String text;
+            text = file.readString();
+            highscore = Integer.parseInt(text);
+            Gdx.app.log("Highscore", "" + highscore);
+        }
+    }
+
+    public void saveHighscore(){
+        if(file.exists()){
+            if(highscore < bunny.getNumberOfCarrots()){
+                file.writeString(String.format("%d", bunny.getNumberOfCarrots()), false);
+            }
+        }
+        else {
+            try {
+                file.file().createNewFile();
+                file.writeString(String.format("%d", bunny.getNumberOfCarrots()), false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void update(float dt){
@@ -116,7 +152,7 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
     }
-    
+
     @Override
     public void resize(int width, int height) {
         gamePort.update(width,height);

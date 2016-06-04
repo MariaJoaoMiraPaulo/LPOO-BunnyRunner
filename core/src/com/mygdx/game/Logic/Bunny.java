@@ -50,7 +50,7 @@ public class Bunny extends Sprite implements Disposable{
     public TextureRegion[] slowDownFrames;
     public Animation slowDownAnimation;
 
-    public int numberOfCarrots;
+    private int numberOfCarrots;
 
     public State stateBunny;
 
@@ -170,8 +170,10 @@ public class Bunny extends Sprite implements Disposable{
 
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
-        else if(stateBunny==State.DEAD && stateTime >=3)
+        else if(stateBunny==State.DEAD && stateTime >=3){
+            ((PlayScreen)game.getScreen()).saveHighscore();
             game.setToGameOverMenu();
+        }
 
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
             stateBunny=State.FALLING;
@@ -285,6 +287,10 @@ public class Bunny extends Sprite implements Disposable{
         numberOfCarrots++;
         ((PlayScreen)game.getScreen()).getHud().setScore(numberOfCarrots);
         Gdx.app.log("Carrots", "Apanhei uma "+ numberOfCarrots);
+    }
+
+    public int getNumberOfCarrots() {
+        return numberOfCarrots;
     }
 
 }
