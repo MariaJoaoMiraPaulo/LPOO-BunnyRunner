@@ -131,7 +131,7 @@ public class Bunny extends Sprite implements Disposable{
 
     public void defineBunny(){
         BodyDef bdef = new  BodyDef();
-        bdef.position.set(135 / BunnyGame.PPM, 32 / BunnyGame.PPM);
+        bdef.position.set(224 / BunnyGame.PPM, 32 / BunnyGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
