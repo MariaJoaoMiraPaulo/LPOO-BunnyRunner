@@ -61,12 +61,13 @@ public class PlayScreen implements Screen, InputProcessor {
 
         world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
+
+        bunny = new Bunny(world, game);
+
         hud = new HudScore(game.batch);
 
 
         new WorldCreator(world,map, this);
-
-        bunny = new Bunny(world, game);
 
         gameTime = 0;
 
@@ -226,5 +227,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public Bunny getBunny() {
         return bunny;
+    }
+
+    public HudScore getHud() {
+        return hud;
     }
 }

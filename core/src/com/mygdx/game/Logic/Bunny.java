@@ -23,7 +23,6 @@ import com.mygdx.game.GUI.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
-
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN};
 
     public BunnyGame game;
@@ -72,7 +71,7 @@ public class Bunny extends Sprite implements Disposable{
 
     public void defineBunny(){
         BodyDef bdef = new  BodyDef();
-        bdef.position.set(135 / BunnyGame.PPM, 32 / BunnyGame.PPM);
+        bdef.position.set(224 / BunnyGame.PPM, 32 / BunnyGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
@@ -284,6 +283,7 @@ public class Bunny extends Sprite implements Disposable{
 
     public void incNumberOfCarrots(){
         numberOfCarrots++;
+        ((PlayScreen)game.getScreen()).getHud().setScore(numberOfCarrots);
         Gdx.app.log("Carrots", "Apanhei uma "+ numberOfCarrots);
     }
 

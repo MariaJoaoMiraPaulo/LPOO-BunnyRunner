@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.sun.org.apache.xpath.internal.operations.String;
 
 
 /**
@@ -26,8 +25,12 @@ public class HudScore {
     private Label numberCarrot;
     private Image carrot;
 
+    private int score;
+
 
     public HudScore(SpriteBatch batch){
+        score = 0;
+
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport,batch);
         carrot = new Image(new Texture("carrot.png"));
@@ -35,7 +38,7 @@ public class HudScore {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-        numberCarrot = new Label("Cenouras",new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        numberCarrot = new Label(String.format("%02d", score),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         numberCarrot.setFontScale(3);
         numberCarrot.setAlignment(Align.topLeft);
 
@@ -49,7 +52,10 @@ public class HudScore {
         table.top().left();
 
         stage.addActor(table);
+    }
 
-
+    public void setScore(int score) {
+        this.score = score;
+        numberCarrot.setText(String.format("%02d", score));
     }
 }
