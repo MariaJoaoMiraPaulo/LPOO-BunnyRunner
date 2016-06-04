@@ -115,6 +115,7 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
+        hud.draw();
     }
     
     @Override
