@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Bunny;
 import com.mygdx.game.Logic.Hunter;
+import com.mygdx.game.Logic.Rock;
 import com.mygdx.game.Tools.WorldContactListener;
 import com.mygdx.game.Tools.WorldCreator;
 
@@ -32,6 +33,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private Bunny bunny;
     private Array<Hunter> hunters;
+    private Array<Rock> rocks;
 
     private HudScore hud;
 
@@ -72,6 +74,7 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny = new Bunny(world, game);
 
         hunters = new Array<Hunter>();
+        rocks = new Array<Rock>();
 
         new WorldCreator(world,map, this);
 
@@ -121,6 +124,8 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny.draw(game.batch);
         for(Hunter hunter : hunters)
                 hunter.draw(game.batch);
+        for(Rock rock : rocks)
+                rock.draw(game.batch);
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -201,24 +206,24 @@ public class PlayScreen implements Screen, InputProcessor {
 
         Gdx.app.log("Drag", " "+screenDelta.x + " " + screenDelta.y);
 
-        if(screenDelta.x>20 && !dragDone)
+        if(screenDelta.x>20 && !dragDone)  //the bunny is going to gain speed
         {
            bunny.checkSpeed();
             dragDone = true;
         }
 
-        if(screenDelta.y > 20 && !dragDone && bunny.stateBunny != Bunny.State.CRAWL){
+        if(screenDelta.y > 20 && !dragDone && bunny.stateBunny != Bunny.State.CRAWL){  //the bunny is going to crawl
             bunny.rotateBunny();
             dragDone = true;
         }
 
-        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.y<-20 && !dragDone) {
+        if(bunny.stateBunny != Bunny.State.JUMPING && bunny.stateBunny != Bunny.State.FALLING && screenDelta.y<-20 && !dragDone) { //the bunny is going do jump
             bunny.jump();
             bunny.setState(Bunny.State.JUMPING);
             dragDone = true;
         }
 
-        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) {
+        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) { //the bunny is going to slowdown
             bunny.setState(Bunny.State.SLOWDOWN);
             dragDone=true;
         }
@@ -258,4 +263,7 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
+    public void setRocks(Array<Rock> rocks) {
+        this.rocks = rocks;
+    }
 }

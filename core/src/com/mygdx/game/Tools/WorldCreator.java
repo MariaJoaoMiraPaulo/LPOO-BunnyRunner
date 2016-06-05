@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Carrot;
 import com.mygdx.game.Logic.Hunter;
+import com.mygdx.game.Logic.Rock;
 import com.mygdx.game.Logic.Spike;
 import com.mygdx.game.GUI.PlayScreen;
 
@@ -98,10 +99,12 @@ public class WorldCreator {
             body.createFixture(fdef);
         }
 
+        Array<Rock> rocks= new Array<Rock>();
+
         // Creating Rock
         for(MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
-            bdef.type= BodyDef.BodyType.StaticBody;
+         /*   bdef.type= BodyDef.BodyType.StaticBody;
             bdef.position.set((rect.getX()+rect.getWidth()/2)/ BunnyGame.PPM,(rect.getY()+rect.getHeight()/2)/ BunnyGame.PPM);
 
             body = world.createBody(bdef);
@@ -110,8 +113,11 @@ public class WorldCreator {
 
             fdef.filter.categoryBits = BunnyGame.ROCK_BIT;
 
-            body.createFixture(fdef);
+            body.createFixture(fdef);*/
+            rocks.add(new Rock(world, map, rect));
         }
+
+        screen.setRocks(rocks);
 
         Array<Hunter> hunters= new Array<Hunter>();
 

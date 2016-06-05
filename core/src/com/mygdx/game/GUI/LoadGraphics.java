@@ -20,6 +20,7 @@ public class LoadGraphics implements Disposable{
     public static Texture hunterImageRight;
     public static Texture hunterImageLeft;
     public static Texture deadHunterImage;
+    public static Texture brickImage;
 
 
     private static TextureRegion[] runningFrames;
@@ -97,6 +98,11 @@ public class LoadGraphics implements Disposable{
         return hunterImageRight;
     }
 
+    public static Texture getBrickImage() {
+        if(brickImage == null)
+            brickImage = new Texture("brick.png");
+        return brickImage;
+    }
 
     public static TextureRegion[] getRunningFrames() {
         if(runningFrames == null){

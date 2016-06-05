@@ -81,7 +81,16 @@ public class WorldContactListener implements ContactListener {
                         && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.SPEED)
                     ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                 break;
+            case BunnyGame.BUNNY_BIT | BunnyGame.HUNTER_HEAD_BIT:
+                Gdx.app.log("Head", "Vou matar o hunter");
+                if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_HEAD_BIT) {
+                    ((Hunter) fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
+                } else {
+                    ((Hunter) fixtureA.getUserData()).setHunterState(Hunter.MovementState.DEAD);
+                }
+                break;
             case BunnyGame.HUNTER_BIT | BunnyGame.BUNNY_BIT:
+                Gdx.app.log("Head", "Entrei");
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_BIT) {
                     if (((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.CRAWL || ((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.SPEED){
                         ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
