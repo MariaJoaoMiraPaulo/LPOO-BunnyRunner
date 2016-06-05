@@ -136,7 +136,7 @@ public class Bunny extends Sprite implements Disposable{
             stateTime=0;
         }
 
-        if(stateBunny==State.CRAWL && stateTime>2) {
+        if(stateBunny==State.CRAWL && stateTime>1.5f) {
             rotateBunny();
         }
 
@@ -178,6 +178,9 @@ public class Bunny extends Sprite implements Disposable{
     }
 
     public void jump(){
+        if(stateBunny == State.CRAWL){
+            rotateBunny();
+        }
         b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
     }
 

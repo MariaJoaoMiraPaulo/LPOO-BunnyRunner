@@ -201,24 +201,24 @@ public class PlayScreen implements Screen, InputProcessor {
 
         Gdx.app.log("Drag", " "+screenDelta.x + " " + screenDelta.y);
 
-        if(screenDelta.x>20 && !dragDone)
+        if(screenDelta.x>20 && !dragDone)  //the bunny is going to gain speed
         {
            bunny.checkSpeed();
             dragDone = true;
         }
 
-        if(screenDelta.y > 20 && !dragDone && bunny.stateBunny != Bunny.State.CRAWL){
+        if(screenDelta.y > 20 && !dragDone && bunny.stateBunny != Bunny.State.CRAWL){  //the bunny is going to crawl
             bunny.rotateBunny();
             dragDone = true;
         }
 
-        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.y<-20 && !dragDone) {
+        if(screenDelta.y<-20 && !dragDone) { //the bunny is going do jump
             bunny.jump();
             bunny.setState(Bunny.State.JUMPING);
             dragDone = true;
         }
 
-        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) {
+        if(bunny.stateBunny== Bunny.State.RUNNING && screenDelta.x<-20 && !dragDone) { //the bunny is going to slowdown
             bunny.setState(Bunny.State.SLOWDOWN);
             dragDone=true;
         }
