@@ -58,8 +58,8 @@ public class HudScore extends Stage {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-        numberCarrot = new Label(String.format("%02d", score),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        numberCarrot.setFontScale(3);
+        numberCarrot = new Label(String.format("%02d", score),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
+        numberCarrot.setFontScale(0.75f);
         numberCarrot.setAlignment(Align.topLeft);
 
         carrot.setWidth(15);
@@ -96,7 +96,7 @@ public class HudScore extends Stage {
            imageState=3;
         else  imageState=4;
 
-        batch.draw(carrotLevel.get(imageState),150,Gdx.graphics.getHeight()- 100,233,100);
+        batch.draw(carrotLevel.get(imageState),0,Gdx.graphics.getHeight()- 150,233,100);
         batch.draw(btnPause,Gdx.graphics.getWidth()-75,Gdx.graphics.getHeight()- 75,75,75);
 
         batch.end();

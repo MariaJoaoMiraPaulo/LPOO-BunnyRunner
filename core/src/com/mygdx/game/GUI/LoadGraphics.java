@@ -1,6 +1,8 @@
 package com.mygdx.game.GUI;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 
@@ -15,7 +17,6 @@ public class LoadGraphics implements Disposable{
     private static Texture bunnyDeadImage;
     private static Texture bunnyCrawlImage;
     private static Texture bunnySlowDownImage;
-    public static Texture bunnySpeedImage;
     public static Texture hunterImageRight;
     public static Texture hunterImageLeft;
     public static Texture deadHunterImage;
@@ -27,10 +28,11 @@ public class LoadGraphics implements Disposable{
     private static TextureRegion[] deadFrames;
     private static TextureRegion[] crawlFrames;
     private static TextureRegion[] slowDownFrames;
-    private static TextureRegion[] speedFrames;
     public static TextureRegion[] hunterFramesRight;
     public static TextureRegion[] hunterFramesLeft;
     public static TextureRegion[] deadHunterFrames;
+
+    private static BitmapFont font;
 
     public static Texture getBunnyRunningImage() {
         if(bunnyRunningImage == null)
@@ -220,6 +222,13 @@ public class LoadGraphics implements Disposable{
         }
 
         return deadHunterFrames;
+    }
+
+    public static BitmapFont getFont(){
+        if(font == null)
+            font = new BitmapFont(Gdx.files.internal("font.fnt"));
+
+        return font;
     }
 
     @Override

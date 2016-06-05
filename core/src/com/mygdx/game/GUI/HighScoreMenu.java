@@ -54,10 +54,9 @@ public class HighScoreMenu implements Screen {
         table.setFillParent(true);
         Gdx.app.log("HS"," "+game.getHighscore());
 
-        BitmapFont font = new BitmapFont(Gdx.files.internal("font.fnt"));
 
         //Score level 1
-        score1 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(font, Color.BLACK));
+        score1 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score1.setFontScale(0.75f);
         score1.setAlignment(Align.center);
         table.center();
@@ -66,7 +65,7 @@ public class HighScoreMenu implements Screen {
         table.row();
 
         //Score Level 2
-        score2 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(font, Color.BLACK));
+        score2 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score2.setFontScale(0.75f);
         score2.setAlignment(Align.center);
         table.add(score2).padLeft(200).padBottom(20);
@@ -74,7 +73,7 @@ public class HighScoreMenu implements Screen {
         table.row();
 
         //Score Level 3
-        score3 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(font, Color.BLACK));
+        score3 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score3.setFontScale(0.75f);
         score3.setAlignment(Align.center);
         table.add(score3).padLeft(200).padBottom(20);
