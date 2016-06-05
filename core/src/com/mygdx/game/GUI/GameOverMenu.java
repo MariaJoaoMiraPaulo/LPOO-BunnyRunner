@@ -35,6 +35,7 @@ public class GameOverMenu implements Screen {
         gamePort.apply();
         stage = new Stage(gamePort, game.batch);
 
+
         background = new Texture("gameOver.png");
         button = new Texture("button.png");
 

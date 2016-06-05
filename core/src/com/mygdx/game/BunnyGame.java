@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GUI.GameOverMenu;
+import com.mygdx.game.GUI.HighScoreMenu;
 import com.mygdx.game.GUI.MainMenu;
 import com.mygdx.game.GUI.PauseMenu;
 import com.mygdx.game.GUI.PlayScreen;
@@ -37,6 +38,7 @@ public class BunnyGame extends Game{
     private GameOverMenu gameOverMenu;
     private PauseMenu pauseMenu;
     private PlayScreen playScreen;
+    private HighScoreMenu highScoreMenu;
 
     @Override
     public void create() {
@@ -45,8 +47,10 @@ public class BunnyGame extends Game{
         gameOverMenu = new GameOverMenu(this);
         pauseMenu = new PauseMenu(this);
         playScreen = new PlayScreen(this, 1);
+        highScoreMenu = new HighScoreMenu(this);
 
-        setScreen(mainMenu);
+        //setScreen(mainMenu);
+        setScreen(highScoreMenu);
     }
 
     @Override

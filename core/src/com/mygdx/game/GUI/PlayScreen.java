@@ -295,4 +295,6 @@ public class PlayScreen implements Screen, InputProcessor {
     public void input() {
         Gdx.input.setInputProcessor(this);
     }
+
+    public int getHighscore() {return highscore;}
 }
