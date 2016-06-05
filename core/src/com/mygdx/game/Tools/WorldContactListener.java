@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.mygdx.game.BunnyGame;
@@ -80,12 +81,12 @@ public class WorldContactListener implements ContactListener {
                 break;
             case BunnyGame.HUNTER_BIT | BunnyGame.BUNNY_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_BIT) {
-                    if (((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.CRAWL){
+                    if (((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.CRAWL || ((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.SPEED){
                         ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
                         ((Bunny) fixtureA.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureA.getUserData()).b2body.getPosition(), true);
                     }
                     else   ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
-                } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL){
+                } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL || ((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.SPEED){
                     ((Hunter)fixtureA.getUserData()).setHunterState(Hunter.MovementState.DEAD);
                     ((Bunny) fixtureB.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureB.getUserData()).b2body.getPosition(), true);
                 }
@@ -93,12 +94,24 @@ public class WorldContactListener implements ContactListener {
                 break;
             case BunnyGame.BUNNY_BIT | BunnyGame.ROCK_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.ROCK_BIT) {
-                    ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.SPEED)
+                        ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                    else {
+                        Filter filter = new Filter();
+                        filter.categoryBits = BunnyGame.DESTROYED_BIT;
+                        fixtureB.setFilterData(filter);
+                    }
                 } else {
-                    ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                    if(((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.SPEED)
+                        ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                    else {
+                        Filter filter = new Filter();
+                        filter.categoryBits = BunnyGame.DESTROYED_BIT;
+                        fixtureB.setFilterData(filter);
+                    }
                 }
                 break;
-           case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
+            case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.DOOR_BIT) {
                     ((Bunny) fixtureA.getUserData()).getGame().newLevel();
                     ((Bunny) fixtureA.getUserData()).getGame().setToPlayScreen();
