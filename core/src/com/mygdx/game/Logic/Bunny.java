@@ -1,6 +1,7 @@
 package com.mygdx.game.Logic;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.GUI.GameOverMenu;
+import com.mygdx.game.GUI.LoadGraphics;
 import com.mygdx.game.GUI.PlayScreen;
 
 /**
@@ -30,24 +32,13 @@ public class Bunny extends Sprite implements Disposable{
     public World world;
     public Body b2body;
 
-    private Texture bunnyRunningImage;
-    private Texture bunnyStartImage;
-    private Texture bunnyFallingImage;
-    private Texture bunnyDeadImage;
-    private Texture bunnyCrawlImage;
-    private Texture bunnySlowDownImage;
-    private TextureRegion[] runningFrames;
+
     private TextureRegion currentFrame;
     private Animation runningAnimation;
-    private TextureRegion[] startingFrames;
     private Animation startingAnimation;
-    private TextureRegion[] fallingFrames;
     private Animation fallingAnimation;
-    private TextureRegion[] deadFrames;
     private Animation deadAnimation;
-    private TextureRegion[] crawlFrames;
     private Animation crawlAnimation;
-    private TextureRegion[] slowDownFrames;
     private Animation slowDownAnimation;
 
     private int numberOfCarrots;
@@ -97,67 +88,20 @@ public class Bunny extends Sprite implements Disposable{
 
     public void defineAnimations(){
 
-        bunnyRunningImage = new Texture("bunny.png");
-        TextureRegion[][] tmp = TextureRegion.split(bunnyRunningImage, bunnyRunningImage.getWidth()/5, bunnyRunningImage.getHeight());
-        runningFrames = new TextureRegion[5];
-        int index = 0;
-        for(int i=0;i<5;i++){
-            runningFrames[index] = tmp[0][i];
-            index++;
-        }
-        runningAnimation = new Animation(0.1f, runningFrames);
         animationStateTime = 0f;
         stateTime = 0f;
 
-        bunnyStartImage= new Texture("bunnyStart.png");
-        TextureRegion[][] tmp2 = TextureRegion.split(bunnyStartImage, bunnyStartImage.getWidth()/3, bunnyStartImage.getHeight());
-        startingFrames = new TextureRegion[3];
-        int index2 = 0;
-        for(int i=0;i<3;i++){
-            startingFrames[index2] = tmp2[0][i];
-            index2++;
-        }
-        startingAnimation = new Animation(1f, startingFrames);
+        runningAnimation = new Animation(0.1f, LoadGraphics.getRunningFrames());
 
-        bunnyFallingImage= new Texture("falling_bunny.png");
-        TextureRegion[][] tmp3 = TextureRegion.split(bunnyFallingImage, bunnyFallingImage.getWidth()/2, bunnyFallingImage.getHeight());
-        fallingFrames = new TextureRegion[2];
-        int index3 = 0;
-        for(int i=0;i<2;i++){
-            fallingFrames[index3] = tmp3[0][i];
-            index3++;
-        }
-        fallingAnimation = new Animation(1f, fallingFrames);
+        startingAnimation = new Animation(1f, LoadGraphics.getStartingFrames());
 
-        bunnyDeadImage= new Texture("dead_bunny.png");
-        TextureRegion[][] tmp4 = TextureRegion.split(bunnyDeadImage, bunnyDeadImage.getWidth()/2, bunnyDeadImage.getHeight());
-        deadFrames = new TextureRegion[2];
-        int index4 = 0;
-        for(int i=0;i<2;i++){
-            deadFrames[index4] = tmp4[0][i];
-            index4++;
-        }
-        deadAnimation= new Animation(0.2f, deadFrames);
+        fallingAnimation = new Animation(1f, LoadGraphics.getFallingFrames());
 
-        bunnyCrawlImage= new Texture("bunny_crawl.png");
-        TextureRegion[][] tmp5 = TextureRegion.split(bunnyCrawlImage, bunnyCrawlImage.getWidth()/2, bunnyCrawlImage.getHeight());
-        crawlFrames = new TextureRegion[2];
-        int index5 = 0;
-        for(int i=0;i<2;i++){
-            crawlFrames[index5] = tmp5[0][i];
-            index5++;
-        }
-        crawlAnimation= new Animation(0.2f, crawlFrames);
+        deadAnimation= new Animation(0.2f, LoadGraphics.getDeadFrames());
 
-        bunnySlowDownImage= new Texture("bunny_slowdown.png");
-        TextureRegion[][] tmp6 = TextureRegion.split(bunnySlowDownImage, bunnySlowDownImage.getWidth()/2, bunnySlowDownImage.getHeight());
-        slowDownFrames = new TextureRegion[2];
-        int index6 = 0;
-        for(int i=0;i<2;i++){
-            slowDownFrames[index6] = tmp6[0][i];
-            index6++;
-        }
-        slowDownAnimation= new Animation(0.8f, slowDownFrames);
+        crawlAnimation= new Animation(0.2f, LoadGraphics.getCrawlFrames());
+
+        slowDownAnimation= new Animation(0.8f, LoadGraphics.getSlowDownFrames());
     }
 
     public void update(float dt){
@@ -240,12 +184,12 @@ public class Bunny extends Sprite implements Disposable{
 
     @Override
     public void dispose() {
-        bunnyRunningImage.dispose();
+        currentFrame.getTexture().dispose();
+      /*  bunnyRunningImage.dispose();
         bunnyStartImage.dispose();
         bunnyFallingImage.dispose();
         bunnyDeadImage.dispose();
         bunnyCrawlImage.dispose();
-        currentFrame.getTexture().dispose();
         for(TextureRegion image : runningFrames)
             image.getTexture().dispose();
 
@@ -259,7 +203,7 @@ public class Bunny extends Sprite implements Disposable{
             image.getTexture().dispose();
 
         for(TextureRegion image : crawlFrames)
-            image.getTexture().dispose();
+            image.getTexture().dispose();*/
     }
 
     public void setState(State state) {

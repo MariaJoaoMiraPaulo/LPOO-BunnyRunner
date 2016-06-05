@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
+import com.mygdx.game.GUI.LoadGraphics;
 import com.mygdx.game.GUI.PlayScreen;
 
 /**
@@ -32,15 +33,12 @@ public class Hunter extends Sprite implements Disposable{
     public Body b2body;
     private Fixture fixture;
 
-    public Texture hunterImage;
-    public TextureRegion[] hunterFrames;
     public TextureRegion currentFrame;
+
     public Animation hunterAnimationRight;
-    public Texture hunterImageLeft;
-    public TextureRegion[] hunterFramesLeft;
+
     public Animation hunterAnimationLeft;
-    public Texture deadHunterImage;
-    public TextureRegion[] deadHunterFrames;
+
     public Animation deadHunterAnimation;
 
     public float animationStateTime;
@@ -85,36 +83,13 @@ public class Hunter extends Sprite implements Disposable{
 
     public void defineHunter(){
 
-        hunterImage = new Texture("hunter_right.png");
-        TextureRegion[][] tmp = TextureRegion.split(hunterImage, hunterImage.getWidth()/6, hunterImage.getHeight());
-        hunterFrames = new TextureRegion[6];
-        int index = 0;
-        for(int i=0;i<6;i++){
-            hunterFrames[index] = tmp[0][i];
-            index++;
-        }
-        hunterAnimationRight = new Animation(0.1f, hunterFrames);
         animationStateTime = 0f;
 
-        hunterImageLeft = new Texture("hunter_left.png");
-        TextureRegion[][] tmp1 = TextureRegion.split(hunterImageLeft, hunterImageLeft.getWidth()/6, hunterImageLeft.getHeight());
-        hunterFramesLeft = new TextureRegion[6];
-        int index2 = 0;
-        for(int i=0;i<6;i++){
-            hunterFramesLeft[index2] = tmp1[0][i];
-            index2++;
-        }
-        hunterAnimationLeft = new Animation(0.1f, hunterFramesLeft);
+        hunterAnimationRight = new Animation(0.1f, LoadGraphics.getHunterFramesRight());
 
-        deadHunterImage = new Texture("dead_hunter.png");
-        TextureRegion[][] tmp2 = TextureRegion.split(deadHunterImage, deadHunterImage.getWidth()/5, deadHunterImage.getHeight());
-        deadHunterFrames = new TextureRegion[5];
-        int index3   = 0;
-        for(int i=0;i<5;i++){
-            deadHunterFrames[index3] = tmp2[0][i];
-            index3++;
-        }
-        deadHunterAnimation = new Animation(0.2f, deadHunterFrames);
+        hunterAnimationLeft = new Animation(0.1f, LoadGraphics.getHunterFramesLeft());
+
+        deadHunterAnimation = new Animation(0.2f, LoadGraphics.getDeadHunterFrames());
     }
 
     public void update(float dt){
@@ -169,7 +144,7 @@ public class Hunter extends Sprite implements Disposable{
     @Override
     public void dispose() {
         currentFrame.getTexture().dispose();
-        hunterImage.dispose();
+      /*  hunterImage.dispose();
         hunterImageLeft.dispose();
         deadHunterImage.dispose();
 
@@ -180,7 +155,7 @@ public class Hunter extends Sprite implements Disposable{
             image.getTexture().dispose();
 
         for(TextureRegion image : deadHunterFrames)
-            image.getTexture().dispose();
+            image.getTexture().dispose();*/
     }
 
     public TextureRegion getCurrentFrame() {
