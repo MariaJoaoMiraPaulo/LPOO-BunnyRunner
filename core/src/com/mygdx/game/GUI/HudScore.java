@@ -25,6 +25,7 @@ public class HudScore extends Stage {
     private Viewport viewport;
     private Label numberCarrot;
     private Image carrot;
+    private Texture btnPause;
     private Array<Texture> carrotLevel;
     private SpriteBatch batch;
 
@@ -46,6 +47,7 @@ public class HudScore extends Stage {
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport,batch);
         carrot = new Image(new Texture("carrot.png"));
+        btnPause = new Texture("button_pause.png");
 
         Table table = new Table();
         table.top();
@@ -87,6 +89,8 @@ public class HudScore extends Stage {
         else if (score < 25)
             batch.draw(carrotLevel.get(3),150,Gdx.graphics.getHeight()- 100,233,100);
         else  batch.draw(carrotLevel.get(4),150,Gdx.graphics.getHeight()- 100,233,100);
+
+        batch.draw(btnPause,Gdx.graphics.getWidth()-75,Gdx.graphics.getHeight()- 75,75,75);
 
         batch.end();
 

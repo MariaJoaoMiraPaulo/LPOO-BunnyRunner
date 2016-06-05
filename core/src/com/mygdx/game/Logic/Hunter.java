@@ -204,8 +204,4 @@ public class Hunter extends Sprite implements Disposable{
         }
         this.hunterState = hunterState;
     }
-
-    public float getStateTime() {
-        return stateTime;
-    }
 }

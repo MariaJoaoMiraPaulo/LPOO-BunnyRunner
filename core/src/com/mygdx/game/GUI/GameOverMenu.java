@@ -120,11 +120,11 @@ public class GameOverMenu implements Screen {
     }
 
     public void setMainMenuScreen(){
-        game.setScreen(new MainMenu(game));
+        game.setToMainMenu();
     }
 
     public void setPlayScreen(){
-        game.setScreen(new PlayScreen(game,game.getAtualLevel()));
+        game.setToPlayScreen();
     }
 
 

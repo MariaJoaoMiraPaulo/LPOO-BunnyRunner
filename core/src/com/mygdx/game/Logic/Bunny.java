@@ -30,32 +30,32 @@ public class Bunny extends Sprite implements Disposable{
     public World world;
     public Body b2body;
 
-    public Texture bunnyRunningImage;
-    public Texture bunnyStartImage;
-    public Texture bunnyFallingImage;
-    public Texture bunnyDeadImage;
-    public Texture bunnyCrawlImage;
-    public Texture bunnySlowDownImage;
-    public TextureRegion[] runningFrames;
-    public TextureRegion currentFrame;
-    public Animation runningAnimation;
-    public TextureRegion[] startingFrames;
-    public Animation startingAnimation;
-    public TextureRegion[] fallingFrames;
-    public Animation fallingAnimation;
-    public TextureRegion[] deadFrames;
-    public Animation deadAnimation;
-    public TextureRegion[] crawlFrames;
-    public Animation crawlAnimation;
-    public TextureRegion[] slowDownFrames;
-    public Animation slowDownAnimation;
+    private Texture bunnyRunningImage;
+    private Texture bunnyStartImage;
+    private Texture bunnyFallingImage;
+    private Texture bunnyDeadImage;
+    private Texture bunnyCrawlImage;
+    private Texture bunnySlowDownImage;
+    private TextureRegion[] runningFrames;
+    private TextureRegion currentFrame;
+    private Animation runningAnimation;
+    private TextureRegion[] startingFrames;
+    private Animation startingAnimation;
+    private TextureRegion[] fallingFrames;
+    private Animation fallingAnimation;
+    private TextureRegion[] deadFrames;
+    private Animation deadAnimation;
+    private TextureRegion[] crawlFrames;
+    private Animation crawlAnimation;
+    private TextureRegion[] slowDownFrames;
+    private Animation slowDownAnimation;
 
     private int numberOfCarrots;
 
     public State stateBunny;
 
-    public float animationStateTime;
-    public float stateTime;
+    private float animationStateTime;
+    private float stateTime;
 
     public Bunny(World world, BunnyGame game){
         defineAnimations();
@@ -293,4 +293,7 @@ public class Bunny extends Sprite implements Disposable{
         return numberOfCarrots;
     }
 
+    public BunnyGame getGame() {
+        return game;
+    }
 }

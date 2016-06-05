@@ -1,12 +1,9 @@
 package com.mygdx.game.GUI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -14,90 +11,95 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
+import com.mygdx.game.Logic.Bunny;
 
 /**
- * Created by mariajoaomirapaulo on 03/06/16.
+ * Created by Nuno on 05/06/2016.
  */
+public class PauseMenu implements Screen {
 
-public class MainMenu implements Screen {
-
-
-    private Texture background;
-    private Texture button;
-    private Image playButton;
-    private Image exitButton;
-    private Stage stage;
     private BunnyGame game;
+
+    private Image playButton;
+    private Image menuButton;
+    private Image optionsButton;
+
+    private Texture button;
+    private Texture background;
 
     private Viewport gamePort;
 
-    public MainMenu(BunnyGame game) {
+    private Stage stage;
 
+    public PauseMenu(BunnyGame game){
         this.game = game;
+
+        button = new Texture("button.png");
+        background = new Texture("pauseMenu.png");
 
         gamePort=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort.apply();
         stage = new Stage(gamePort, game.batch);
 
-        background = new Texture("MainMenu2.png");
-        button = new Texture("button.png");
-
-        float xPlayButton=Gdx.graphics.getWidth()*40/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
-        float yPlayButton=Gdx.graphics.getHeight()*26/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
-        float wPlayButton = Gdx.graphics.getWidth()*20/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
-        float hPlayButton = Gdx.graphics.getHeight()*7/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
-
+        float xPlayButton= Gdx.graphics.getWidth()*39/100;
+        float yPlayButton=Gdx.graphics.getHeight()*41/100;
+        float wPlayButton = Gdx.graphics.getWidth()*11/100;
+        float hPlayButton = Gdx.graphics.getHeight()*8/100;
 
         playButton = new Image(button);
         playButton.setWidth(wPlayButton);
         playButton.setHeight(hPlayButton);
         playButton.setPosition(xPlayButton,yPlayButton);
 
-         xPlayButton=Gdx.graphics.getWidth()*40/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
-         yPlayButton=Gdx.graphics.getHeight()*16/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
-         wPlayButton = Gdx.graphics.getWidth()*20/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
-         hPlayButton = Gdx.graphics.getHeight()*7/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
+        xPlayButton= Gdx.graphics.getWidth()*53/100;
 
+        menuButton = new Image(button);
+        menuButton.setWidth(wPlayButton);
+        menuButton.setHeight(hPlayButton);
+        menuButton.setPosition(xPlayButton,yPlayButton);
 
-        exitButton = new Image(button);
-        exitButton.setWidth(wPlayButton);
-        exitButton.setHeight(hPlayButton);
-        exitButton.setPosition(xPlayButton,yPlayButton);
+        xPlayButton= Gdx.graphics.getWidth()*66/100;
+
+        optionsButton = new Image(button);
+        optionsButton.setWidth(wPlayButton);
+        optionsButton.setHeight(hPlayButton);
+        optionsButton.setPosition(xPlayButton,yPlayButton);
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(playButton);
-        stage.addActor(exitButton);
+        stage.addActor(menuButton);
+        stage.addActor(optionsButton);
 
         playButton.addListener(new ClickListener(){
-           @Override
-            public void clicked(InputEvent event, float x, float y){
-               setPlayScreen();
-
-           }
-        });
-
-        exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                Gdx.app.exit();
+                setPlayScreen();
+            }
+        });
 
+        menuButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                setMenuScreen();
+            }
+        });
+
+        optionsButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                //Adicionar menu das opçoes
             }
         });
 
     }
 
     public void setPlayScreen(){
-        game.setToPlayScreen();
+        game.setToSamePlayScreen();
     }
 
+    public void setMenuScreen(){
+        game.setToMainMenu();
+    }
 
     @Override
     public void show() {
@@ -110,7 +112,6 @@ public class MainMenu implements Screen {
         game.batch.begin();
         game.batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         game.batch.end();
-        stage.draw();
     }
 
     @Override

@@ -31,8 +31,8 @@ public class PlayScreen implements Screen, InputProcessor {
     public BunnyGame game;
 
     private Bunny bunny;
-   // private Hunter hunter;
     private Array<Hunter> hunters;
+
     private HudScore hud;
 
     //Tiled Map
@@ -89,6 +89,7 @@ public class PlayScreen implements Screen, InputProcessor {
         dragDone = false;
 
         loadFile();
+
     }
 
     public void loadFile(){
@@ -130,7 +131,6 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny.update(dt);
         for(Hunter hunter : hunters)
                 hunter.update(dt);
-        //hunter.update(dt); //FIXME
 
         gamecam.position.x = bunny.b2body.getPosition().x;
 
@@ -154,7 +154,6 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny.draw(game.batch);
         for(Hunter hunter : hunters)
                 hunter.draw(game.batch);
-        //hunter.draw(game.batch);//FIXME
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -212,6 +211,13 @@ public class PlayScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         startingPoint.set(screenX, screenY);
 
+        Gdx.app.log("Toque", " "+ screenX + " " + screenY);
+        if(screenX > Gdx.graphics.getWidth() - 75 && screenX < Gdx.graphics.getWidth() &&
+                screenY > 0 && screenY < 75){
+            Gdx.app.log("Toque", "Pausa!");
+            game.setToPauseMenu();
+        }
+
         if(bunny.stateBunny == Bunny.State.STANDING)
             bunny.setState(Bunny.State.RUNNING);
 
@@ -265,10 +271,6 @@ public class PlayScreen implements Screen, InputProcessor {
         return world;
     }
 
-   /* public void setHunter(Hunter hunter) {
-        this.hunter = hunter;
-    }*/
-
     public Bunny getBunny() {
         return bunny;
     }
@@ -279,5 +281,9 @@ public class PlayScreen implements Screen, InputProcessor {
 
     public void setHunters(Array<Hunter> hunters){
         this.hunters = hunters;
+    }
+
+    public void input() {
+        Gdx.input.setInputProcessor(this);
     }
 }
