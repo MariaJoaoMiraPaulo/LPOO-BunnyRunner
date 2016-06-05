@@ -29,7 +29,6 @@ public class HighScoreMenu implements Screen {
     public HighScoreMenu(BunnyGame game){
 
         this.game=game;
-        int score=0;
         viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new OrthographicCamera());
         stage = new Stage(viewport,game.batch);
         background = new Texture("HighScoreMenu.png");
@@ -37,7 +36,8 @@ public class HighScoreMenu implements Screen {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-        score1 = new Label(String.format("%02d", score),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        Gdx.app.log("HS"," "+game.getHighscore());
+        score1 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(new BitmapFont(), Color.WHITE));
         score1.setFontScale(3);
         score1.setAlignment(Align.center);
 
@@ -48,13 +48,13 @@ public class HighScoreMenu implements Screen {
 
         stage.addActor(table);
 
-
+        Gdx.input.setInputProcessor(stage);
 
 
     }
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class HighScoreMenu implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width,height);
     }
 
     @Override
@@ -89,5 +89,9 @@ public class HighScoreMenu implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public void setLabel(){
+        score1.setText(String.format("%02d",game.getHighscore()));
     }
 }

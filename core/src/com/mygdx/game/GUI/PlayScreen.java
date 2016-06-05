@@ -52,8 +52,6 @@ public class PlayScreen implements Screen, InputProcessor {
     private Vector2 startingPoint;
     private boolean dragDone;
 
-    private FileHandle file;
-    private int highscore;
 
     public PlayScreen(BunnyGame game, int mapLevel){
         this.game=game;
@@ -88,39 +86,7 @@ public class PlayScreen implements Screen, InputProcessor {
         startingPoint = new Vector2(0,0);
         dragDone = false;
 
-        loadFile();
 
-    }
-
-    public void loadFile(){
-        file = Gdx.files.local("highscore.dat");
-
-        if(!file.exists()){
-            highscore = 0;
-            Gdx.app.log("Highscore", "Passei");
-        }
-        else {
-            String text;
-            text = file.readString();
-            highscore = Integer.parseInt(text);
-            Gdx.app.log("Highscore", "" + highscore);
-        }
-    }
-
-    public void saveHighscore(){
-        if(file.exists()){
-            if(highscore < bunny.getNumberOfCarrots()){
-                file.writeString(String.format("%d", bunny.getNumberOfCarrots()), false);
-            }
-        }
-        else {
-            try {
-                file.file().createNewFile();
-                file.writeString(String.format("%d", bunny.getNumberOfCarrots()), false);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     public void update(float dt){
@@ -187,10 +153,6 @@ public class PlayScreen implements Screen, InputProcessor {
         renderer.dispose();
         world.dispose();
         b2dr.dispose();
-    }
-
-    public void newGame(){
-        game.setScreen(new PlayScreen(game,game.getAtualLevel()));
     }
 
     @Override
@@ -296,5 +258,4 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
-    public int getHighscore() {return highscore;}
 }

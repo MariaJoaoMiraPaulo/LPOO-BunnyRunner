@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GUI.GameOverMenu;
@@ -9,7 +10,8 @@ import com.mygdx.game.GUI.HighScoreMenu;
 import com.mygdx.game.GUI.MainMenu;
 import com.mygdx.game.GUI.PauseMenu;
 import com.mygdx.game.GUI.PlayScreen;
-import com.sun.org.apache.xpath.internal.operations.String;
+
+import java.io.IOException;
 
 /**
  * Created by mariajoaomirapaulo on 10/05/16.
@@ -31,6 +33,9 @@ public class BunnyGame extends Game{
     public static final short ROCK_BIT = 256;
     public static final short HUNTER_BIT = 512;
 
+    private FileHandle file;
+    private int highscore;
+
     public SpriteBatch batch;
     private int atualLevel=1;
 
@@ -47,10 +52,12 @@ public class BunnyGame extends Game{
         gameOverMenu = new GameOverMenu(this);
         pauseMenu = new PauseMenu(this);
         playScreen = new PlayScreen(this, 1);
+        loadFile();
         highScoreMenu = new HighScoreMenu(this);
 
-        //setScreen(mainMenu);
-        setScreen(highScoreMenu);
+
+
+        setScreen(mainMenu);
     }
 
     @Override
@@ -92,6 +99,49 @@ public class BunnyGame extends Game{
     public void setToSamePlayScreen() {
         playScreen.input();
         setScreen(playScreen);
+    }
+
+    public void setToHighScoreMenu() {
+        highScoreMenu.setLabel();
+        setScreen(highScoreMenu);
+    }
+
+    public void loadFile(){
+        file = Gdx.files.local("highscore.dat");
+
+        if(!file.exists()){
+            highscore = 0;
+            Gdx.app.log("Highscore", "Passei");
+        }
+        else {
+            java.lang.String text;
+            text = file.readString();
+            highscore = Integer.parseInt(text);
+           // highscore = 0;
+            Gdx.app.log("Highscore", "" + highscore);
+        }
+    }
+
+    public void saveHighscore(){
+        if(file.exists()){
+            if(highscore < ((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()){
+                file.writeString(java.lang.String.format("%d",((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()), false);
+                highscore=((PlayScreen)getScreen()).getBunny().getNumberOfCarrots();
+            }
+          // file.writeString(java.lang.String.format("%d",0),false);
+        }
+        else {
+            try {
+                file.file().createNewFile();
+                file.writeString(java.lang.String.format("%d",((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()), false);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int getHighscore() {
+        return highscore;
     }
 }
 

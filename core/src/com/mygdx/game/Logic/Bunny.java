@@ -113,19 +113,21 @@ public class Bunny extends Sprite implements Disposable{
         stateTime += dt;
         Gdx.app.log("Tempo ", " "+ stateTime + "  " + stateBunny);
 
-        if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING)
+        if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING )
             b2body.setLinearVelocity(MOVEMENT, 0);
 
-        if(stateBunny==State.SPEED && stateTime <3)
-            b2body.setLinearVelocity(3.5f, 0);
-        else if (stateBunny==State.SPEED && stateTime >= 3)
-        {  setState(State.RUNNING);
-            numberOfCarrotsSpeed=0;}
+        if(b2body.getLinearVelocity().x < 2.5 && stateBunny==State.SPEED && stateTime <3){
+            b2body.setLinearVelocity(2.5f, 0);
+        }
+        else if (stateBunny==State.SPEED && stateTime >= 3) {
+            setState(State.RUNNING);
+            numberOfCarrotsSpeed=0;
+        }
 
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
         else if(stateBunny==State.DEAD && stateTime >=3){
-            ((PlayScreen)game.getScreen()).saveHighscore();
+            game.saveHighscore();
             game.setToGameOverMenu();
         }
 
@@ -260,6 +262,7 @@ public class Bunny extends Sprite implements Disposable{
         {
             Gdx.app.log("Cenouras:",""+ numberOfCarrotsSpeed);
             setState(State.SPEED);
+            b2body.applyLinearImpulse(new Vector2(4, 0), b2body.getWorldCenter(), true);
         }
     }
 

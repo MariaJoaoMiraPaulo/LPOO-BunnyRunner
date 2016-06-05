@@ -84,6 +84,14 @@ public class MainMenu implements Screen {
            }
         });
 
+        highScoreButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                setHighScoreMenu();
+
+            }
+        });
+
         exitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -92,6 +100,10 @@ public class MainMenu implements Screen {
             }
         });
 
+    }
+
+    public void setHighScoreMenu(){
+        game.setToHighScoreMenu();
     }
 
     public void setPlayScreen(){
