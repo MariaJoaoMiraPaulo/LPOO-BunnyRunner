@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
-import com.mygdx.game.Logic.Bunny;
 
 /**
  * Created by Nuno on 05/06/2016.
@@ -22,7 +21,8 @@ public class PauseMenu implements Screen {
 
     private Image playButton;
     private Image menuButton;
-    private Image optionsButton;
+    private Image soundButton;
+    private Image restartButton;
 
     private Texture button;
     private Texture background;
@@ -60,15 +60,24 @@ public class PauseMenu implements Screen {
 
         xPlayButton= Gdx.graphics.getWidth()*66/100;
 
-        optionsButton = new Image(button);
-        optionsButton.setWidth(wPlayButton);
-        optionsButton.setHeight(hPlayButton);
-        optionsButton.setPosition(xPlayButton,yPlayButton);
+        soundButton = new Image(button);
+        soundButton.setWidth(wPlayButton);
+        soundButton.setHeight(hPlayButton);
+        soundButton.setPosition(xPlayButton,yPlayButton);
+
+        xPlayButton= Gdx.graphics.getWidth()*77/100;
+
+
+        restartButton = new Image(button);
+        restartButton.setWidth(wPlayButton);
+        restartButton.setHeight(hPlayButton);
+        restartButton.setPosition(xPlayButton,yPlayButton);
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(playButton);
         stage.addActor(menuButton);
-        stage.addActor(optionsButton);
+        stage.addActor(soundButton);
+        stage.addActor(restartButton);
 
         playButton.addListener(new ClickListener(){
             @Override
@@ -84,13 +93,30 @@ public class PauseMenu implements Screen {
             }
         });
 
-        optionsButton.addListener(new ClickListener(){
+        soundButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                //Adicionar menu das opçoes
+                Gdx.app.log("Entrei","Som");
+                ConfigMusic();
+
             }
         });
 
+        restartButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+               setNewPlayScreen();
+            }
+        });
+
+    }
+
+    public void ConfigMusic(){
+        game.setSoundOn(!game.isSoundOn());
+    }
+
+    public void setNewPlayScreen(){
+        game.setToPlayScreen();
     }
 
     public void setPlayScreen(){

@@ -3,6 +3,7 @@ package com.mygdx.game.GUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -53,6 +54,7 @@ public class PlayScreen implements Screen, InputProcessor {
     private Vector2 screenDelta;
     private Vector2 startingPoint;
     private boolean dragDone;
+    private Music music;
 
 
     public PlayScreen(BunnyGame game, int mapLevel){
@@ -89,6 +91,12 @@ public class PlayScreen implements Screen, InputProcessor {
         startingPoint = new Vector2(0,0);
         dragDone = false;
 
+        music = game.manager.get("song.wav", Music.class);
+        music.setLooping(true);
+        music.play();
+
+
+
 
     }
 
@@ -99,13 +107,21 @@ public class PlayScreen implements Screen, InputProcessor {
 
         bunny.update(dt);
         for(Hunter hunter : hunters)
-                hunter.update(dt);
+            hunter.update(dt);
 
         gamecam.position.x = bunny.b2body.getPosition().x;
 
         gamecam.update();
         renderer.setView(gamecam);
         hud.setNumberCarrotsSpeed(bunny.getNumberOfCarrotsSpeed());
+
+        if(!game.isSoundOn()){
+            Gdx.app.log("Entrei","Vou desligar ");
+            music.pause();
+        }
+
+
+
     }
 
     @Override
@@ -123,13 +139,14 @@ public class PlayScreen implements Screen, InputProcessor {
         game.batch.begin();
         bunny.draw(game.batch);
         for(Hunter hunter : hunters)
-                hunter.draw(game.batch);
+            hunter.draw(game.batch);
         for(Rock rock : rocks)
-                rock.draw(game.batch);
+            rock.draw(game.batch);
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
         hud.draw();
+
     }
 
     @Override
@@ -208,7 +225,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         if(screenDelta.x>20 && !dragDone)  //the bunny is going to gain speed
         {
-           bunny.checkSpeed();
+            bunny.checkSpeed();
             dragDone = true;
         }
 

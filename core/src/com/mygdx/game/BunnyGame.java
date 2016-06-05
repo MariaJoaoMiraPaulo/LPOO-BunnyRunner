@@ -2,6 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -46,17 +49,22 @@ public class BunnyGame extends Game{
     private PlayScreen playScreen;
     private HighScoreMenu highScoreMenu;
 
+    public static AssetManager manager;
+    private boolean soundOn;
+
     @Override
     public void create() {
         batch= new SpriteBatch();
+        this.soundOn=true;
+        manager = new AssetManager();
+        manager.load("song.wav",Music.class);
+        manager.finishLoading();
         mainMenu = new MainMenu(this);
         gameOverMenu = new GameOverMenu(this);
         pauseMenu = new PauseMenu(this);
         playScreen = new PlayScreen(this, 1);
         loadFile();
         highScoreMenu = new HighScoreMenu(this);
-
-
 
         setScreen(mainMenu);
     }
@@ -143,6 +151,18 @@ public class BunnyGame extends Game{
 
     public int getHighscore() {
         return highscore;
+    }
+
+    public boolean isSoundOn() {
+        return soundOn;
+    }
+
+    public void setSoundOn(boolean soundOn) {
+        this.soundOn = soundOn;
+    }
+
+    public PlayScreen getPlayScreen() {
+        return playScreen;
     }
 }
 
