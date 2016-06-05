@@ -74,9 +74,11 @@ public class WorldContactListener implements ContactListener {
                 break;
             case BunnyGame.BUNNY_BIT | BunnyGame.GROUND_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.GROUND_BIT) {
-                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL)
+                    if (((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.CRAWL
+                            && ((Bunny) fixtureA.getUserData()).stateBunny != Bunny.State.SPEED)
                         ((Bunny) fixtureA.getUserData()).setState(Bunny.State.RUNNING);
-                } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL)
+                } else if (((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.STANDING && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.CRAWL
+                        && ((Bunny) fixtureB.getUserData()).stateBunny != Bunny.State.SPEED)
                     ((Bunny) fixtureB.getUserData()).setState(Bunny.State.RUNNING);
                 break;
             case BunnyGame.HUNTER_BIT | BunnyGame.BUNNY_BIT:
