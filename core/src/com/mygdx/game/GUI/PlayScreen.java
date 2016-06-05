@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Bunny;
 import com.mygdx.game.Logic.Hunter;
+import com.mygdx.game.Logic.Rock;
 import com.mygdx.game.Tools.WorldContactListener;
 import com.mygdx.game.Tools.WorldCreator;
 
@@ -32,6 +33,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private Bunny bunny;
     private Array<Hunter> hunters;
+    private Array<Rock> rocks;
 
     private HudScore hud;
 
@@ -72,6 +74,7 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny = new Bunny(world, game);
 
         hunters = new Array<Hunter>();
+        rocks = new Array<Rock>();
 
         new WorldCreator(world,map, this);
 
@@ -121,6 +124,8 @@ public class PlayScreen implements Screen, InputProcessor {
         bunny.draw(game.batch);
         for(Hunter hunter : hunters)
                 hunter.draw(game.batch);
+        for(Rock rock : rocks)
+                rock.draw(game.batch);
         game.batch.end();
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
@@ -258,4 +263,7 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
     }
 
+    public void setRocks(Array<Rock> rocks) {
+        this.rocks = rocks;
+    }
 }
