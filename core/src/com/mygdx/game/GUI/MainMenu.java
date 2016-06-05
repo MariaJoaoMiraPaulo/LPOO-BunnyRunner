@@ -26,6 +26,7 @@ public class MainMenu implements Screen {
     private Texture button;
     private Image playButton;
     private Image exitButton;
+    private Image highScoreButton;
     private Stage stage;
     private BunnyGame game;
 
@@ -39,17 +40,13 @@ public class MainMenu implements Screen {
         gamePort.apply();
         stage = new Stage(gamePort, game.batch);
 
-        background = new Texture("MainMenu2.png");
+        background = new Texture("MainMenu.png");
         button = new Texture("button.png");
 
         float xPlayButton=Gdx.graphics.getWidth()*40/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
-        float yPlayButton=Gdx.graphics.getHeight()*26/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
+        float yPlayButton=Gdx.graphics.getHeight()*28/100;
         float wPlayButton = Gdx.graphics.getWidth()*20/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
         float hPlayButton = Gdx.graphics.getHeight()*7/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
 
 
         playButton = new Image(button);
@@ -57,14 +54,15 @@ public class MainMenu implements Screen {
         playButton.setHeight(hPlayButton);
         playButton.setPosition(xPlayButton,yPlayButton);
 
-         xPlayButton=Gdx.graphics.getWidth()*40/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
-         yPlayButton=Gdx.graphics.getHeight()*16/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
-         wPlayButton = Gdx.graphics.getWidth()*20/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
-         hPlayButton = Gdx.graphics.getHeight()*7/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
+        yPlayButton=Gdx.graphics.getHeight()*19/100;
+
+
+        highScoreButton = new Image(button);
+        highScoreButton.setWidth(wPlayButton);
+        highScoreButton.setHeight(hPlayButton);
+        highScoreButton.setPosition(xPlayButton,yPlayButton);
+
+        yPlayButton=Gdx.graphics.getHeight()*9/100;
 
 
         exitButton = new Image(button);
@@ -72,9 +70,11 @@ public class MainMenu implements Screen {
         exitButton.setHeight(hPlayButton);
         exitButton.setPosition(xPlayButton,yPlayButton);
 
+
         Gdx.input.setInputProcessor(stage);
         stage.addActor(playButton);
         stage.addActor(exitButton);
+        stage.addActor(highScoreButton);
 
         playButton.addListener(new ClickListener(){
            @Override
