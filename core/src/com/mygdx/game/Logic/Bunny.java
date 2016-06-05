@@ -40,6 +40,7 @@ public class Bunny extends Sprite implements Disposable{
     private Animation deadAnimation;
     private Animation crawlAnimation;
     private Animation slowDownAnimation;
+    private Animation speedAnimation;
 
     private int numberOfCarrots;
     private int numberOfCarrotsSpeed;
@@ -103,6 +104,8 @@ public class Bunny extends Sprite implements Disposable{
         crawlAnimation= new Animation(0.2f, LoadGraphics.getCrawlFrames());
 
         slowDownAnimation= new Animation(0.8f, LoadGraphics.getSlowDownFrames());
+
+        speedAnimation= new Animation(0.03f, LoadGraphics.getRunningFrames());
     }
 
     public void update(float dt){
@@ -161,6 +164,9 @@ public class Bunny extends Sprite implements Disposable{
                 break;
             case SLOWDOWN:
                 currentFrame=slowDownAnimation.getKeyFrame(animationStateTime,true);
+                break;
+            case SPEED:
+                currentFrame=speedAnimation.getKeyFrame(animationStateTime,true);
                 break;
             default:
                 currentFrame = startingAnimation.getKeyFrame(animationStateTime, true);

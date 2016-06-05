@@ -15,9 +15,11 @@ public class LoadGraphics implements Disposable{
     private static Texture bunnyDeadImage;
     private static Texture bunnyCrawlImage;
     private static Texture bunnySlowDownImage;
+    public static Texture bunnySpeedImage;
     public static Texture hunterImageRight;
     public static Texture hunterImageLeft;
     public static Texture deadHunterImage;
+
 
     private static TextureRegion[] runningFrames;
     private static TextureRegion[] startingFrames;
@@ -25,6 +27,7 @@ public class LoadGraphics implements Disposable{
     private static TextureRegion[] deadFrames;
     private static TextureRegion[] crawlFrames;
     private static TextureRegion[] slowDownFrames;
+    private static TextureRegion[] speedFrames;
     public static TextureRegion[] hunterFramesRight;
     public static TextureRegion[] hunterFramesLeft;
     public static TextureRegion[] deadHunterFrames;
@@ -91,6 +94,7 @@ public class LoadGraphics implements Disposable{
 
         return hunterImageRight;
     }
+
 
     public static TextureRegion[] getRunningFrames() {
         if(runningFrames == null){
