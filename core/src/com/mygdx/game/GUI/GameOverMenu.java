@@ -41,13 +41,9 @@ public class GameOverMenu implements Screen {
 
 
         float xPlayButton= Gdx.graphics.getWidth()*41/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
         float yPlayButton=Gdx.graphics.getHeight()*29/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
         float wPlayButton = Gdx.graphics.getWidth()*21/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
         float hPlayButton = Gdx.graphics.getHeight()*8/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
 
 
         playAgainButton = new Image(button);
@@ -57,13 +53,9 @@ public class GameOverMenu implements Screen {
 
 
         xPlayButton=Gdx.graphics.getWidth()*41/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
         yPlayButton=Gdx.graphics.getHeight()*19/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
         wPlayButton = Gdx.graphics.getWidth()*21/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
         hPlayButton = Gdx.graphics.getHeight()*8/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
 
 
         MainMenuButoon = new Image(button);
@@ -73,13 +65,9 @@ public class GameOverMenu implements Screen {
 
 
         xPlayButton=Gdx.graphics.getWidth()*41/100;
-        Gdx.app.log("Background", " x :"+Gdx.graphics.getHeight()*19/100);
         yPlayButton=Gdx.graphics.getHeight()*9/100;
-        Gdx.app.log("Background", " y :"+Gdx.graphics.getHeight()*19/100);
         wPlayButton = Gdx.graphics.getWidth()*21/100;
-        Gdx.app.log("Background", " comprimento :"+Gdx.graphics.getWidth()*32/100);
         hPlayButton = Gdx.graphics.getHeight()*8/100;
-        Gdx.app.log("Background", " altura :"+Gdx.graphics.getHeight()*12/100);
 
         exitButoon = new Image(button);
         exitButoon.setWidth(wPlayButton);
