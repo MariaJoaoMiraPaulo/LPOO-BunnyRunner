@@ -30,13 +30,19 @@ public class HudScore extends Stage {
     private SpriteBatch batch;
 
     private int score;
-    private int levelCarrot;
-    private int imageState=0;
+    private int numberCarrotsSpeed;
+    private int imageState;
 
+
+    public void setNumberCarrotsSpeed(int numberCarrotsSpeed) {
+        this.numberCarrotsSpeed = numberCarrotsSpeed;
+    }
 
     public HudScore(SpriteBatch batch){
         score = 0;
         this.batch=batch;
+        this.imageState=0;
+        this.numberCarrotsSpeed=0;
         carrotLevel = new Array<Texture>();
         carrotLevel.add(new Texture("carrot0.png"));
         carrotLevel.add(new Texture("carrot1.png"));
@@ -70,7 +76,7 @@ public class HudScore extends Stage {
 
     public void setScore(int score) {
         this.score=score;
-        this.levelCarrot=levelCarrot;
+        numberCarrotsSpeed++;
         numberCarrot.setText(String.format("%02d", score));
 
     }
@@ -80,16 +86,17 @@ public class HudScore extends Stage {
         super.draw();
         batch.begin();
         Gdx.app.log("Score"," "+ score);
-        if(score==0)
-            batch.draw(carrotLevel.get(0),150,Gdx.graphics.getHeight()- 100,233,100);
-        else if (score <10)
-            batch.draw(carrotLevel.get(1),150,Gdx.graphics.getHeight()- 100,233,100);
-        else if( score <20)
-            batch.draw(carrotLevel.get(2),150,Gdx.graphics.getHeight()- 100,233,100);
-        else if (score < 25)
-            batch.draw(carrotLevel.get(3),150,Gdx.graphics.getHeight()- 100,233,100);
-        else  batch.draw(carrotLevel.get(4),150,Gdx.graphics.getHeight()- 100,233,100);
+        if(numberCarrotsSpeed==0)
+           imageState=0;
+        else if (numberCarrotsSpeed <10)
+            imageState=1;
+        else if( numberCarrotsSpeed <20)
+           imageState=2;
+        else if (numberCarrotsSpeed < 25)
+           imageState=3;
+        else  imageState=4;
 
+        batch.draw(carrotLevel.get(imageState),150,Gdx.graphics.getHeight()- 100,233,100);
         batch.draw(btnPause,Gdx.graphics.getWidth()-75,Gdx.graphics.getHeight()- 75,75,75);
 
         batch.end();

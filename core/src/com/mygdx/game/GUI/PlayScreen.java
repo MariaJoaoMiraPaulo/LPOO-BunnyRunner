@@ -136,6 +136,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         gamecam.update();
         renderer.setView(gamecam);
+        hud.setNumberCarrotsSpeed(bunny.getNumberOfCarrotsSpeed());
     }
 
     @Override
@@ -236,7 +237,13 @@ public class PlayScreen implements Screen, InputProcessor {
 
         screenDelta.set(screenX - startingPoint.x, screenY - startingPoint.y);
 
-        Gdx.app.log("Eventos: ", "Drag "+screenDelta.x + " " + screenDelta.y);
+        Gdx.app.log("Drag", " "+screenDelta.x + " " + screenDelta.y);
+
+        if(screenDelta.x>20 && !dragDone)
+        {
+           bunny.checkSpeed();
+            dragDone = true;
+        }
 
         if(screenDelta.y > 20 && !dragDone && bunny.stateBunny != Bunny.State.CRAWL){
             bunny.rotateBunny();
@@ -253,6 +260,8 @@ public class PlayScreen implements Screen, InputProcessor {
             bunny.setState(Bunny.State.SLOWDOWN);
             dragDone=true;
         }
+
+
 
         return false;
     }

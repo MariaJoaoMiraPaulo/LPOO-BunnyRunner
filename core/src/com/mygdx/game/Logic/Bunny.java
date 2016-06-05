@@ -25,7 +25,7 @@ import com.mygdx.game.GUI.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
-    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN};
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN,SPEED};
 
     public BunnyGame game;
 
@@ -42,6 +42,7 @@ public class Bunny extends Sprite implements Disposable{
     private Animation slowDownAnimation;
 
     private int numberOfCarrots;
+    private int numberOfCarrotsSpeed;
 
     public State stateBunny;
 
@@ -111,6 +112,12 @@ public class Bunny extends Sprite implements Disposable{
 
         if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING)
             b2body.setLinearVelocity(MOVEMENT, 0);
+
+        if(stateBunny==State.SPEED && stateTime <3)
+            b2body.setLinearVelocity(3.5f, 0);
+        else if (stateBunny==State.SPEED && stateTime >= 3)
+        {  setState(State.RUNNING);
+            numberOfCarrotsSpeed=0;}
 
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
@@ -229,6 +236,7 @@ public class Bunny extends Sprite implements Disposable{
 
     public void incNumberOfCarrots(){
         numberOfCarrots++;
+        numberOfCarrotsSpeed++;
         ((PlayScreen)game.getScreen()).getHud().setScore(numberOfCarrots);
         Gdx.app.log("Carrots", "Apanhei uma "+ numberOfCarrots);
     }
@@ -240,4 +248,17 @@ public class Bunny extends Sprite implements Disposable{
     public BunnyGame getGame() {
         return game;
     }
+
+    public void checkSpeed(){
+        if(numberOfCarrotsSpeed>=25)
+        {
+            Gdx.app.log("Cenouras:",""+ numberOfCarrotsSpeed);
+            setState(State.SPEED);
+        }
+    }
+
+    public int getNumberOfCarrotsSpeed() {
+        return numberOfCarrotsSpeed;
+    }
+
 }
