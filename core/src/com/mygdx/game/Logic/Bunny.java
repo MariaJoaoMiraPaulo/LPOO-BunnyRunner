@@ -81,7 +81,8 @@ public class Bunny extends Sprite implements Disposable{
                 BunnyGame.DOOR_BIT |
                 BunnyGame.ROCK_BIT |
                 BunnyGame.HUNTER_BIT |
-                BunnyGame.DOOR_BIT;
+                BunnyGame.DOOR_BIT |
+                BunnyGame.HUNTER_HEAD_BIT;
 
         fdef.shape = shape;
 

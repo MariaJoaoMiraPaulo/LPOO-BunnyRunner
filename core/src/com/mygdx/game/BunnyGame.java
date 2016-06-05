@@ -32,6 +32,7 @@ public class BunnyGame extends Game{
     public static final short DOOR_BIT = 128;
     public static final short ROCK_BIT = 256;
     public static final short HUNTER_BIT = 512;
+    public static final short HUNTER_HEAD_BIT = 1024;
 
     private FileHandle file;
     private int highscore;

@@ -6,8 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -69,6 +71,17 @@ public class Hunter extends Sprite implements Disposable{
 
         fixture = b2body.createFixture(fdef);
         fixture.setUserData(this);
+
+        EdgeShape head = new EdgeShape();
+
+        head.set(new Vector2(-20 / BunnyGame.PPM, 26f / BunnyGame.PPM), new Vector2(20 / BunnyGame.PPM, 26f / BunnyGame.PPM));
+        fdef.shape = head;
+        fdef.isSensor = true;
+
+        fdef.filter.categoryBits = BunnyGame.HUNTER_HEAD_BIT;
+        fdef.filter.maskBits= BunnyGame.BUNNY_BIT ;
+
+        b2body.createFixture(fdef).setUserData(this);
 
         hunterState=MovementState.RIGHT;
 
