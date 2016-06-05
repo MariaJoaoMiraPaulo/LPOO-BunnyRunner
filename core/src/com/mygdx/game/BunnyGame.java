@@ -6,10 +6,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GUI.GameOverMenu;
+import com.mygdx.game.GUI.HighScoreMenu;
 import com.mygdx.game.GUI.MainMenu;
 import com.mygdx.game.GUI.PauseMenu;
 import com.mygdx.game.GUI.PlayScreen;
-import com.sun.org.apache.xpath.internal.operations.String;
 
 import java.io.IOException;
 
@@ -43,6 +43,7 @@ public class BunnyGame extends Game{
     private GameOverMenu gameOverMenu;
     private PauseMenu pauseMenu;
     private PlayScreen playScreen;
+    private HighScoreMenu highScoreMenu;
 
     @Override
     public void create() {
@@ -51,8 +52,10 @@ public class BunnyGame extends Game{
         gameOverMenu = new GameOverMenu(this);
         pauseMenu = new PauseMenu(this);
         playScreen = new PlayScreen(this, 1);
-
         loadFile();
+        highScoreMenu = new HighScoreMenu(this);
+
+
 
         setScreen(mainMenu);
     }
@@ -98,6 +101,11 @@ public class BunnyGame extends Game{
         setScreen(playScreen);
     }
 
+    public void setToHighScoreMenu() {
+        highScoreMenu.setLabel();
+        setScreen(highScoreMenu);
+    }
+
     public void loadFile(){
         file = Gdx.files.local("highscore.dat");
 
@@ -109,6 +117,7 @@ public class BunnyGame extends Game{
             java.lang.String text;
             text = file.readString();
             highscore = Integer.parseInt(text);
+           // highscore = 0;
             Gdx.app.log("Highscore", "" + highscore);
         }
     }
@@ -117,7 +126,9 @@ public class BunnyGame extends Game{
         if(file.exists()){
             if(highscore < ((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()){
                 file.writeString(java.lang.String.format("%d",((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()), false);
+                highscore=((PlayScreen)getScreen()).getBunny().getNumberOfCarrots();
             }
+          // file.writeString(java.lang.String.format("%d",0),false);
         }
         else {
             try {
@@ -127,6 +138,10 @@ public class BunnyGame extends Game{
                 e.printStackTrace();
             }
         }
+    }
+
+    public int getHighscore() {
+        return highscore;
     }
 }
 
