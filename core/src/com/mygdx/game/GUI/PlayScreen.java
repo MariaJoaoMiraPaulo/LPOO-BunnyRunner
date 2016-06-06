@@ -100,8 +100,10 @@ public class PlayScreen implements Screen, InputProcessor {
     public void update(float dt){
         gameTime += dt;
 
-        if(game.getLogic().getBunny().stateBunny == Bunny.State.DEAD && game.getLogic().getBunny().getStateTime() > 3)
+        if(game.getLogic().getBunny().stateBunny == Bunny.State.DEAD && game.getLogic().getBunny().getStateTime() > 3){
             game.setToGameOverMenu();
+            game.saveHighscore();
+        }
 
         if(game.getLogic().getBunny().stateBunny == Bunny.State.NEXT_LEVEL){
             game.newLevel();
@@ -113,6 +115,7 @@ public class PlayScreen implements Screen, InputProcessor {
         gamecam.update();
         renderer.setView(gamecam);
         hud.setNumberCarrotsSpeed(game.getLogic().getBunny().getNumberOfCarrotsSpeed());
+        hud.setScore(game.getLogic().getBunny().getNumberOfCarrots());
     }
 
     @Override
