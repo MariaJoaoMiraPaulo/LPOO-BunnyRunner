@@ -133,8 +133,9 @@ public class Bunny extends Sprite implements Disposable{
             numberOfCarrotsSpeed=0;
         }
 
-        if(stateBunny==State.DEAD && stateTime < 3)
+        if(stateBunny==State.DEAD && stateTime < 3){
             b2body.setLinearVelocity(0,0);
+        }
 
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
             stateBunny=State.FALLING;
@@ -149,6 +150,7 @@ public class Bunny extends Sprite implements Disposable{
             setState(State.RUNNING);
         }
 
+        Gdx.app.log("BOAS", " "+ stateBunny.toString());
 
         animationStateTime += dt;
 
@@ -244,8 +246,7 @@ public class Bunny extends Sprite implements Disposable{
     }
 
     public void checkSpeed(){
-        if(numberOfCarrotsSpeed>=25)
-        {
+        if(numberOfCarrotsSpeed>=25) {
             setState(State.SPEED);
             b2body.applyLinearImpulse(new Vector2(4, 0), b2body.getWorldCenter(), true);
         }

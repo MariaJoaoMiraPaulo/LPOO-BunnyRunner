@@ -1,7 +1,6 @@
 package com.mygdx.game.Logic;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -18,7 +17,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.GUI.LoadGraphics;
-import com.mygdx.game.GUI.PlayScreen;
 
 /**
  * Created by mariajoaomirapaulo on 02/06/16.
@@ -53,6 +51,36 @@ public class Hunter extends Sprite implements Disposable{
         this.logic = logic;
         this.world = logic.getWorld();
 
+        hunterState=MovementState.RIGHT;
+
+        defineHunter(x, y);
+        defineHunterAnimation();
+
+        inicialPosition=b2body.getPosition().x;
+
+        distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
+
+        stateTime = 0;
+
+        currentFrame = new TextureRegion(LoadGraphics.getHunterImageLeft());
+    }
+
+    public Hunter(World world, float x, float y){
+
+        this.world = world;
+
+        hunterState=MovementState.RIGHT;
+
+        defineHunter(x, y);
+
+        inicialPosition=b2body.getPosition().x;
+
+        distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
+
+        stateTime = 0;
+    }
+
+    private void defineHunter(float x, float y) {
         BodyDef bdef = new BodyDef();
         bdef.position.set( x / BunnyGame.PPM, y / BunnyGame.PPM);
         bdef.type = BodyDef.BodyType.DynamicBody;
@@ -82,21 +110,9 @@ public class Hunter extends Sprite implements Disposable{
         fdef.filter.maskBits= BunnyGame.BUNNY_BIT ;
 
         b2body.createFixture(fdef).setUserData(this);
-
-        hunterState=MovementState.RIGHT;
-
-        defineHunter();
-
-        inicialPosition=b2body.getPosition().x;
-
-        distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
-
-        stateTime = 0;
-
-        currentFrame = new TextureRegion(LoadGraphics.getHunterImageLeft());
     }
 
-    public void defineHunter(){
+    public void defineHunterAnimation(){
 
         animationStateTime = 0f;
 
@@ -159,18 +175,6 @@ public class Hunter extends Sprite implements Disposable{
     @Override
     public void dispose() {
         currentFrame.getTexture().dispose();
-      /*  hunterImage.dispose();
-        hunterImageLeft.dispose();
-        deadHunterImage.dispose();
-
-        for(TextureRegion image : hunterFrames)
-            image.getTexture().dispose();
-
-        for(TextureRegion image : hunterFramesLeft)
-            image.getTexture().dispose();
-
-        for(TextureRegion image : deadHunterFrames)
-            image.getTexture().dispose();*/
     }
 
     public TextureRegion getCurrentFrame() {
@@ -195,7 +199,4 @@ public class Hunter extends Sprite implements Disposable{
         this.hunterState = hunterState;
     }
 
-    public float getStateTime() {
-        return stateTime;
-    }
 }
