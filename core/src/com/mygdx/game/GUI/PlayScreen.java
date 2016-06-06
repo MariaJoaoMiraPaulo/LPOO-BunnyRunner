@@ -108,7 +108,7 @@ public class PlayScreen implements Screen, InputProcessor {
             update(delta);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
             renderer.render();
-            b2dr.render(game.getLogic().getWorld(),gamecam.combined);
+            //b2dr.render(game.getLogic().getWorld(),gamecam.combined);
             batch.setProjectionMatrix(gamecam.combined);
             batch.begin();
             game.getLogic().getBunny().draw(batch);
