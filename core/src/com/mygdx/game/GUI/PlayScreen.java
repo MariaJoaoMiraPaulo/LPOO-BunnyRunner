@@ -86,7 +86,7 @@ public class PlayScreen implements Screen, InputProcessor {
         if(game.getLogic().getBunny().stateBunny == Bunny.State.NEXT_LEVEL){
             game.newLevel();
             if(game.isWon() )
-                game.setToMainMenu();
+                game.setToFinalMenu();
             else game.setToPlayScreen();
         }
 
