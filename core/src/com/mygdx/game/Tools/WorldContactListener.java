@@ -122,7 +122,7 @@ public class WorldContactListener implements ContactListener {
                     }
                 }
                 break;
-            case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
+        /*    case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.DOOR_BIT) {
                     ((Bunny) fixtureA.getUserData()).getGame().newLevel();
                     ((Bunny) fixtureA.getUserData()).getGame().setToPlayScreen();
@@ -130,7 +130,7 @@ public class WorldContactListener implements ContactListener {
                     ((Bunny) fixtureB.getUserData()).getGame().newLevel();
                     ((Bunny) fixtureB.getUserData()).getGame().setToPlayScreen();
                 }
-                break;
+                break;*/
 
         }
 

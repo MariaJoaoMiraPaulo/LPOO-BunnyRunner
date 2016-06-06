@@ -31,7 +31,7 @@ public class Hunter extends Sprite implements Disposable{
     private float stateTime;
 
     private World world;
-    private PlayScreen screen;
+    private GameLogic logic;
     public Body b2body;
     private Fixture fixture;
 
@@ -49,9 +49,9 @@ public class Hunter extends Sprite implements Disposable{
     private float inicialPosition;
 
 
-    public Hunter(PlayScreen screen, float x, float y){
-        this.screen = screen;
-        this.world = screen.getWorld();
+    public Hunter(GameLogic logic, float x, float y){
+        this.logic = logic;
+        this.world = logic.getWorld();
 
         BodyDef bdef = new BodyDef();
         bdef.position.set( x / BunnyGame.PPM, y / BunnyGame.PPM);
@@ -92,6 +92,8 @@ public class Hunter extends Sprite implements Disposable{
         distanceMax = b2body.getPosition().x + (247 / BunnyGame.PPM);
 
         stateTime = 0;
+
+        currentFrame = new TextureRegion(LoadGraphics.getHunterImageLeft());
     }
 
     public void defineHunter(){
@@ -110,11 +112,11 @@ public class Hunter extends Sprite implements Disposable{
 
         switch (hunterState){
             case RIGHT:
-                if(screen.getBunny().stateBunny != Bunny.State.DEAD)
+                if(logic.getBunny().stateBunny != Bunny.State.DEAD)
                     b2body.setLinearVelocity(1,0);
                 break;
             case LEFT:
-                if(screen.getBunny().stateBunny != Bunny.State.DEAD)
+                if(logic.getBunny().stateBunny != Bunny.State.DEAD)
                     b2body.setLinearVelocity(-1,0);
                 break;
             case DEAD:
@@ -191,5 +193,9 @@ public class Hunter extends Sprite implements Disposable{
             fixture.setFilterData(filter);
         }
         this.hunterState = hunterState;
+    }
+
+    public float getStateTime() {
+        return stateTime;
     }
 }

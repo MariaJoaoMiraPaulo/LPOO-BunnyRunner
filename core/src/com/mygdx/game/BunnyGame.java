@@ -10,6 +10,7 @@ import com.mygdx.game.GUI.HighScoreMenu;
 import com.mygdx.game.GUI.MainMenu;
 import com.mygdx.game.GUI.PauseMenu;
 import com.mygdx.game.GUI.PlayScreen;
+import com.mygdx.game.Logic.GameLogic;
 
 import java.io.IOException;
 
@@ -40,6 +41,8 @@ public class BunnyGame extends Game{
     public SpriteBatch batch;
     private int atualLevel=1;
 
+    private GameLogic logic;
+
     private MainMenu mainMenu;
     private GameOverMenu gameOverMenu;
     private PauseMenu pauseMenu;
@@ -48,16 +51,16 @@ public class BunnyGame extends Game{
 
     @Override
     public void create() {
+        Gdx.app.log("Render", "bunnygame 1");
         batch= new SpriteBatch();
         mainMenu = new MainMenu(this);
         gameOverMenu = new GameOverMenu(this);
         pauseMenu = new PauseMenu(this);
-        playScreen = new PlayScreen(this, 1);
+
+        //playScreen = new PlayScreen(this);
         loadFile();
         highScoreMenu = new HighScoreMenu(this);
-
-
-
+        Gdx.app.log("Render", "bunnygame 2");
         setScreen(mainMenu);
     }
 
@@ -68,6 +71,7 @@ public class BunnyGame extends Game{
 
     @Override
     public void render() {
+        Gdx.app.log("Render", "bunnygame 3");
         super.render();
     }
 
@@ -93,7 +97,8 @@ public class BunnyGame extends Game{
     }
 
     public void setToPlayScreen(){
-        playScreen = new PlayScreen(this, atualLevel);
+        logic = new GameLogic(atualLevel);;
+        playScreen = new PlayScreen(this);
         setScreen(playScreen);
     }
 
@@ -125,20 +130,23 @@ public class BunnyGame extends Game{
 
     public void saveHighscore(){
         if(file.exists()){
-            if(highscore < ((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()){
-                file.writeString(java.lang.String.format("%d",((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()), false);
-                highscore=((PlayScreen)getScreen()).getBunny().getNumberOfCarrots();
+            if(highscore < logic.getBunny().getNumberOfCarrots()){
+                file.writeString(java.lang.String.format("%d",logic.getBunny().getNumberOfCarrots()), false);
+                highscore=logic.getBunny().getNumberOfCarrots();
             }
-          // file.writeString(java.lang.String.format("%d",0),false);
         }
         else {
             try {
                 file.file().createNewFile();
-                file.writeString(java.lang.String.format("%d",((PlayScreen)getScreen()).getBunny().getNumberOfCarrots()), false);
+                file.writeString(java.lang.String.format("%d",logic.getBunny().getNumberOfCarrots()), false);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public GameLogic getLogic() {
+        return logic;
     }
 
     public int getHighscore() {

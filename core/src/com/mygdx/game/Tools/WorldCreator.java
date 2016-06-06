@@ -1,5 +1,6 @@
 package com.mygdx.game.Tools;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Carrot;
+import com.mygdx.game.Logic.GameLogic;
 import com.mygdx.game.Logic.Hunter;
 import com.mygdx.game.Logic.Rock;
 import com.mygdx.game.Logic.Spike;
@@ -23,7 +25,7 @@ import com.mygdx.game.GUI.PlayScreen;
 public class WorldCreator {
 
 
-    public WorldCreator(World world, TiledMap map, PlayScreen screen){
+    public WorldCreator(World world, TiledMap map, GameLogic logic){
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -117,7 +119,7 @@ public class WorldCreator {
             rocks.add(new Rock(world, map, rect));
         }
 
-        screen.setRocks(rocks);
+        logic.setRocks(rocks);
 
         Array<Hunter> hunters= new Array<Hunter>();
 
@@ -125,10 +127,10 @@ public class WorldCreator {
         for(MapObject object : map.getLayers().get(8).getObjects().getByType(RectangleMapObject.class)){
             Rectangle rect =  ((RectangleMapObject) object).getRectangle();
             //screen.setHunter(new Hunter(screen ,rect.getX(),rect.getY()));
-            hunters.add(new Hunter(screen ,rect.getX(),rect.getY()));
+            hunters.add(new Hunter(logic ,rect.getX(),rect.getY()));
         }
 
-        screen.setHunters(hunters);
+        logic.setHunters(hunters);
 
 
     }

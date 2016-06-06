@@ -118,6 +118,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.app.log("Render", "entrei");
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         game.batch.begin();
         game.batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());

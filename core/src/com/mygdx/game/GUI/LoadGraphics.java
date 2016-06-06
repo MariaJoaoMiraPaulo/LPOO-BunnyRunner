@@ -22,7 +22,6 @@ public class LoadGraphics implements Disposable{
     public static Texture deadHunterImage;
     public static Texture brickImage;
 
-
     private static TextureRegion[] runningFrames;
     private static TextureRegion[] startingFrames;
     private static TextureRegion[] fallingFrames;
@@ -273,4 +272,5 @@ public class LoadGraphics implements Disposable{
         for(TextureRegion image : deadHunterFrames)
             image.getTexture().dispose();
     }
+
 }

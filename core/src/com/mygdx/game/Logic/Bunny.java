@@ -27,8 +27,6 @@ public class Bunny extends Sprite implements Disposable{
 
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN,SPEED};
 
-    public BunnyGame game;
-
     public World world;
     public Body b2body;
 
@@ -50,14 +48,15 @@ public class Bunny extends Sprite implements Disposable{
     private float animationStateTime;
     private float stateTime;
 
-    public Bunny(World world, BunnyGame game){
+    public Bunny(World world){
         defineAnimations();
 
-        this.game = game;
         this.world = world;
         defineBunny();
 
         this.stateBunny=State.STANDING;
+
+        currentFrame = new TextureRegion(LoadGraphics.getBunnyStartImage());
 
         numberOfCarrots = 0;
     }
@@ -112,7 +111,6 @@ public class Bunny extends Sprite implements Disposable{
     public void update(float dt){
 
         stateTime += dt;
-        Gdx.app.log("Tempo ", " "+ stateTime + "  " + stateBunny);
 
         if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING )
             b2body.setLinearVelocity(MOVEMENT, 0);
@@ -128,8 +126,8 @@ public class Bunny extends Sprite implements Disposable{
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
         else if(stateBunny==State.DEAD && stateTime >=3){
-            game.saveHighscore();
-            game.setToGameOverMenu();
+            //game.saveHighscore();
+            //game.setToGameOverMenu();
         }
 
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
@@ -249,16 +247,12 @@ public class Bunny extends Sprite implements Disposable{
     public void incNumberOfCarrots(){
         numberOfCarrots++;
         numberOfCarrotsSpeed++;
-        ((PlayScreen)game.getScreen()).getHud().setScore(numberOfCarrots);
+        //((PlayScreen)game.getScreen()).getHud().setScore(numberOfCarrots);
         Gdx.app.log("Carrots", "Apanhei uma "+ numberOfCarrots);
     }
 
     public int getNumberOfCarrots() {
         return numberOfCarrots;
-    }
-
-    public BunnyGame getGame() {
-        return game;
     }
 
     public void checkSpeed(){
@@ -274,4 +268,7 @@ public class Bunny extends Sprite implements Disposable{
         return numberOfCarrotsSpeed;
     }
 
+    public float getStateTime() {
+        return stateTime;
+    }
 }
