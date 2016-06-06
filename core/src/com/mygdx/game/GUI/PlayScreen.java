@@ -206,7 +206,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
         if(game.getLogic().getBunny().stateBunny != Bunny.State.JUMPING && game.getLogic().getBunny().stateBunny != Bunny.State.FALLING && screenDelta.y<-20 && !dragDone) { //the bunny is going do jump
             game.getLogic().getBunny().jump();
-            game.getLogic().getBunny().setState(Bunny.State.JUMPING);
             dragDone = true;
         }
 

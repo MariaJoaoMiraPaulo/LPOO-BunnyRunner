@@ -61,6 +61,16 @@ public class Bunny extends Sprite implements Disposable{
         numberOfCarrots = 0;
     }
 
+    public Bunny(World world, boolean test){
+
+        this.world = world;
+        defineBunny();
+
+        this.stateBunny=State.STANDING;
+
+        numberOfCarrots = 0;
+    }
+
     public void defineBunny(){
         BodyDef bdef = new  BodyDef();
         bdef.position.set(224 / BunnyGame.PPM, 32 / BunnyGame.PPM);
@@ -178,6 +188,7 @@ public class Bunny extends Sprite implements Disposable{
             rotateBunny();
         }
         b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+        setState(State.JUMPING);
     }
 
     public TextureRegion getCurrentFrame() {
