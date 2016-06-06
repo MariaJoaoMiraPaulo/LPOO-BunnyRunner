@@ -125,10 +125,6 @@ public class Bunny extends Sprite implements Disposable{
 
         if(stateBunny==State.DEAD && stateTime < 3)
             b2body.setLinearVelocity(0,0);
-        else if(stateBunny==State.DEAD && stateTime >=3){
-            //game.saveHighscore();
-            //game.setToGameOverMenu();
-        }
 
         if(b2body.getLinearVelocity().y<0 && stateBunny==State.JUMPING){
             stateBunny=State.FALLING;
@@ -203,25 +199,6 @@ public class Bunny extends Sprite implements Disposable{
     @Override
     public void dispose() {
         currentFrame.getTexture().dispose();
-      /*  bunnyRunningImage.dispose();
-        bunnyStartImage.dispose();
-        bunnyFallingImage.dispose();
-        bunnyDeadImage.dispose();
-        bunnyCrawlImage.dispose();
-        for(TextureRegion image : runningFrames)
-            image.getTexture().dispose();
-
-        for(TextureRegion image : startingFrames)
-            image.getTexture().dispose();
-
-        for(TextureRegion image : fallingFrames)
-            image.getTexture().dispose();
-
-        for(TextureRegion image : deadFrames)
-            image.getTexture().dispose();
-
-        for(TextureRegion image : crawlFrames)
-            image.getTexture().dispose();*/
     }
 
     public void setState(State state) {
@@ -248,8 +225,6 @@ public class Bunny extends Sprite implements Disposable{
     public void incNumberOfCarrots(){
         numberOfCarrots++;
         numberOfCarrotsSpeed++;
-        //((PlayScreen)game.getScreen()).getHud().setScore(numberOfCarrots);
-        Gdx.app.log("Carrots", "Apanhei uma "+ numberOfCarrots);
     }
 
     public int getNumberOfCarrots() {
@@ -259,7 +234,6 @@ public class Bunny extends Sprite implements Disposable{
     public void checkSpeed(){
         if(numberOfCarrotsSpeed>=25)
         {
-            Gdx.app.log("Cenouras:",""+ numberOfCarrotsSpeed);
             setState(State.SPEED);
             b2body.applyLinearImpulse(new Vector2(4, 0), b2body.getWorldCenter(), true);
         }

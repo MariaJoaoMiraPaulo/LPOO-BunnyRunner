@@ -35,23 +35,15 @@ public class PlayScreen implements Screen, InputProcessor {
 
     private SpriteBatch batch;
 
- /*  private Bunny bunny;
-    private Array<Hunter> hunters;
-    private Array<Rock> rocks;*/
-
     private HudScore hud;
 
     //Tiled Map
     private OrthographicCamera gamecam;
     private Viewport gamePort;
-    /*  private TmxMapLoader mapLoader;
-      private TiledMap map;*/
     private OrthogonalTiledMapRenderer renderer;
 
     //Box 2d variables
-    //  private World world;
     private Box2DDebugRenderer b2dr;
-    private float gameTime;
 
     //Variables relationed to the touch events
     private Vector2 screenDelta;
@@ -65,8 +57,6 @@ public class PlayScreen implements Screen, InputProcessor {
         gamecam = new OrthographicCamera();
         //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
         //gamePort=new StretchViewport(400,208,gamecam);
-       /* mapLoader=new TmxMapLoader();
-        map = mapLoader.load("level"+mapLevel+".tmx");*/
         renderer = new OrthogonalTiledMapRenderer(game.getLogic().getMap(), 1 / BunnyGame.PPM);
         gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
@@ -75,17 +65,6 @@ public class PlayScreen implements Screen, InputProcessor {
         b2dr = new Box2DDebugRenderer();
 
         hud = new HudScore(game.batch);
-
-     /*   bunny = new Bunny(world, game);
-
-        hunters = new Array<Hunter>();
-        rocks = new Array<Rock>();
-
-        new WorldCreator(world,map, this);*/
-
-        gameTime = 0;
-
-        //world.setContactListener(new WorldContactListener());
 
         //Telling Libgdx what it input process so it can be called when a new input event arrives
         Gdx.input.setInputProcessor(this);
@@ -98,7 +77,6 @@ public class PlayScreen implements Screen, InputProcessor {
     }
 
     public void update(float dt){
-        gameTime += dt;
 
         if(game.getLogic().getBunny().stateBunny == Bunny.State.DEAD && game.getLogic().getBunny().getStateTime() > 3){
             game.setToGameOverMenu();
@@ -164,9 +142,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void dispose() {
-        // map.dispose();
         renderer.dispose();
-        // world.dispose();
         b2dr.dispose();
     }
 
@@ -192,7 +168,6 @@ public class PlayScreen implements Screen, InputProcessor {
         Gdx.app.log("Toque", " "+ screenX + " " + screenY);
         if(screenX > Gdx.graphics.getWidth() - 75 && screenX < Gdx.graphics.getWidth() &&
                 screenY > 0 && screenY < 75){
-            Gdx.app.log("Toque", "Pausa!");
             game.setToPauseMenu();
         }
 
@@ -253,27 +228,12 @@ public class PlayScreen implements Screen, InputProcessor {
         return false;
     }
 
-  /*  public World getWorld() {
-        return world;
-    }
-
-    public Bunny getBunny() {
-        return bunny;
-    }*/
-
     public HudScore getHud() {
         return hud;
     }
-
-  /*  public void setHunters(Array<Hunter> hunters){
-        this.hunters = hunters;
-    }*/
 
     public void input() {
         Gdx.input.setInputProcessor(this);
     }
 
-  /*  public void setRocks(Array<Rock> rocks) {
-        this.rocks = rocks;
-    }*/
 }
