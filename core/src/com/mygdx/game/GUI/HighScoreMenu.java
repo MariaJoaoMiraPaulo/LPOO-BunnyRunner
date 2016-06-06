@@ -74,7 +74,7 @@ public class HighScoreMenu implements Screen {
         table.row();
 
         //Score Level 3
-        game.loadFile(3s);
+        game.loadFile(3);
         score3 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score3.setFontScale(0.75f);
         score3.setAlignment(Align.center);
