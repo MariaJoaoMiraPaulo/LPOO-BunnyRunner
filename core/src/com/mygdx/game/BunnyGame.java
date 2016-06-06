@@ -58,7 +58,7 @@ public class BunnyGame extends Game{
         pauseMenu = new PauseMenu(this);
 
         //playScreen = new PlayScreen(this);
-        loadFile();
+        loadFile(atualLevel);
         highScoreMenu = new HighScoreMenu(this);
         Gdx.app.log("Render", "bunnygame 2");
         setScreen(mainMenu);
@@ -82,6 +82,8 @@ public class BunnyGame extends Game{
     public void newLevel() {
         if(this.atualLevel <2)
             this.atualLevel = 2;
+        saveHighscore();
+        loadFile(atualLevel);
     }
 
     public void setToMainMenu(){
@@ -112,8 +114,10 @@ public class BunnyGame extends Game{
         setScreen(highScoreMenu);
     }
 
-    public void loadFile(){
-        file = Gdx.files.local("highscore.dat");
+    public void loadFile(int level){
+        String filename;
+        filename = "highscore"+level+".dat";
+        file = Gdx.files.local(filename);
 
         if(!file.exists()){
             highscore = 0;

@@ -54,8 +54,8 @@ public class HighScoreMenu implements Screen {
         table.setFillParent(true);
         Gdx.app.log("HS"," "+game.getHighscore());
 
-
         //Score level 1
+        game.loadFile(1);
         score1 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score1.setFontScale(0.75f);
         score1.setAlignment(Align.center);
@@ -65,6 +65,7 @@ public class HighScoreMenu implements Screen {
         table.row();
 
         //Score Level 2
+        game.loadFile(2);
         score2 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score2.setFontScale(0.75f);
         score2.setAlignment(Align.center);
@@ -79,6 +80,7 @@ public class HighScoreMenu implements Screen {
         table.add(score3).padLeft(200).padBottom(20);
         table.padTop(230);
 
+        game.loadFile(game.getAtualLevel());
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(table);

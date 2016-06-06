@@ -225,6 +225,7 @@ public class Bunny extends Sprite implements Disposable{
     public void incNumberOfCarrots(){
         numberOfCarrots++;
         numberOfCarrotsSpeed++;
+        Gdx.app.log("Cenoura", "+1 "+ numberOfCarrots);
     }
 
     public int getNumberOfCarrots() {
