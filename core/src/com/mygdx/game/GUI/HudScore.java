@@ -57,16 +57,19 @@ public class HudScore extends Stage {
 
         Table table = new Table();
         table.top();
+        table.padTop(10);
         table.setFillParent(true);
-        numberCarrot = new Label(String.format("%02d", score),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
+        numberCarrot = new Label(String.format("%03d", score),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         numberCarrot.setFontScale(0.75f);
         numberCarrot.setAlignment(Align.topLeft);
 
-        carrot.setWidth(15);
-        carrot.setHeight(20);
+        //carrot.setWidth(15);
+        //carrot.setHeight(20);
+        carrot.scaleBy(0.15f);
 
         table.add(carrot).padRight(9);
         table.add(numberCarrot);
+                //.expandX().align(Align.left);
 
         table.padLeft(20);
         table.top().left();
@@ -77,7 +80,7 @@ public class HudScore extends Stage {
     public void setScore(int score) {
         this.score=score;
         numberCarrotsSpeed++;
-        numberCarrot.setText(String.format("%02d", score));
+        numberCarrot.setText(String.format("%03d", score));
 
     }
 
