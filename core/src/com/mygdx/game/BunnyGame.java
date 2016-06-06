@@ -97,7 +97,7 @@ public class BunnyGame extends Game{
     }
 
     public void setToPlayScreen(){
-        logic = new GameLogic(atualLevel);;
+        logic = new GameLogic(atualLevel);
         playScreen = new PlayScreen(this);
         setScreen(playScreen);
     }

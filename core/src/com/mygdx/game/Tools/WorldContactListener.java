@@ -122,15 +122,13 @@ public class WorldContactListener implements ContactListener {
                     }
                 }
                 break;
-        /*    case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
+               case BunnyGame.BUNNY_BIT | BunnyGame.DOOR_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.DOOR_BIT) {
-                    ((Bunny) fixtureA.getUserData()).getGame().newLevel();
-                    ((Bunny) fixtureA.getUserData()).getGame().setToPlayScreen();
+                    ((Bunny) fixtureA.getUserData()).stateBunny = Bunny.State.NEXT_LEVEL;
                 } else {
-                    ((Bunny) fixtureB.getUserData()).getGame().newLevel();
-                    ((Bunny) fixtureB.getUserData()).getGame().setToPlayScreen();
+                    ((Bunny) fixtureB.getUserData()).stateBunny = Bunny.State.NEXT_LEVEL;
                 }
-                break;*/
+                break;
 
         }
 

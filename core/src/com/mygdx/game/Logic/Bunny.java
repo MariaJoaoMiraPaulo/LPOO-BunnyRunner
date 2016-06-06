@@ -25,7 +25,7 @@ import com.mygdx.game.GUI.PlayScreen;
 public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
-    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN,SPEED};
+    public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN ,SPEED, NEXT_LEVEL};
 
     public World world;
     public Body b2body;
@@ -147,6 +147,7 @@ public class Bunny extends Sprite implements Disposable{
         animationStateTime += dt;
 
         switch (stateBunny){
+            case NEXT_LEVEL:
             case JUMPING:
             case RUNNING:
                 currentFrame = runningAnimation.getKeyFrame(animationStateTime, true);
