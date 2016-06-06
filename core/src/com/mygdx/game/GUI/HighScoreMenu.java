@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -81,7 +80,7 @@ public class HighScoreMenu implements Screen {
         table.add(score3).padLeft(200).padBottom(20);
         table.padTop(230);
 
-        game.loadFile(game.getAtualLevel());
+        game.loadFile(game.getCurrentFrame());
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(table);
