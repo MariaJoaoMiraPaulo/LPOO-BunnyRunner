@@ -36,7 +36,7 @@ public class PauseMenu implements Screen {
         this.game = game;
 
         button = new Texture("button.png");
-        background = new Texture("pauseMenu (1).png");
+        background = new Texture("pauseMenu.png");
 
         gamePort=new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         gamePort.apply();

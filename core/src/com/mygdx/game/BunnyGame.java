@@ -40,6 +40,7 @@ public class BunnyGame extends Game{
 
     public SpriteBatch batch;
     private int atualLevel=1;
+    private boolean won;
 
     private GameLogic logic;
 
@@ -61,6 +62,7 @@ public class BunnyGame extends Game{
         loadFile(atualLevel);
         highScoreMenu = new HighScoreMenu(this);
         Gdx.app.log("Render", "bunnygame 2");
+        won = false;
         setScreen(mainMenu);
     }
 
@@ -80,8 +82,13 @@ public class BunnyGame extends Game{
     }
 
     public void newLevel() {
-        if(this.atualLevel <2)
-            this.atualLevel = 2;
+        Gdx.app.log("Nivel", " " + atualLevel);
+        if(this.atualLevel < 3)
+            this.atualLevel++;
+        else if(this.atualLevel == 3){
+            won = true;
+        }
+        Gdx.app.log("Nivel", " " + atualLevel);
         saveHighscore();
         loadFile(atualLevel);
     }
@@ -155,6 +162,10 @@ public class BunnyGame extends Game{
 
     public int getHighscore() {
         return highscore;
+    }
+
+    public boolean isWon() {
+        return won;
     }
 }
 
