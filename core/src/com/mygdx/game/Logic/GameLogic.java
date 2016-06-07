@@ -22,12 +22,12 @@ public class GameLogic implements Disposable{
     /**
      * Timer update rate
      */
-    public static final float TIMER_RATE = 1/60f;
+    public static final float TIMER_RATE = 1/300f;
 
     /**
      * world step rate
      */
-    public static final float WORLD_RATE = 1/60f;
+    public static final float WORLD_RATE = 1/300f;
 
     /**
      * main character from the game

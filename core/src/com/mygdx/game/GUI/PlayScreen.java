@@ -52,16 +52,16 @@ public class PlayScreen implements Screen, InputProcessor {
 
 
     public PlayScreen(BunnyGame game){
+        int mapHeight = game.getLogic().getMap().getProperties().get("height", Integer.class).intValue()*game.getLogic().getMap().getProperties().get("tileheight", Integer.class).intValue();
+
         batch = new SpriteBatch();
         this.game=game;
         gamecam = new OrthographicCamera();
-        //gamePort=new FitViewport(Gdx.graphics.getWidth()/200,Gdx.graphics.getHeight()/200,gamecam);
-        //gamePort=new StretchViewport(400,208,gamecam);
+        gamePort =  new FitViewport(mapHeight *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight() / BunnyGame.PPM, mapHeight / BunnyGame.PPM, gamecam);
         renderer = new OrthogonalTiledMapRenderer(game.getLogic().getMap(), 1 / BunnyGame.PPM);
-        gamePort=new FitViewport(BunnyGame.V_WIDTH / BunnyGame.PPM, BunnyGame.V_HEIGHT / BunnyGame.PPM,gamecam);
+
         gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
 
-        //  world = new World(new Vector2(0,-10),true);
         b2dr = new Box2DDebugRenderer();
 
         hud = new HudScore(game.batch);
@@ -106,21 +106,21 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-            update(delta);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-            renderer.render();
-            //b2dr.render(game.getLogic().getWorld(),gamecam.combined);
-            batch.setProjectionMatrix(gamecam.combined);
-            batch.begin();
-            game.getLogic().getBunny().draw(batch);
-            for(Hunter hunter : game.getLogic().getHunters())
-                hunter.draw(batch);
-            for(Rock rock : game.getLogic().getRocks())
-                rock.draw(batch);
-            batch.end();
-            batch.setProjectionMatrix(hud.stage.getCamera().combined);
-            hud.stage.draw();
-            hud.draw();
+        update(delta);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        renderer.render();
+        //b2dr.render(game.getLogic().getWorld(),gamecam.combined);
+        batch.setProjectionMatrix(gamecam.combined);
+        batch.begin();
+        game.getLogic().getBunny().draw(batch);
+        for(Hunter hunter : game.getLogic().getHunters())
+            hunter.draw(batch);
+        for(Rock rock : game.getLogic().getRocks())
+            rock.draw(batch);
+        batch.end();
+        batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+        hud.draw();
     }
 
     @Override

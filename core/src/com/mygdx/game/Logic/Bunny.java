@@ -209,10 +209,11 @@ public class Bunny extends Sprite implements Disposable{
 
         stateTime += dt;
 
-        if(b2body.getLinearVelocity().x < 2 && stateBunny==State.RUNNING )
+        if(b2body.getLinearVelocity().x < MOVEMENT && stateBunny==State.RUNNING ){
             b2body.setLinearVelocity(MOVEMENT, 0);
+        }
 
-        if(b2body.getLinearVelocity().x < 2.5 && stateBunny==State.SPEED && stateTime <3){
+        if(b2body.getLinearVelocity().x < 2.5f && stateBunny==State.SPEED && stateTime <3){
             b2body.setLinearVelocity(2.5f, 0);
             numberOfCarrotsSpeed=0;
         }
@@ -367,7 +368,7 @@ public class Bunny extends Sprite implements Disposable{
     public void checkSpeed(){
         if(numberOfCarrotsSpeed>=25) {
             setState(State.SPEED);
-            b2body.applyLinearImpulse(new Vector2(4, 0), b2body.getWorldCenter(), true);
+            b2body.applyLinearImpulse(new Vector2(4f, 0), b2body.getWorldCenter(), true);
         }
     }
 

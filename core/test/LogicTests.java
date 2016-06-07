@@ -19,7 +19,7 @@ import static junit.framework.TestCase.assertEquals;
  * Created by Nuno on 06/06/2016.
  */
 @RunWith(TestsLauncher.class)
-public class TryingToTest {
+public class LogicTests {
     public void sleep(long time){
         try {
             Thread.sleep(time);
@@ -162,6 +162,52 @@ public class TryingToTest {
         sleep(8000);
 
         Assert.assertEquals(Bunny.State.NEXT_LEVEL.toString(), logic.getBunny().stateBunny.toString());
+    }
+
+    @Test
+    public void testGainSpeed(){
+        GameLogic logic = new GameLogic(0);
+
+        logic.getBunny().setState(Bunny.State.RUNNING);
+        logic.getHunters().get(0).hunterState = Hunter.MovementState.DEAD;
+
+        sleep(14000);
+
+        logic.getBunny().checkSpeed();
+
+        sleep(1000);
+
+        Assert.assertEquals(Bunny.State.SPEED.toString(), logic.getBunny().stateBunny.toString());
+    }
+
+    @Test
+    public void testFallState(){
+        GameLogic logic = new GameLogic(0);
+
+        logic.getBunny().setState(Bunny.State.RUNNING);
+        logic.getHunters().get(0).hunterState = Hunter.MovementState.DEAD;
+
+        sleep(1000);
+
+        logic.getBunny().jump();
+
+        sleep(500);
+
+        Assert.assertEquals(Bunny.State.FALLING.toString(), logic.getBunny().stateBunny.toString());
+    }
+
+    @Test
+    public void testSlowDown(){
+        GameLogic logic = new GameLogic(0);
+
+        logic.getBunny().setState(Bunny.State.RUNNING);
+        logic.getBunny().setState(Bunny.State.SLOWDOWN);
+
+        Assert.assertEquals(Bunny.State.SLOWDOWN.toString(), logic.getBunny().stateBunny.toString());
+
+        sleep(2000);
+
+        Assert.assertEquals(Bunny.State.RUNNING.toString(), logic.getBunny().stateBunny.toString());
     }
 
 
