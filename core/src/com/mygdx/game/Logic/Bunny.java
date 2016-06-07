@@ -48,7 +48,6 @@ public class Bunny extends Sprite implements Disposable{
      */
     public Body b2body;
 
-
     /**
      * Defines a rectangular are of a texture
      */
@@ -201,7 +200,7 @@ public class Bunny extends Sprite implements Disposable{
     }
 
     /**
-     * Updates bunny, changes if it is necessary his position, bunny state or bunny animation
+     * Updates bunny and changes, if it is necessary his position, bunny state or bunny animation
      * @param dt current time
      */
     public void update(float dt){
@@ -283,7 +282,7 @@ public class Bunny extends Sprite implements Disposable{
 
     /**
      * Returns a texture region of a texture
-     * @return TextureRegion Rectangle area of  a texture
+     * @return TextureRegion Rectangle area of a texture
      */
     public TextureRegion getCurrentFrame() {
         return currentFrame;

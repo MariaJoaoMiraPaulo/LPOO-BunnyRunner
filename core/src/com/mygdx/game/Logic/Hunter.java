@@ -21,32 +21,89 @@ import com.mygdx.game.GUI.LoadGraphics;
 /**
  * Created by Maria Joao Mira Paulo e Nuno Ramos on 02/06/16.
  */
+
+/**
+ * Class used to re present a Hunter
+ */
 public class Hunter extends Sprite implements Disposable{
 
+    /**
+     * Hunter's possible states
+     */
     public enum MovementState {RIGHT, LEFT, DEAD};
 
+    /**
+     * Current hunter state
+     */
     public MovementState hunterState;
+
+    /**
+     * Time associated to each active state
+     */
     private float stateTime;
 
+    /**
+     * Box2d physics world
+     */
     private World world;
+
+    /**
+     * Game Logic
+     */
     private GameLogic logic;
+
+    /**
+     * Box2d physics body
+     */
     public Body b2body;
+
+    /**
+     * Box2d Fixture
+     */
     private Fixture fixture;
 
+
+    /**
+     * Defines a rectangular are of a texture
+     */
     public TextureRegion currentFrame;
 
+    /**
+     * Hunter's Right state animation
+     */
     public Animation hunterAnimationRight;
 
+    /**
+     * Hunter's Left state animation
+     */
     public Animation hunterAnimationLeft;
 
+    /**
+     * Hunter's dead state animation
+     */
     public Animation deadHunterAnimation;
 
+    /**
+     * Current time of each bunny animation, used to know which is the right image for bunny
+     */
     public float animationStateTime;
 
+    /**
+     * Maximum distance that the hunter can go through
+     */
     private float distanceMax;
+
+    /**
+     * Starting Position for hunter
+     */
     private float inicialPosition;
 
-
+    /**
+     * Hunter Constructor
+     * @param logic Game Logic
+     * @param x hunter's x Position on map
+     * @param y hunter's y Position on map
+     */
     public Hunter(GameLogic logic, float x, float y){
         this.logic = logic;
         this.world = logic.getWorld();
@@ -65,6 +122,12 @@ public class Hunter extends Sprite implements Disposable{
         currentFrame = new TextureRegion(LoadGraphics.getHunterImageLeft());
     }
 
+    /**
+     * Hunter Constructor
+     * @param world Game world
+     * @param x hunter's x Position on map
+     * @param y hunter's y Position on map
+     */
     public Hunter(World world, float x, float y){
 
         this.world = world;
@@ -80,6 +143,11 @@ public class Hunter extends Sprite implements Disposable{
         stateTime = 0;
     }
 
+    /**
+     * Defines the character Hunter, his position, height and wight for example.
+     * @param x hunter's x Position on map
+     * @param y hunter's y Position on map
+     */
     private void defineHunter(float x, float y) {
         BodyDef bdef = new BodyDef();
         bdef.position.set( x / BunnyGame.PPM, y / BunnyGame.PPM);
@@ -112,6 +180,9 @@ public class Hunter extends Sprite implements Disposable{
         b2body.createFixture(fdef).setUserData(this);
     }
 
+    /**
+     * Creating Animations for hunter different states
+     */
     public void defineHunterAnimation(){
 
         animationStateTime = 0f;
@@ -123,6 +194,10 @@ public class Hunter extends Sprite implements Disposable{
         deadHunterAnimation = new Animation(0.2f, LoadGraphics.getDeadHunterFrames());
     }
 
+    /**
+     * Updates hunter and changes, if it is necessary his position, hunter state or hunter animation
+     * @param dt current time
+     */
     public void update(float dt){
         stateTime += dt;
 
@@ -161,6 +236,11 @@ public class Hunter extends Sprite implements Disposable{
         }
     }
 
+
+    /**
+     * Draws Hunter Image
+     * @param batch SpriteBatch
+     */
     @Override
     public void draw(Batch batch) {
         if(hunterState != Hunter.MovementState.DEAD)
@@ -170,15 +250,25 @@ public class Hunter extends Sprite implements Disposable{
 
     }
 
+    /**
+     * Frees Memory
+     */
     @Override
     public void dispose() {
         currentFrame.getTexture().dispose();
     }
 
+    /**
+     * Returns a texture region of a texture
+     * @return TextureRegion Rectangle area of a texture
+     */
     public TextureRegion getCurrentFrame() {
         return currentFrame;
     }
 
+    /**
+     * Changes hunter's state from right to lef, or from left to right if he reaches the limit position on x axis
+     */
     public void switchState(){
         stateTime = 0;
 
@@ -187,6 +277,10 @@ public class Hunter extends Sprite implements Disposable{
         else hunterState=MovementState.RIGHT;
     }
 
+    /**
+     * Changes MovementState to hunterStet, equals state Time to null and destroys bit
+     * @param hunterState new Hunter state
+     */
     public void setHunterState(MovementState hunterState) {
         stateTime = 0;
         if(hunterState == MovementState.DEAD){
