@@ -127,10 +127,11 @@ public class Bunny extends Sprite implements Disposable{
 
         if(b2body.getLinearVelocity().x < 2.5 && stateBunny==State.SPEED && stateTime <3){
             b2body.setLinearVelocity(2.5f, 0);
+            numberOfCarrotsSpeed=0;
         }
         else if (stateBunny==State.SPEED && stateTime >= 3) {
             setState(State.RUNNING);
-            numberOfCarrotsSpeed=0;
+            //numberOfCarrotsSpeed=0;
         }
 
         if(stateBunny==State.DEAD && stateTime < 3){

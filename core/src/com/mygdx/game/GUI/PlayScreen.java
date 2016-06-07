@@ -94,6 +94,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
         gamecam.update();
         renderer.setView(gamecam);
+        Gdx.app.log("Carrots"," "+ game.getLogic().getBunny().getNumberOfCarrotsSpeed());
         hud.setNumberCarrotsSpeed(game.getLogic().getBunny().getNumberOfCarrotsSpeed());
         hud.setScore(game.getLogic().getBunny().getNumberOfCarrots());
     }

@@ -79,8 +79,9 @@ public class HudScore extends Stage {
 
     public void setScore(int score) {
         this.score=score;
-        numberCarrotsSpeed++;
-        numberCarrot.setText(String.format("%03d", score));
+       /* if(score!=0)
+          numberCarrotsSpeed++;
+        */numberCarrot.setText(String.format("%03d", score));
 
     }
 
@@ -88,7 +89,7 @@ public class HudScore extends Stage {
     public void draw() {
         super.draw();
         batch.begin();
-        Gdx.app.log("Score"," "+ score);
+        Gdx.app.log("Score"," "+ score + " " + numberCarrotsSpeed);
         if(numberCarrotsSpeed==0)
            imageState=0;
         else if (numberCarrotsSpeed <10)
