@@ -58,10 +58,9 @@ public class Hunter extends Sprite implements Disposable{
     public Body b2body;
 
     /**
-     * Box2d Fixture
+     * Hunter's Fixture, which has the bit type
      */
     private Fixture fixture;
-
 
     /**
      * Defines a rectangular are of a texture
