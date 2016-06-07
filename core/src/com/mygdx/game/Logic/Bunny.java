@@ -24,12 +24,12 @@ import com.mygdx.game.GUI.PlayScreen;
  */
 
 /**
- * Class used to represent a Bunny
+ * Class used to re present a Bunny
  */
 public class Bunny extends Sprite implements Disposable{
 
     /**
-     * Horizontal Bunny's Velocity
+     * Bunny's Horizontal Velocity
      */
     public static final int MOVEMENT = 2;
 
@@ -49,6 +49,9 @@ public class Bunny extends Sprite implements Disposable{
     public Body b2body;
 
 
+    /**
+     * Defines a rectangular are of a texture
+     */
     private TextureRegion currentFrame;
 
     /**
@@ -93,15 +96,29 @@ public class Bunny extends Sprite implements Disposable{
     private int numberOfCarrots;
 
     /**
-     * 
+     * Number of Carrots that bunny ate from the use of power speed
      */
     private int numberOfCarrotsSpeed;
 
+    /**
+     * Current bunny state
+     */
     public State stateBunny;
 
+    /**
+     * Current time of each bunny animation, used to know which is the right image for bunny
+     */
     private float animationStateTime;
+
+    /**
+     * Time associated to each active state
+     */
     private float stateTime;
 
+    /**
+     * Bunny Constructor
+     * @param world World where bunny is going to play
+     */
     public Bunny(World world){
         defineAnimations();
 
@@ -115,6 +132,11 @@ public class Bunny extends Sprite implements Disposable{
         numberOfCarrots = 0;
     }
 
+    /**
+     * Bunny Constructor
+     * @param world World where bunny is going to play
+     * @param test created only to java unit tests
+     */
     public Bunny(World world, boolean test){
 
         this.world = world;
@@ -125,6 +147,9 @@ public class Bunny extends Sprite implements Disposable{
         numberOfCarrots = 0;
     }
 
+    /**
+     * Defines the character Bunny, his position, height and wight for example.
+     */
     public void defineBunny(){
         BodyDef bdef = new  BodyDef();
         bdef.position.set(224 / BunnyGame.PPM, 32 / BunnyGame.PPM);
@@ -152,6 +177,9 @@ public class Bunny extends Sprite implements Disposable{
         b2body.createFixture(fdef).setUserData(this);
     }
 
+    /**
+     * Creating Animations for bunny different states
+     */
     public void defineAnimations(){
 
         animationStateTime = 0f;
@@ -172,6 +200,10 @@ public class Bunny extends Sprite implements Disposable{
         speedAnimation= new Animation(0.03f, LoadGraphics.getRunningFrames());
     }
 
+    /**
+     * Updates bunny, changes if it is necessary his position, bunny state or bunny animation
+     * @param dt current time
+     */
     public void update(float dt){
 
         stateTime += dt;
@@ -238,6 +270,9 @@ public class Bunny extends Sprite implements Disposable{
 
     }
 
+    /**
+     * Function that allows bunny to Jump
+     */
     public void jump(){
         if(stateBunny == State.CRAWL){
             rotateBunny();
@@ -246,14 +281,26 @@ public class Bunny extends Sprite implements Disposable{
         setState(State.JUMPING);
     }
 
+    /**
+     * Returns a texture region of a texture
+     * @return TextureRegion Rectangle area of  a texture
+     */
     public TextureRegion getCurrentFrame() {
         return currentFrame;
     }
 
+    /**
+     * Applies a Linear impulse on bunny
+     * @param force
+     */
     public void applyForce(Vector2 force){
         b2body.applyLinearImpulse(force, b2body.getWorldCenter(), true);
     }
 
+    /**
+     * Draws Bunny Image
+     * @param batch SpriteBatch
+     */
     @Override
     public void draw(Batch batch) {
         if(stateBunny!=Bunny.State.DEAD && stateBunny != State.CRAWL)
@@ -262,11 +309,18 @@ public class Bunny extends Sprite implements Disposable{
             batch.draw(getCurrentFrame(), b2body.getPosition().x - 18 / BunnyGame.PPM, b2body.getPosition().y - 18f / BunnyGame.PPM, 43/BunnyGame.PPM, 27/BunnyGame.PPM);
     }
 
+    /**
+     * Frees Memory
+     */
     @Override
     public void dispose() {
         currentFrame.getTexture().dispose();
     }
 
+    /**
+     * Changes bunny State to state, equals state Time to null
+     * @param state State
+     */
     public void setState(State state) {
         if(stateBunny != State.DEAD){
             this.stateTime = 0;
@@ -274,6 +328,9 @@ public class Bunny extends Sprite implements Disposable{
         }
     }
 
+    /**
+     * Rotates bunny if his state is CRAWL (vertical to horizontal)
+     */
     public void rotateBunny(){
 
         if(stateBunny==State.CRAWL) {
@@ -288,16 +345,26 @@ public class Bunny extends Sprite implements Disposable{
         }
     }
 
+    /**
+     * Increment Number of carrots
+     */
     public void incNumberOfCarrots(){
         numberOfCarrots++;
         numberOfCarrotsSpeed++;
         Gdx.app.log("Cenoura", "+1 "+ numberOfCarrots);
     }
 
+    /**
+     * Returns the number of Carrots
+     * @return int number of carrots
+     */
     public int getNumberOfCarrots() {
         return numberOfCarrots;
     }
 
+    /**
+     * Checks if Bunny has the power to change the state for speed, increasing velocity
+     */
     public void checkSpeed(){
         if(numberOfCarrotsSpeed>=25) {
             setState(State.SPEED);
@@ -305,10 +372,18 @@ public class Bunny extends Sprite implements Disposable{
         }
     }
 
+    /**
+     * Returns the number of carrots that bunny ate from the use of power speed
+     * @return int numberOfcarrotsSpeed
+     */
     public int getNumberOfCarrotsSpeed() {
         return numberOfCarrotsSpeed;
     }
 
+    /**
+     * Returns the time associated to each active state
+     * @return float stateTime
+     */
     public float getStateTime() {
         return stateTime;
     }
