@@ -15,7 +15,7 @@ import com.mygdx.game.BunnyGame;
  */
 
 /**
- * A object from tile
+ * Class used to re present an object from tile
  */
 public abstract class InteractiveTileObject {
 
@@ -73,7 +73,7 @@ public abstract class InteractiveTileObject {
 
     /**
      * To get a cell from the tile map
-     * @return the cell
+     * @return Tiled Map cell
      */
     public TiledMapTileLayer.Cell getCell(){
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(1);

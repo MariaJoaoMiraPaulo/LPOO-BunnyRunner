@@ -19,32 +19,32 @@ import com.mygdx.game.GUI.LoadGraphics;
  */
 
 /**
- * A rock from the game
+ * Class used to re present a Rock
  */
 public class Rock extends Sprite {
 
     /**
-     * world of the object
+     * Rocks' world
      */
     protected World world;
 
     /**
-     *  map of the object
+     *  Rocks' map
      */
     protected TiledMap map;
 
     /**
-     * bounds of the object on the map
+     * Rocks's bounds on the map
      */
     protected Rectangle bounds;
 
     /**
-     * to simulate the physics the world needs a body from the object
+     * To simulate the physics the world needs a body from the object
      */
     protected Body body;
 
     /**
-     * that fixture from the body, this fixture has the bit type
+     * Rocks's Fixture, which has the bit type
      */
     protected Fixture fixture;
 
@@ -77,7 +77,7 @@ public class Rock extends Sprite {
     }
 
     /**
-     * To draw brick image when the games is running
+     * Draws rock's image when the games is running
      * @param batch batch
      */
     @Override
