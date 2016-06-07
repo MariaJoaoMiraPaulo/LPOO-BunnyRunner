@@ -191,7 +191,7 @@ public class LogicTests {
 
         logic.getBunny().jump();
 
-        sleep(500);
+        sleep(800);
 
         Assert.assertEquals(Bunny.State.FALLING.toString(), logic.getBunny().stateBunny.toString());
     }

@@ -27,6 +27,7 @@ public class MainMenu implements Screen {
     private Image playButton;
     private Image exitButton;
     private Image highScoreButton;
+    private Image helpButton;
     private Stage stage;
     private BunnyGame game;
 
@@ -43,45 +44,55 @@ public class MainMenu implements Screen {
         background = new Texture("MainMenu.png");
         button = new Texture("button.png");
 
-        float xPlayButton=Gdx.graphics.getWidth()*40/100;
-        float yPlayButton=Gdx.graphics.getHeight()*28/100;
-        float wPlayButton = Gdx.graphics.getWidth()*20/100;
-        float hPlayButton = Gdx.graphics.getHeight()*7/100;
-
+        float xButton=Gdx.graphics.getWidth()*40/100;
+        float yButton=Gdx.graphics.getHeight()*28/100;
+        float wButton = Gdx.graphics.getWidth()*20/100;
+        float hButton = Gdx.graphics.getHeight()*7/100;
 
         playButton = new Image(button);
-        playButton.setWidth(wPlayButton);
-        playButton.setHeight(hPlayButton);
-        playButton.setPosition(xPlayButton,yPlayButton);
+        playButton.setWidth(wButton);
+        playButton.setHeight(hButton);
+        playButton.setPosition(xButton,yButton);
 
-        yPlayButton=Gdx.graphics.getHeight()*19/100;
+        yButton=Gdx.graphics.getHeight()*19/100;
 
 
         highScoreButton = new Image(button);
-        highScoreButton.setWidth(wPlayButton);
-        highScoreButton.setHeight(hPlayButton);
-        highScoreButton.setPosition(xPlayButton,yPlayButton);
+        highScoreButton.setWidth(wButton);
+        highScoreButton.setHeight(hButton);
+        highScoreButton.setPosition(xButton,yButton);
 
-        yPlayButton=Gdx.graphics.getHeight()*9/100;
+        yButton=Gdx.graphics.getHeight()*9/100;
 
 
         exitButton = new Image(button);
-        exitButton.setWidth(wPlayButton);
-        exitButton.setHeight(hPlayButton);
-        exitButton.setPosition(xPlayButton,yPlayButton);
+        exitButton.setWidth(wButton);
+        exitButton.setHeight(hButton);
+        exitButton.setPosition(xButton,yButton);
 
+        xButton= Gdx.graphics.getWidth()*82/100;
+        yButton=Gdx.graphics.getHeight()*5.45f/100;
+        wButton = Gdx.graphics.getWidth()*11/100;
+        hButton = Gdx.graphics.getHeight()*8/100;
+
+
+        helpButton = new Image(button);
+        helpButton.setWidth(wButton);
+        helpButton.setHeight(hButton);
+        helpButton.setPosition(xButton,yButton);
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(playButton);
         stage.addActor(exitButton);
         stage.addActor(highScoreButton);
+        stage.addActor(helpButton);
 
         playButton.addListener(new ClickListener(){
-           @Override
+            @Override
             public void clicked(InputEvent event, float x, float y){
-               setPlayScreen();
+                setPlayScreen();
 
-           }
+            }
         });
 
         highScoreButton.addListener(new ClickListener(){
@@ -89,6 +100,13 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y){
                 setHighScoreMenu();
 
+            }
+        });
+
+        helpButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                setHelpMenu();
             }
         });
 
@@ -100,6 +118,10 @@ public class MainMenu implements Screen {
             }
         });
 
+    }
+
+    private void setHelpMenu() {
+        game.setToHelpMenu();
     }
 
     public void setHighScoreMenu(){
@@ -118,7 +140,6 @@ public class MainMenu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.app.log("Render", "entrei");
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         game.batch.begin();
         game.batch.draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());

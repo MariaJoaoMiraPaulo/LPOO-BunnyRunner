@@ -92,7 +92,6 @@ public class GameLogic implements Disposable{
         timer.scheduleTask(new Timer.Task() {
             @Override
             public void run() {
-                //FIXME: Actually use the elapsed time
                 update(TIMER_RATE);
             }
         }, 0, TIMER_RATE);

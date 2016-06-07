@@ -6,6 +6,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.GUI.FinalMenu;
 import com.mygdx.game.GUI.GameOverMenu;
+import com.mygdx.game.GUI.HelpMenu;
 import com.mygdx.game.GUI.HighScoreMenu;
 import com.mygdx.game.GUI.MainMenu;
 import com.mygdx.game.GUI.PauseMenu;
@@ -52,6 +53,7 @@ public class BunnyGame extends Game{
     private PlayScreen playScreen;
     private HighScoreMenu highScoreMenu;
     private FinalMenu finalMenu;
+    private HelpMenu helpMenu;
 
     @Override
     public void create() {
@@ -60,6 +62,7 @@ public class BunnyGame extends Game{
         gameOverMenu = new GameOverMenu(this);
         pauseMenu = new PauseMenu(this);
         finalMenu = new FinalMenu(this);
+        helpMenu = new HelpMenu(this);
 
         loadFile(currentLevel);
         highScoreMenu = new HighScoreMenu(this);
@@ -129,6 +132,10 @@ public class BunnyGame extends Game{
     public void setToHighScoreMenu() {
         highScoreMenu.setLabel();
         setScreen(highScoreMenu);
+    }
+
+    public void setToHelpMenu() {
+        setScreen(helpMenu);
     }
 
     public void loadFile(int level){
