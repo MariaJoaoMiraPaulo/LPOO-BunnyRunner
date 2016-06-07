@@ -13,7 +13,7 @@ import com.mygdx.game.BunnyGame;
  */
 
 /**
- * Spikes class
+ * Class used to re present a Spike
  */
 public class Spike extends InteractiveTileObject {
 

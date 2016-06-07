@@ -15,7 +15,7 @@ import com.mygdx.game.BunnyGame;
  */
 
 /**
- * A object from tile
+ * Class used to re present an object from tile
  */
 public abstract class InteractiveTileObject {
 

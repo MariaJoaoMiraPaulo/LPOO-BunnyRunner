@@ -15,7 +15,7 @@ import com.mygdx.game.Tools.WorldCreator;
  */
 
 /**
- * It has all the logic from the game, its use to separate graphics
+ * Class that contains the game logic ( used to separate graphics from logic )
  */
 public class GameLogic implements Disposable{
 

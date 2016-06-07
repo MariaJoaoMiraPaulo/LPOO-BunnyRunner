@@ -19,7 +19,7 @@ import com.mygdx.game.GUI.LoadGraphics;
  */
 
 /**
- * A rock from the game
+ * Class used to re present a Rock
  */
 public class Rock extends Sprite {
 

@@ -14,7 +14,7 @@ import com.mygdx.game.BunnyGame;
  */
 
 /**
- * A carrot from the game
+ * Class used to re present a carrot
  */
 public class Carrot extends InteractiveTileObject{
 
