@@ -42,7 +42,7 @@ public class BunnyGame extends Game{
     private int highscore;
 
     public SpriteBatch batch;
-    private int currentLevel =1;
+    private int currentLevel =3;
 
     private boolean won;
 
