@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="13" tilewidth="16" tileheight="16" nextobjectid="60">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="300" height="13" tilewidth="16" tileheight="16" nextobjectid="61">
  <tileset firstgid="1" name="level1" tilewidth="16" tileheight="16" tilecount="1872" columns="156">
   <image source="level1.png" width="2500" height="206"/>
  </tileset>
@@ -71,7 +71,7 @@
  </objectgroup>
  <objectgroup name="Ground">
   <object id="55" x="1.52184" y="190.991" width="991.478" height="17.5011"/>
-  <object id="57" x="992.619" y="190.61" width="3810.3" height="17.5011"/>
+  <object id="57" x="992.619" y="192" width="3810.3" height="16.1111"/>
  </objectgroup>
  <objectgroup name="Spike"/>
  <objectgroup name="Platform"/>

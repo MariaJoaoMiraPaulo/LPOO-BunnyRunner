@@ -20,6 +20,14 @@ import static junit.framework.TestCase.assertEquals;
  */
 @RunWith(TestsLauncher.class)
 public class TryingToTest {
+    public void sleep(long time){
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Test
     public void testFirstState() {
         World  world = new World(new Vector2(0,-10),true);
@@ -110,11 +118,7 @@ public class TryingToTest {
 
         logic.getBunny().setState(Bunny.State.RUNNING);
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(5000);
 
         assertNotSame(0, logic.getBunny().getNumberOfCarrots());
     }
@@ -126,14 +130,39 @@ public class TryingToTest {
         logic.getBunny().setState(Bunny.State.RUNNING);
         logic.getBunny().setState(Bunny.State.JUMPING);
 
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        sleep(5000);
 
         Assert.assertEquals(Bunny.State.DEAD.toString(), logic.getBunny().stateBunny.toString());
     }
+
+    @Test
+    public void testBunnyDeadWithHunter(){
+        GameLogic logic = new GameLogic(0);
+
+        logic.getBunny().setState(Bunny.State.RUNNING);
+
+       sleep(10000);
+
+        Assert.assertEquals(Bunny.State.DEAD.toString(), logic.getBunny().stateBunny.toString());
+    }
+
+    @Test
+    public void testBunnyNextLevel(){
+        GameLogic logic = new GameLogic(0);
+
+        logic.getBunny().setState(Bunny.State.RUNNING);
+
+        for(int i =0 ;i<7;i++){
+            logic.getBunny().setState(Bunny.State.SPEED);
+            sleep(2000);
+        }
+
+        logic.getBunny().setState(Bunny.State.RUNNING);
+
+        sleep(8000);
+
+        Assert.assertEquals(Bunny.State.NEXT_LEVEL.toString(), logic.getBunny().stateBunny.toString());
+    }
+
 
 }

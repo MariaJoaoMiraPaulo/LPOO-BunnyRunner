@@ -139,8 +139,6 @@ public class Hunter extends Sprite implements Disposable{
                 break;
         }
 
-        Gdx.app.log("Cheguei ", " X: "+b2body.getPosition().x);
-
 
         if(b2body.getPosition().x>=distanceMax && hunterState == MovementState.RIGHT){
             switchState();

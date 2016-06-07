@@ -96,12 +96,14 @@ public class WorldContactListener implements ContactListener {
                         ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
                         ((Bunny) fixtureA.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureA.getUserData()).b2body.getPosition(), true);
                     }
-                    else   ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
+                    else  if( ((Hunter)fixtureB.getUserData()).hunterState != Hunter.MovementState.DEAD)
+                             ((Bunny) fixtureA.getUserData()).setState(Bunny.State.DEAD);
                 } else if (((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.CRAWL || ((Bunny) fixtureB.getUserData()).stateBunny == Bunny.State.SPEED){
                     ((Hunter)fixtureA.getUserData()).setHunterState(Hunter.MovementState.DEAD);
                     ((Bunny) fixtureB.getUserData()).b2body.applyLinearImpulse(new Vector2(2f,0), ((Bunny) fixtureB.getUserData()).b2body.getPosition(), true);
                 }
-                else ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
+                else   if( ((Hunter)fixtureA.getUserData()).hunterState != Hunter.MovementState.DEAD)
+                    ((Bunny) fixtureB.getUserData()).setState(Bunny.State.DEAD);
                 break;
             case BunnyGame.BUNNY_BIT | BunnyGame.ROCK_BIT:
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.ROCK_BIT) {

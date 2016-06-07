@@ -150,8 +150,6 @@ public class Bunny extends Sprite implements Disposable{
             setState(State.RUNNING);
         }
 
-        Gdx.app.log("BOAS", " "+ stateBunny.toString());
-
         animationStateTime += dt;
 
         switch (stateBunny){
