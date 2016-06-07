@@ -3,28 +3,18 @@ package com.mygdx.game.GUI;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 import com.mygdx.game.Logic.Bunny;
-import com.mygdx.game.Logic.GameLogic;
 import com.mygdx.game.Logic.Hunter;
 import com.mygdx.game.Logic.Rock;
-import com.mygdx.game.Tools.WorldContactListener;
-import com.mygdx.game.Tools.WorldCreator;
-
-import java.io.IOException;
 
 /**
  * Created by Maria Joao Mira Paulo e Nuno Ramos on 10/05/16.
@@ -38,8 +28,8 @@ public class PlayScreen implements Screen, InputProcessor {
     private HudScore hud;
 
     //Tiled Map
-    private OrthographicCamera gamecam;
-    private Viewport gamePort;
+    private OrthographicCamera camera;
+    private Viewport viewport;
     private OrthogonalTiledMapRenderer renderer;
 
     //Box 2d variables
@@ -56,11 +46,11 @@ public class PlayScreen implements Screen, InputProcessor {
 
         batch = new SpriteBatch();
         this.game=game;
-        gamecam = new OrthographicCamera();
-        gamePort =  new FitViewport(mapHeight *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight() / BunnyGame.PPM, mapHeight / BunnyGame.PPM, gamecam);
+        camera = new OrthographicCamera();
+        viewport =  new FitViewport(mapHeight *(float)Gdx.graphics.getWidth()/Gdx.graphics.getHeight() / BunnyGame.PPM, mapHeight / BunnyGame.PPM, camera);
         renderer = new OrthogonalTiledMapRenderer(game.getLogic().getMap(), 1 / BunnyGame.PPM);
 
-        gamecam.position.set(gamePort.getWorldWidth()/2,gamePort.getWorldHeight()/2,0);
+        camera.position.set(viewport.getWorldWidth()/2, viewport.getWorldHeight()/2,0);
 
         b2dr = new Box2DDebugRenderer();
 
@@ -90,11 +80,10 @@ public class PlayScreen implements Screen, InputProcessor {
             else game.setToPlayScreen();
         }
 
-        gamecam.position.x = game.getLogic().getBunny().b2body.getPosition().x;
+        camera.position.x = game.getLogic().getBunny().b2body.getPosition().x;
 
-        gamecam.update();
-        renderer.setView(gamecam);
-        Gdx.app.log("Carrots"," "+ game.getLogic().getBunny().getNumberOfCarrotsSpeed());
+        camera.update();
+        renderer.setView(camera);
         hud.setNumberCarrotsSpeed(game.getLogic().getBunny().getNumberOfCarrotsSpeed());
         hud.setScore(game.getLogic().getBunny().getNumberOfCarrots());
     }
@@ -109,8 +98,7 @@ public class PlayScreen implements Screen, InputProcessor {
         update(delta);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         renderer.render();
-        //b2dr.render(game.getLogic().getWorld(),gamecam.combined);
-        batch.setProjectionMatrix(gamecam.combined);
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         game.getLogic().getBunny().draw(batch);
         for(Hunter hunter : game.getLogic().getHunters())
@@ -125,7 +113,7 @@ public class PlayScreen implements Screen, InputProcessor {
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width,height);
+        viewport.update(width,height);
     }
 
     @Override
@@ -168,7 +156,6 @@ public class PlayScreen implements Screen, InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         startingPoint.set(screenX, screenY);
 
-        Gdx.app.log("Toque", " "+ screenX + " " + screenY);
         if(screenX > Gdx.graphics.getWidth() - 75 && screenX < Gdx.graphics.getWidth() &&
                 screenY > 0 && screenY < 75){
             game.setToPauseMenu();
@@ -192,8 +179,6 @@ public class PlayScreen implements Screen, InputProcessor {
 
         screenDelta.set(screenX - startingPoint.x, screenY - startingPoint.y);
 
-        Gdx.app.log("Drag", " "+screenDelta.x + " " + screenDelta.y);
-
         if(screenDelta.x>20 && !dragDone)  //the bunny is going to gain speed
         {
             game.getLogic().getBunny().checkSpeed();
@@ -215,8 +200,6 @@ public class PlayScreen implements Screen, InputProcessor {
             dragDone=true;
         }
 
-
-
         return false;
     }
 
@@ -228,10 +211,6 @@ public class PlayScreen implements Screen, InputProcessor {
     @Override
     public boolean scrolled(int amount) {
         return false;
-    }
-
-    public HudScore getHud() {
-        return hud;
     }
 
     public void input() {

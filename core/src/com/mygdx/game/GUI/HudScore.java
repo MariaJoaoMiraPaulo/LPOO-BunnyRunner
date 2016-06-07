@@ -63,13 +63,10 @@ public class HudScore extends Stage {
         numberCarrot.setFontScale(0.75f);
         numberCarrot.setAlignment(Align.topLeft);
 
-        //carrot.setWidth(15);
-        //carrot.setHeight(20);
         carrot.scaleBy(0.15f);
 
         table.add(carrot).padRight(9);
         table.add(numberCarrot);
-                //.expandX().align(Align.left);
 
         table.padLeft(20);
         table.top().left();
@@ -79,9 +76,7 @@ public class HudScore extends Stage {
 
     public void setScore(int score) {
         this.score=score;
-       /* if(score!=0)
-          numberCarrotsSpeed++;
-        */numberCarrot.setText(String.format("%03d", score));
+        numberCarrot.setText(String.format("%03d", score));
 
     }
 
@@ -89,7 +84,6 @@ public class HudScore extends Stage {
     public void draw() {
         super.draw();
         batch.begin();
-        Gdx.app.log("Score"," "+ score + " " + numberCarrotsSpeed);
         if(numberCarrotsSpeed==0)
            imageState=0;
         else if (numberCarrotsSpeed <10)
@@ -104,7 +98,5 @@ public class HudScore extends Stage {
         batch.draw(btnPause,Gdx.graphics.getWidth()-75,Gdx.graphics.getHeight()- 75,75,75);
 
         batch.end();
-
-        Gdx.app.log("Entrei"," ");
     }
 }

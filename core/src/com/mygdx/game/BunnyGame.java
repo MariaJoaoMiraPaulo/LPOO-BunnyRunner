@@ -78,7 +78,9 @@ public class BunnyGame extends Game{
         pauseMenu.dispose();
         finalMenu.dispose();
         highScoreMenu.dispose();
-        playScreen.dispose();
+        helpMenu.dispose();
+        if(playScreen != null)
+            playScreen.dispose();
     }
 
     @Override

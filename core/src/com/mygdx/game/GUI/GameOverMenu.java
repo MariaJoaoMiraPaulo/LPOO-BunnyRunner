@@ -152,6 +152,7 @@ public class GameOverMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        button.dispose();
     }
 }

@@ -156,6 +156,7 @@ public class PauseMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
+        button.dispose();
     }
 }

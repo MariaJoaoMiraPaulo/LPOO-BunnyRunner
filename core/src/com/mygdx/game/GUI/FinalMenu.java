@@ -101,6 +101,6 @@ public class FinalMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
     }
 }

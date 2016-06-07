@@ -95,6 +95,6 @@ public class HelpMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
     }
 }

@@ -138,7 +138,7 @@ public class HighScoreMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        background.dispose();
     }
 
     public void setLabel(){
