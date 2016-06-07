@@ -65,7 +65,7 @@ public class HighScoreMenu implements Screen {
 
         //Score Level 2
         game.loadFile(2);
-        score2 = new Label(String.format("%03d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
+        score2 = new Label(String.format("%02d",game.getHighscore()),new Label.LabelStyle(LoadGraphics.getFont(), Color.BLACK));
         score2.setFontScale(0.75f);
         score2.setAlignment(Align.center);
         table.add(score2).padLeft(200).padBottom(20);

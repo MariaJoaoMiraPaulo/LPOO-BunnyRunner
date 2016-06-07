@@ -17,14 +17,43 @@ import com.mygdx.game.GUI.LoadGraphics;
 /**
  * Created by Maria Joao Mira Paulo e Nuno Ramos on 05/06/2016.
  */
+
+/**
+ * A rock from the game
+ */
 public class Rock extends Sprite {
 
+    /**
+     * world of the object
+     */
     protected World world;
+
+    /**
+     *  map of the object
+     */
     protected TiledMap map;
+
+    /**
+     * bounds of the object on the map
+     */
     protected Rectangle bounds;
+
+    /**
+     * to simulate the physics the world needs a body from the object
+     */
     protected Body body;
+
+    /**
+     * that fixture from the body, this fixture has the bit type
+     */
     protected Fixture fixture;
 
+    /**
+     * Rock constructor
+     * @param world world of the rock
+     * @param map map of the rock
+     * @param bounds bounds of the rock on map
+     */
     public Rock(World world, TiledMap map, Rectangle bounds){
 
         this.world = world;
@@ -47,7 +76,10 @@ public class Rock extends Sprite {
         fixture = body.createFixture(fdef);
     }
 
-
+    /**
+     * To draw brick image when the games is running
+     * @param batch batch
+     */
     @Override
     public void draw(Batch batch) {
         if(fixture.getFilterData().categoryBits == BunnyGame.ROCK_BIT)

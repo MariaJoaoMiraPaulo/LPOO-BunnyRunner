@@ -11,8 +11,18 @@ import com.mygdx.game.BunnyGame;
 /**
  * Created by Maria Joao Mira Paulo e Nuno Ramos on 31/05/16.
  */
+
+/**
+ * Spikes class
+ */
 public class Spike extends InteractiveTileObject {
 
+    /**
+     * Spike constructor
+     * @param world world of the spikes
+     * @param map map of the spikes
+     * @param bounds bounds of the spikes on map
+     */
     public Spike(World world, TiledMap map, Rectangle bounds){
         super(world,map,bounds);
 
@@ -35,6 +45,6 @@ public class Spike extends InteractiveTileObject {
     }
     @Override
     public void bunnyHit() {
-
+        //when hited by the bunny, the bunny dies
     }
 }

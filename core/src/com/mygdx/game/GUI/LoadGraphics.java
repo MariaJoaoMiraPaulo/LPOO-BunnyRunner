@@ -271,6 +271,9 @@ public class LoadGraphics implements Disposable{
 
         for(TextureRegion image : deadHunterFrames)
             image.getTexture().dispose();
+
+        font.dispose();
+        brickImage.dispose();
     }
 
 }

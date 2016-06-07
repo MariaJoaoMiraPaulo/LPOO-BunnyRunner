@@ -12,8 +12,18 @@ import com.mygdx.game.BunnyGame;
 /**
  * Created by Maria Joao Mira Paulo e Nuno Ramos on 26/05/16.
  */
+
+/**
+ * A carrot from the game
+ */
 public class Carrot extends InteractiveTileObject{
 
+    /**
+     * Carrot constructor
+     * @param world current world
+     * @param map current map level
+     * @param bounds bounds on map
+     */
     public Carrot(World world, TiledMap map, Rectangle bounds){
         super(world,map,bounds);
 
@@ -27,7 +37,7 @@ public class Carrot extends InteractiveTileObject{
         body = world.createBody(bdef);
         shape.setAsBox(bounds.getWidth()/2/ BunnyGame.PPM,bounds.getHeight()/2/ BunnyGame.PPM);
         fdef.shape=shape;
-        fdef.isSensor=true;
+        fdef.isSensor=true; //this make no collision but it warns the world listener when the bunny passes the carrot
         fixture = body.createFixture(fdef);
         fixture.setUserData(this);
 
@@ -35,9 +45,11 @@ public class Carrot extends InteractiveTileObject{
         setCategoryFilter(BunnyGame.CARROT_BIT);
     }
 
+    /**
+     * When the bunny hits the carrot this function is called, this function makes the carrot disappear from the map
+     */
     @Override
     public void bunnyHit() {
-        Gdx.app.log("Carrot","Colison");
         setCategoryFilter(BunnyGame.DESTROYED_BIT);
         getCell().setTile(null);
     }

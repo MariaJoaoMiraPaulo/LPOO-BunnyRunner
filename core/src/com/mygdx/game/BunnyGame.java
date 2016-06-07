@@ -42,7 +42,7 @@ public class BunnyGame extends Game{
     private int highscore;
 
     public SpriteBatch batch;
-    private int currentLevel =3;
+    private int currentLevel =1;
 
     private boolean won;
 
@@ -57,7 +57,6 @@ public class BunnyGame extends Game{
 
     @Override
     public void create() {
-        Gdx.app.log("Render", "bunnygame 1");
         batch= new SpriteBatch();
         mainMenu = new MainMenu(this);
         gameOverMenu = new GameOverMenu(this);
@@ -66,7 +65,6 @@ public class BunnyGame extends Game{
 
         loadFile(currentLevel);
         highScoreMenu = new HighScoreMenu(this);
-        Gdx.app.log("Render", "bunnygame 2");
         won = false;
         setScreen(mainMenu);
     }
@@ -74,11 +72,16 @@ public class BunnyGame extends Game{
     @Override
     public void dispose() {
         super.dispose();
+        mainMenu.dispose();
+        gameOverMenu.dispose();
+        pauseMenu.dispose();
+        finalMenu.dispose();
+        highScoreMenu.dispose();
+        playScreen.dispose();
     }
 
     @Override
     public void render() {
-        Gdx.app.log("Render", "bunnygame 3");
         super.render();
     }
 
@@ -87,13 +90,11 @@ public class BunnyGame extends Game{
     }
 
     public void newLevel() {
-        Gdx.app.log("Nivel", " " + currentLevel);
         if(this.currentLevel < MAX_LEVEL)
             this.currentLevel++;
         else if(this.currentLevel == MAX_LEVEL){
             won = true;
         }
-        Gdx.app.log("Nivel", " " + currentLevel);
         saveHighscore();
         loadFile(currentLevel);
     }
@@ -107,6 +108,7 @@ public class BunnyGame extends Game{
     }
 
     public void setToPauseMenu(){
+        logic.setPause(true);
         setScreen(pauseMenu);
     }
 
@@ -121,6 +123,7 @@ public class BunnyGame extends Game{
     }
 
     public void setToSamePlayScreen() {
+        logic.setPause(false);
         playScreen.input();
         setScreen(playScreen);
     }
@@ -137,14 +140,11 @@ public class BunnyGame extends Game{
 
         if(!file.exists()){
             highscore = 0;
-            Gdx.app.log("Highscore", "Passei");
         }
         else {
             java.lang.String text;
             text = file.readString();
             highscore = Integer.parseInt(text);
-           // highscore = 0;
-            Gdx.app.log("Highscore", "" + highscore);
         }
     }
 
