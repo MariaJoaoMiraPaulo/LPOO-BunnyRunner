@@ -34,6 +34,36 @@ public class Bunny extends Sprite implements Disposable{
     public static final int MOVEMENT = 2;
 
     /**
+     * Bunny´s Horizontal Velocity when he is with speed activate
+     */
+    public static final float SPEED_MOVEMENT = 2.5f;
+
+    /**
+     * Bunny´s Vertical force to jump
+     */
+    private static final int  JUMP = 4;
+
+    /**
+     * A small value to adjust when we rotate bunny body
+     */
+    private static final int ADJUSTMENT = 1;
+
+    /**
+     * Force use when the bunny crawl
+     */
+    private static final int CRAWL_FORCE = 2;
+
+    /**
+     * Force given to bunny when he activates speed
+     */
+    private static final int INICIAL_SPEED_FORCE = 4;
+
+    /**
+     * Number of carrots need to activate speed power
+     */
+    private static final int NUMBER_MAX_OF_CARROTS = 25;
+
+    /**
      * Bunny's possible states
      */
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN ,SPEED, NEXT_LEVEL};
@@ -209,12 +239,13 @@ public class Bunny extends Sprite implements Disposable{
 
         stateTime += dt;
 
+        //Some ifs to see if its need to change the currente bunny frame state
         if(b2body.getLinearVelocity().x < MOVEMENT && stateBunny==State.RUNNING ){
             b2body.setLinearVelocity(MOVEMENT, 0);
         }
 
-        if(b2body.getLinearVelocity().x < 2.5f && stateBunny==State.SPEED && stateTime <3){
-            b2body.setLinearVelocity(2.5f, 0);
+        if(b2body.getLinearVelocity().x < SPEED_MOVEMENT && stateBunny==State.SPEED && stateTime <3){
+            b2body.setLinearVelocity(SPEED_MOVEMENT, 0);
             numberOfCarrotsSpeed=0;
         }
         else if (stateBunny==State.SPEED && stateTime >= 3) {
@@ -240,6 +271,7 @@ public class Bunny extends Sprite implements Disposable{
 
         animationStateTime += dt;
 
+        //switch the update current frame of the bunny
         switch (stateBunny){
             case NEXT_LEVEL:
             case JUMPING:
@@ -278,7 +310,7 @@ public class Bunny extends Sprite implements Disposable{
         if(stateBunny == State.CRAWL){
             rotateBunny();
         }
-        b2body.applyLinearImpulse(new Vector2(0, 4f), b2body.getWorldCenter(), true);
+        b2body.applyLinearImpulse(new Vector2(0, JUMP), b2body.getWorldCenter(), true);
         setState(State.JUMPING);
     }
 
@@ -336,12 +368,12 @@ public class Bunny extends Sprite implements Disposable{
 
         if(stateBunny==State.CRAWL) {
             b2body.setTransform(b2body.getPosition().x, b2body.getPosition().y, (float)Math.PI*2);
-            b2body.applyLinearImpulse(new Vector2(0, 1f), b2body.getPosition(), true);
+            b2body.applyLinearImpulse(new Vector2(0, ADJUSTMENT), b2body.getPosition(), true);
             setState(State.RUNNING);
         }
         else {
             b2body.setTransform(b2body.getPosition().x,b2body.getPosition().y, (float)Math.PI/2);
-            b2body.applyLinearImpulse(new Vector2(2f, 1f), b2body.getPosition(), true);
+            b2body.applyLinearImpulse(new Vector2(CRAWL_FORCE, ADJUSTMENT), b2body.getPosition(), true);
             setState(State.CRAWL);
         }
     }
@@ -366,9 +398,9 @@ public class Bunny extends Sprite implements Disposable{
      * Checks if Bunny has the power to change the state for speed, increasing velocity
      */
     public void checkSpeed(){
-        if(numberOfCarrotsSpeed>=25) {
+        if(numberOfCarrotsSpeed>=NUMBER_MAX_OF_CARROTS) {
             setState(State.SPEED);
-            b2body.applyLinearImpulse(new Vector2(4f, 0), b2body.getWorldCenter(), true);
+            b2body.applyLinearImpulse(new Vector2(INICIAL_SPEED_FORCE, 0), b2body.getWorldCenter(), true);
         }
     }
 

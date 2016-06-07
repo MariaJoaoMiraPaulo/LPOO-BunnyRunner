@@ -20,6 +20,11 @@ import com.mygdx.game.Tools.WorldCreator;
 public class GameLogic implements Disposable{
 
     /**
+     * Gravity of the world
+     */
+    private static final int GRAVITY = -10;
+
+    /**
      * Timer update rate
      */
     public static final float TIMER_RATE = 1/300f;
@@ -77,7 +82,7 @@ public class GameLogic implements Disposable{
         mapLoader=new TmxMapLoader();
         map = mapLoader.load("level"+mapLevel+".tmx");
 
-        world = new World(new Vector2(0,-10),true);
+        world = new World(new Vector2(0,GRAVITY),true);
 
         bunny = new Bunny(world);
 

@@ -63,7 +63,6 @@ public class BunnyGame extends Game{
         pauseMenu = new PauseMenu(this);
         finalMenu = new FinalMenu(this);
         helpMenu = new HelpMenu(this);
-
         loadFile(currentLevel);
         highScoreMenu = new HighScoreMenu(this);
         won = false;
