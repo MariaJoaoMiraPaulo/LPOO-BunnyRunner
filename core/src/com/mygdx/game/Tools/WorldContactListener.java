@@ -90,7 +90,6 @@ public class WorldContactListener implements ContactListener {
                 }
                 break;
             case BunnyGame.HUNTER_BIT | BunnyGame.BUNNY_BIT:
-                Gdx.app.log("Head", "Entrei");
                 if (fixtureA.getFilterData().categoryBits == BunnyGame.BUNNY_BIT && fixtureB.getFilterData().categoryBits == BunnyGame.HUNTER_BIT) {
                     if (((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.CRAWL || ((Bunny) fixtureA.getUserData()).stateBunny == Bunny.State.SPEED){
                         ((Hunter)fixtureB.getUserData()).setHunterState(Hunter.MovementState.DEAD);
