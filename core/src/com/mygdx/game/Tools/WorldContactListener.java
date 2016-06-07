@@ -16,7 +16,7 @@ import com.mygdx.game.Logic.InteractiveTileObject;
 import com.sun.org.apache.bcel.internal.generic.BREAKPOINT;
 
 /**
- * Created by mariajoaomirapaulo on 26/05/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 26/05/16.
  */
 public class WorldContactListener implements ContactListener {
     @Override

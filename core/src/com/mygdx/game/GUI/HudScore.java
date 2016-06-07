@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 /**
- * Created by mariajoaomirapaulo on 04/06/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 04/06/16.
  */
 public class HudScore extends Stage {
 

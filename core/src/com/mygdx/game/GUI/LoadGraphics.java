@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 
 /**
- * Created by Nuno on 05/06/2016.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 05/06/2016.
  */
 public class LoadGraphics implements Disposable{
 

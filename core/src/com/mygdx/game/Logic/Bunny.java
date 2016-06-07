@@ -20,27 +20,81 @@ import com.mygdx.game.GUI.LoadGraphics;
 import com.mygdx.game.GUI.PlayScreen;
 
 /**
- * Created by mariajoaomirapaulo on 12/05/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 12/05/16.
+ */
+
+/**
+ * Class used to represent a Bunny
  */
 public class Bunny extends Sprite implements Disposable{
+
+    /**
+     * Horizontal Bunny's Velocity
+     */
     public static final int MOVEMENT = 2;
 
+    /**
+     * Bunny's possible states
+     */
     public enum State {STANDING, RUNNING, JUMPING, FALLING, CRAWL, DEAD, SLOWDOWN ,SPEED, NEXT_LEVEL};
 
+    /**
+     * Box2d physics world
+     */
     public World world;
+
+    /**
+     * Box2d physics body
+     */
     public Body b2body;
 
 
     private TextureRegion currentFrame;
+
+    /**
+     * Bunny's running state animation
+     */
     private Animation runningAnimation;
+
+    /**
+     * Bunny's starting state animation
+     */
     private Animation startingAnimation;
+
+    /**
+     * Bunny's starting falling animation
+     */
     private Animation fallingAnimation;
+
+    /**
+     * Bunny's dead state animation
+     */
     private Animation deadAnimation;
+
+    /**
+     * Bunny's crawl state animation
+     */
     private Animation crawlAnimation;
+
+    /**
+     * Bunny's slowDown state animation
+     */
     private Animation slowDownAnimation;
+
+    /**
+     * Bunny's speed state animation
+     */
     private Animation speedAnimation;
 
+    /**
+     *
+     * Total Number of Carrots that bunny ate
+     */
     private int numberOfCarrots;
+
+    /**
+     * 
+     */
     private int numberOfCarrotsSpeed;
 
     public State stateBunny;

@@ -19,7 +19,7 @@ import com.mygdx.game.BunnyGame;
 import com.mygdx.game.GUI.LoadGraphics;
 
 /**
- * Created by mariajoaomirapaulo on 02/06/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 02/06/16.
  */
 public class Hunter extends Sprite implements Disposable{
 

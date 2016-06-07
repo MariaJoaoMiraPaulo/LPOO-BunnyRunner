@@ -15,7 +15,7 @@ import com.mygdx.game.BunnyGame;
 import com.mygdx.game.GUI.LoadGraphics;
 
 /**
- * Created by Nuno on 05/06/2016.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 05/06/2016.
  */
 public class Rock extends Sprite {
 

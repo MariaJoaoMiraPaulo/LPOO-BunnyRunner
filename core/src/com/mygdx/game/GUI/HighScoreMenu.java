@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BunnyGame;
 
 /**
- * Created by mariajoaomirapaulo on 05/06/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 05/06/16.
  */
 public class HighScoreMenu implements Screen {
 

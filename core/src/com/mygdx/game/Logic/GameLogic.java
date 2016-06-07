@@ -12,7 +12,7 @@ import com.mygdx.game.Tools.WorldContactListener;
 import com.mygdx.game.Tools.WorldCreator;
 
 /**
- * Created by Nuno on 05/06/2016.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 05/06/2016.
  */
 public class GameLogic implements Disposable{
 

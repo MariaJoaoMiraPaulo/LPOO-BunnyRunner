@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.BunnyGame;
 
 /**
- * Created by mariajoaomirapaulo on 31/05/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 31/05/16.
  */
 public class Spike extends InteractiveTileObject {
 

@@ -20,7 +20,7 @@ import com.mygdx.game.Logic.Spike;
 import com.mygdx.game.GUI.PlayScreen;
 
 /**
- * Created by mariajoaomirapaulo on 26/05/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 26/05/16.
  */
 public class WorldCreator {
 

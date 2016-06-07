@@ -27,7 +27,7 @@ import com.mygdx.game.Tools.WorldCreator;
 import java.io.IOException;
 
 /**
- * Created by mariajoaomirapaulo on 10/05/16.
+ * Created by Maria Joao Mira Paulo e Nuno Ramos on 10/05/16.
  */
 public class PlayScreen implements Screen, InputProcessor {
 
