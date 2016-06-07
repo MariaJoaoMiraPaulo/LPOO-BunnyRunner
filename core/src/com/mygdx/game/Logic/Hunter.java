@@ -158,7 +158,10 @@ public class Hunter extends Sprite implements Disposable{
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(13/ BunnyGame.PPM,16.5f/BunnyGame.PPM);
 
-        fdef.filter.categoryBits = BunnyGame.HUNTER_BIT;
+
+        fdef.filter.categoryBits = BunnyGame.HUNTER_BIT; //The collision category bits
+
+        // The categories that the bunny would accept for collision
         fdef.filter.maskBits= BunnyGame.BUNNY_BIT |
                 BunnyGame.DEFAULT_BIT |
                 BunnyGame.GROUND_BIT ;

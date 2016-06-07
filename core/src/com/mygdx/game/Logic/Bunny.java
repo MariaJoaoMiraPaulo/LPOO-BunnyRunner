@@ -159,7 +159,9 @@ public class Bunny extends Sprite implements Disposable{
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(13/BunnyGame.PPM,16.5f/BunnyGame.PPM);
 
-        fdef.filter.categoryBits = BunnyGame.BUNNY_BIT;
+        fdef.filter.categoryBits = BunnyGame.BUNNY_BIT; //The collision category bits
+
+        // The categories that the bunny would accept for collision
         fdef.filter.maskBits= BunnyGame.CARROT_BIT |
                 BunnyGame.DEFAULT_BIT |
                 BunnyGame.GROUND_BIT |
@@ -216,7 +218,6 @@ public class Bunny extends Sprite implements Disposable{
         }
         else if (stateBunny==State.SPEED && stateTime >= 3) {
             setState(State.RUNNING);
-            //numberOfCarrotsSpeed=0;
         }
 
         if(stateBunny==State.DEAD && stateTime < 3){
@@ -350,7 +351,6 @@ public class Bunny extends Sprite implements Disposable{
     public void incNumberOfCarrots(){
         numberOfCarrots++;
         numberOfCarrotsSpeed++;
-        Gdx.app.log("Cenoura", "+1 "+ numberOfCarrots);
     }
 
     /**
