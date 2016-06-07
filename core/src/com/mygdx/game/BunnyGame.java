@@ -42,7 +42,7 @@ public class BunnyGame extends Game{
     private int highscore;
 
     public SpriteBatch batch;
-    private int currentFrame =1;
+    private int currentLevel =1;
 
     private boolean won;
 
@@ -64,7 +64,7 @@ public class BunnyGame extends Game{
         pauseMenu = new PauseMenu(this);
         finalMenu = new FinalMenu(this);
 
-        loadFile(currentFrame);
+        loadFile(currentLevel);
         highScoreMenu = new HighScoreMenu(this);
         Gdx.app.log("Render", "bunnygame 2");
         won = false;
@@ -82,20 +82,20 @@ public class BunnyGame extends Game{
         super.render();
     }
 
-    public int getCurrentFrame() {
-        return currentFrame;
+    public int getCurrentLevel() {
+        return currentLevel;
     }
 
     public void newLevel() {
-        Gdx.app.log("Nivel", " " + currentFrame);
-        if(this.currentFrame < MAX_LEVEL)
-            this.currentFrame++;
-        else if(this.currentFrame == MAX_LEVEL){
+        Gdx.app.log("Nivel", " " + currentLevel);
+        if(this.currentLevel < MAX_LEVEL)
+            this.currentLevel++;
+        else if(this.currentLevel == MAX_LEVEL){
             won = true;
         }
-        Gdx.app.log("Nivel", " " + currentFrame);
+        Gdx.app.log("Nivel", " " + currentLevel);
         saveHighscore();
-        loadFile(currentFrame);
+        loadFile(currentLevel);
     }
 
     public void setToMainMenu(){
@@ -115,7 +115,7 @@ public class BunnyGame extends Game{
     }
 
     public void setToPlayScreen(){
-        logic = new GameLogic(currentFrame);
+        logic = new GameLogic(currentLevel);
         playScreen = new PlayScreen(this);
         setScreen(playScreen);
     }
@@ -181,8 +181,8 @@ public class BunnyGame extends Game{
         this.won = won;
     }
 
-    public void setCurrentFrame(int currentFrame) {
-        this.currentFrame = currentFrame;
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 }
 

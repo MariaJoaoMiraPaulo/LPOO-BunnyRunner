@@ -60,7 +60,7 @@ public class FinalMenu implements Screen {
     }
 
     public void restartGame(){game.setWon(false);
-        game.setCurrentFrame(1);}
+        game.setCurrentLevel(1);}
 
     public void setMainMenuScreen(){
         game.setToMainMenu();

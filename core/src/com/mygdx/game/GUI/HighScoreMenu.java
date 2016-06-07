@@ -80,7 +80,7 @@ public class HighScoreMenu implements Screen {
         table.add(score3).padLeft(200).padBottom(20);
         table.padTop(230);
 
-        game.loadFile(game.getCurrentFrame());
+        game.loadFile(game.getCurrentLevel());
 
         Gdx.input.setInputProcessor(stage);
         stage.addActor(table);
