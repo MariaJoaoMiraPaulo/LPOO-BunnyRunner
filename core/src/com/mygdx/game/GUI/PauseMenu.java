@@ -96,7 +96,7 @@ public class PauseMenu implements Screen {
         soundButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                //Adicionar menu das opçoes
+                setVolume();
             }
         });
 
@@ -107,6 +107,10 @@ public class PauseMenu implements Screen {
             }
         });
 
+    }
+
+    private void setVolume() {
+        game.setPlayingMusic(!game.isPlayingMusic());
     }
 
     public void setPlayScreen(){

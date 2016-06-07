@@ -62,8 +62,6 @@ public class PlayScreen implements Screen, InputProcessor {
         screenDelta = new Vector2(0,0);
         startingPoint = new Vector2(0,0);
         dragDone = false;
-
-
     }
 
     public void update(float dt){
