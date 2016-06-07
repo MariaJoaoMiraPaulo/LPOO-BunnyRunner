@@ -19,7 +19,7 @@ import static junit.framework.TestCase.assertEquals;
  * Created by Nuno on 06/06/2016.
  */
 @RunWith(TestsLauncher.class)
-public class TryingToTest {
+public class LogicTests {
     public void sleep(long time){
         try {
             Thread.sleep(time);
