@@ -10,14 +10,17 @@
 #####Fig. 2: High Score Menu
 
 
-<img src="https://github.com/MariaJoaoMiraPaulo/LPOO-BunnyRunner/blob/master/android/assets/Game1.png" width="500">
+<img src="https://github.com/MariaJoaoMiraPaulo/LPOO-BunnyRunner/blob/master/android/assets/Game3.png" width="500">
 #####Fig. 3: Game 
+
 
 <img src="https://github.com/MariaJoaoMiraPaulo/LPOO-BunnyRunner/blob/master/android/assets/Game2.png" width="500">
 #####Fig. 4: Game 
 
-<img src="https://github.com/MariaJoaoMiraPaulo/LPOO-BunnyRunner/blob/master/android/assets/Game3.png" width="500">
-#####Fig. 3: Game 
+
+<img src="https://github.com/MariaJoaoMiraPaulo/LPOO-BunnyRunner/blob/master/android/assets/Game1.png" width="500">
+#####Fig. 5: Game 
+
 
 <img src="https://github.com/MariaJoaoMiraPaulo/LPOO-BunnyRunner/blob/master/android/assets/pauseMenu.png" width="500">
 #####Fig. 6: Pause Menu
